@@ -1,0 +1,126 @@
+package redix.soft.anilist.activity;
+
+import android.content.Context;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.TextView;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.OnEditorAction;
+import redix.soft.anilist.R;
+import redix.soft.anilist.fragment.HomeFragment;
+import redix.soft.anilist.fragment.SearchFragment;
+
+public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+
+    @BindView(R.id.toolbar_title) TextView toolbarTitle;
+    @BindView(R.id.search_bar) View searchBar;
+    @BindView(R.id.search_bar_input) EditText editSearchInput;
+    @BindView(R.id.back_button) View backbutton;
+    @BindView(R.id.navigation) BottomNavigationView navigation;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        ButterKnife.bind(this);
+
+        navigation = findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(this);
+        navigation.setSelectedItemId(R.id.navigation_home);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.navigation_home:
+                loadFragment(new HomeFragment(), HomeFragment.TAG, HomeFragment.TITLE);
+                return true;
+            case R.id.navigation_search:
+                loadFragment(new SearchFragment(), SearchFragment.TAG, SearchFragment.TITLE);
+                return true;
+            case R.id.navigation_account:
+                return true;
+        }
+        return false;
+    }
+
+    public void loadFragment(Fragment fragment, String tag, String title) {
+        if(tag.equals(HomeFragment.TAG) || tag.equals(SearchFragment.TAG))
+            backbutton.setVisibility(View.GONE);
+        else
+            backbutton.setVisibility(View.VISIBLE);
+
+        if(tag.equals(SearchFragment.TAG))
+            showSearchBar();
+        else
+            hideSearchBar(title);
+
+        toolbarTitle.setText(title);
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .setCustomAnimations(android.R.anim.fade_in, android.R.animator.fade_out)
+                .replace(R.id.fragment_container, fragment, tag)
+                .commit();
+    }
+
+    private void hideSearchBar(String title){
+        toolbarTitle.setText(title);
+        toolbarTitle.setVisibility(View.VISIBLE);
+        searchBar.setVisibility(View.GONE);
+    }
+
+    private void showSearchBar(){
+        toolbarTitle.setVisibility(View.GONE);
+        searchBar.setVisibility(View.VISIBLE);
+    }
+
+    /*@OnTextChanged(value = R.id.search_bar_input,
+            callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+    void afterSearchInput(Editable editable) {
+        if(editable.toString().length() > 2)
+            ((SearchFragment) getSupportFragmentManager().findFragmentByTag("searchFragment"))
+                    .searchAnime(editable.toString());
+    }*/
+
+    @OnEditorAction(value = R.id.search_bar_input)
+    public boolean onEnterSearch(int actionId){
+        if(actionId == EditorInfo.IME_ACTION_SEARCH) {
+            ((SearchFragment) getSupportFragmentManager().findFragmentByTag("searchFragment"))
+                    .searchAnime(editSearchInput.getText().toString());
+            hideKeyboard();
+            return true;
+        }
+        return false;
+    }
+
+    public void hideKeyboard(){
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(editSearchInput.getWindowToken(), 0);
+    }
+
+    @OnClick(R.id.back_button)
+    public void onClickBack(View view){
+        onBackPressed();
+    }
+
+    @Override
+    public void onBackPressed() {
+        FragmentManager manager = getSupportFragmentManager();
+        manager.popBackStack();
+    }
+}
