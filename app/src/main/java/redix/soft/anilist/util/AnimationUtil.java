@@ -2,7 +2,9 @@ package redix.soft.anilist.util;
 
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
 
 public class AnimationUtil {
@@ -37,6 +39,36 @@ public class AnimationUtil {
         anim.setDuration(200);
         anim.setInterpolator(new AccelerateInterpolator(0.5f));
         v.startAnimation(anim);
+    }
+
+    public static void fadeIn(View view){
+        AlphaAnimation anim = new AlphaAnimation(0.0f, 1.0f);
+        anim.setDuration(400);
+        anim.setFillAfter(true);
+        anim.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                view.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        view.startAnimation(anim);
+    }
+
+    public static void fadeOut(View view){
+        AlphaAnimation anim = new AlphaAnimation(1.0f, 0.0f);
+        anim.setDuration(200);
+        anim.setFillAfter(false);
+        view.startAnimation(anim);
     }
 
 }

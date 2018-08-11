@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -59,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     public void loadFragment(Fragment fragment, String tag, String title) {
-        if(tag.equals(HomeFragment.TAG) || tag.equals(SearchFragment.TAG))
+        if(tag.equals(HomeFragment.TAG))
             backbutton.setVisibility(View.GONE);
         else
             backbutton.setVisibility(View.VISIBLE);
@@ -71,11 +72,19 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         toolbarTitle.setText(title);
 
-        getSupportFragmentManager()
+        FragmentTransaction transaction = getSupportFragmentManager()
                 .beginTransaction()
-                .setCustomAnimations(android.R.anim.fade_in, android.R.animator.fade_out)
-                .replace(R.id.fragment_container, fragment, tag)
-                .commit();
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+
+        if(tag.equals(HomeFragment.TAG) || tag.equals(SearchFragment.TAG))
+            transaction.replace(R.id.fragment_container, fragment, tag);
+        else {
+            transaction.hide(getSupportFragmentManager().findFragmentById(R.id.fragment_container));
+            transaction.add(R.id.fragment_container, fragment, tag);
+            transaction.addToBackStack(tag);
+        }
+
+        transaction.commit();
     }
 
     private void hideSearchBar(String title){
@@ -85,6 +94,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     private void showSearchBar(){
+        backbutton.setVisibility(View.GONE);
         toolbarTitle.setVisibility(View.GONE);
         searchBar.setVisibility(View.VISIBLE);
     }
@@ -121,6 +131,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     @Override
     public void onBackPressed() {
         FragmentManager manager = getSupportFragmentManager();
-        manager.popBackStack();
+        manager.popBackStackImmediate();
+
+        if(getSupportFragmentManager().findFragmentById(R.id.fragment_container) instanceof SearchFragment) {
+            showSearchBar();
+        }
     }
 }

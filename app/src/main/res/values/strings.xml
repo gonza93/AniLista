@@ -6,4 +6,6 @@
 
     <string name="loading_message_anime">Loading anime detail...</string>
     <string name="episodes">ep.</string>
+    <string name="ranked">Ranked:</string>
+    <string name="aired">Aired:</string>
 </resources>

@@ -25,6 +25,7 @@ public class AnimeFragment extends Fragment {
     public static final String TITLE = "Anime Details";
 
     @BindView(R.id.anime_progress) View progress;
+    @BindView(R.id.anime_main_layout) View mainLayout;
 
     private FragmentAnimeBinding animeBinding;
 
@@ -53,6 +54,7 @@ public class AnimeFragment extends Fragment {
                 .subscribe(anime -> {
                     this.animeBinding.setAnime(anime);
                     AnimationUtil.collapse(progress);
+                    AnimationUtil.fadeIn(mainLayout);
                 });
     }
 }
