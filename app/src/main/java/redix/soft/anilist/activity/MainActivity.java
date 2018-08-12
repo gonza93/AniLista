@@ -20,10 +20,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnEditorAction;
 import redix.soft.anilist.R;
-import redix.soft.anilist.adapter.BottomBarAdapter;
 import redix.soft.anilist.fragment.HomeFragment;
 import redix.soft.anilist.fragment.SearchFragment;
-import redix.soft.anilist.util.NoSwipePager;
 
 public class MainActivity extends AppCompatActivity
         implements BottomNavigationView.OnNavigationItemSelectedListener, BottomNavigationView.OnNavigationItemReselectedListener {
@@ -141,8 +139,8 @@ public class MainActivity extends AppCompatActivity
         FragmentManager manager = getSupportFragmentManager();
         manager.popBackStackImmediate();
 
-        /*if(getSupportFragmentManager().findFragmentById(R.id.fragment_container) instanceof SearchFragment) {
+        if(getSupportFragmentManager().findFragmentById(R.id.fragment_container) instanceof SearchFragment) {
             showSearchBar();
-        }*/
+        }
     }
 }

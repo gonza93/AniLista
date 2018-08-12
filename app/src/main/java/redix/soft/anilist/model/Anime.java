@@ -8,6 +8,8 @@ import android.widget.ImageView;
 import com.google.gson.annotations.SerializedName;
 import com.squareup.picasso.Picasso;
 
+import java.util.List;
+
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 import redix.soft.anilist.BR;
 
@@ -29,6 +31,12 @@ public class Anime extends BaseObservable {
     @SerializedName("aired_string")
     private String airedString;
     private int rank;
+
+    //Arrays
+    @SerializedName("studio")
+    private List<Studio> studios;
+    @SerializedName("genre")
+    private List<Genre> genres;
 
     public int getId() {
         return id;
@@ -83,7 +91,13 @@ public class Anime extends BaseObservable {
         return rank;
     }
 
+    public List<Studio> getStudios() {
+        return studios;
+    }
 
+    public List<Genre> getGenres() {
+        return genres;
+    }
 
     public void setTitle(String title) {
         this.title = title;

@@ -1,7 +1,9 @@
 package redix.soft.anilist.adapter;
 
 import redix.soft.anilist.model.Anime;
+import redix.soft.anilist.model.Genre;
 
-public interface ItemClickListener {
-    void onItemClick(Anime anime);
+public abstract class ItemClickListener {
+    public void onItemClick(Anime anime){}
+    public void onItemClick(Genre genre){}
 }
