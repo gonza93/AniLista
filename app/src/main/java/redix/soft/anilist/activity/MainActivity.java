@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -21,10 +20,13 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnEditorAction;
 import redix.soft.anilist.R;
+import redix.soft.anilist.adapter.BottomBarAdapter;
 import redix.soft.anilist.fragment.HomeFragment;
 import redix.soft.anilist.fragment.SearchFragment;
+import redix.soft.anilist.util.NoSwipePager;
 
-public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity
+        implements BottomNavigationView.OnNavigationItemSelectedListener, BottomNavigationView.OnNavigationItemReselectedListener {
 
     @BindView(R.id.toolbar_title) TextView toolbarTitle;
     @BindView(R.id.search_bar) View searchBar;
@@ -39,27 +41,34 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         ButterKnife.bind(this);
 
-        navigation = findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(this);
         navigation.setOnNavigationItemSelectedListener(this);
         navigation.setSelectedItemId(R.id.navigation_home);
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
         switch (item.getItemId()) {
             case R.id.navigation_home:
-                loadFragment(new HomeFragment(), HomeFragment.TAG, HomeFragment.TITLE);
-                return true;
+                loadFragment(new HomeFragment(), HomeFragment.TAG);
+                break;
             case R.id.navigation_search:
-                loadFragment(new SearchFragment(), SearchFragment.TAG, SearchFragment.TITLE);
-                return true;
+                loadFragment(new SearchFragment(), SearchFragment.TAG);
+                break;
             case R.id.navigation_account:
-                return true;
+                break;
         }
-        return false;
+
+        return true;
     }
 
-    public void loadFragment(Fragment fragment, String tag, String title) {
+    @Override
+    public void onNavigationItemReselected(@NonNull MenuItem item) {
+
+    }
+
+    public void loadFragment(Fragment fragment, String tag) {
         if(tag.equals(HomeFragment.TAG))
             backbutton.setVisibility(View.GONE);
         else
@@ -68,9 +77,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         if(tag.equals(SearchFragment.TAG))
             showSearchBar();
         else
-            hideSearchBar(title);
+            hideSearchBar();
 
-        toolbarTitle.setText(title);
+        toolbarTitle.setText(tag);
 
         FragmentTransaction transaction = getSupportFragmentManager()
                 .beginTransaction()
@@ -87,8 +96,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         transaction.commit();
     }
 
-    private void hideSearchBar(String title){
-        toolbarTitle.setText(title);
+    private void hideSearchBar(){
         toolbarTitle.setVisibility(View.VISIBLE);
         searchBar.setVisibility(View.GONE);
     }
@@ -133,8 +141,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         FragmentManager manager = getSupportFragmentManager();
         manager.popBackStackImmediate();
 
-        if(getSupportFragmentManager().findFragmentById(R.id.fragment_container) instanceof SearchFragment) {
+        /*if(getSupportFragmentManager().findFragmentById(R.id.fragment_container) instanceof SearchFragment) {
             showSearchBar();
-        }
+        }*/
     }
 }

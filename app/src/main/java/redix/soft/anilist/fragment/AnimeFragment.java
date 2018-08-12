@@ -21,7 +21,7 @@ import rx.schedulers.Schedulers;
 
 public class AnimeFragment extends Fragment {
 
-    public static final String TAG = "animeFragment";
+    public static final String TAG = "Anime Details";
     public static final String TITLE = "Anime Details";
 
     @BindView(R.id.anime_progress) View progress;
