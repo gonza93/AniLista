@@ -9,7 +9,7 @@ import rx.Observable;
 
 public class JikanService {
 
-    private static final String BASE_URL = "https://api.jikan.moe/";
+    private static final String BASE_URL = "https://api.jikan.moe/v3/";
     private JikanAPI jikanAPI;
 
     public JikanService(){
@@ -22,8 +22,8 @@ public class JikanService {
         jikanAPI = retrofit.create(JikanAPI.class);
     }
 
-    public Observable<Response> searchAnime(String query){
-        return jikanAPI.searchAnime(query);
+    public Observable<Response> searchAnime(String query, int page){
+        return jikanAPI.searchAnime(query, page);
     }
 
     public Observable<Anime> getAnimeInfo(int id){

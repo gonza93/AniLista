@@ -10,9 +10,10 @@ import rx.Observable;
 public interface JikanAPI {
 
     @GET("/search/anime")
-    Observable<Response> searchAnime(@Query("q") String query);
+    Observable<Response> searchAnime(@Query("q") String query,
+                                     @Query("page") int page);
 
-    @GET("/anime/{id}/pictures")
+    @GET("/anime/{id}")
     Observable<Anime> getAnimeInfo(@Path("id") int id);
 
 }

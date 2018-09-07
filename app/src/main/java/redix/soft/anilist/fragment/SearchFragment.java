@@ -55,7 +55,7 @@ public class SearchFragment extends Fragment {
         animeAdapter.clear();
         progress.setVisibility(View.VISIBLE);
 
-        new JikanService().searchAnime(query)
+        new JikanService().searchAnime(query, 1)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(response -> {

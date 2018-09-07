@@ -50,11 +50,12 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="250dp"
+                    android:layout_width="300dp"
+                    android:layout_height="225dp"
                     bind:imageUrl="@{anime.imageURL}"
-                    android:scaleType="fitCenter"
+                    android:scaleType="fitXY"
                     android:layout_weight="1"
+                    android:layout_marginEnd="10dp"
                     tools:ignore="ContentDescription" />
 
                 <LinearLayout
