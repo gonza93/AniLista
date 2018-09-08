@@ -36,6 +36,8 @@ public class AnimeFragment extends Fragment {
     private FragmentAnimeBinding animeBinding;
     private GenreAdapter genreAdapter;
 
+    private int animeId;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -52,8 +54,9 @@ public class AnimeFragment extends Fragment {
         genreList.setLayoutManager(ChipsLayoutManagerHelper.build(getContext()));
         genreList.setAdapter(genreAdapter);
 
-        int animeId = getArguments().getInt("id", 1);
-        getAnimeInfo(animeId);
+        if(getArguments() != null)
+            animeId = getArguments().getInt("id", 11757);
+        getAnimeInfo(11757); //TODO CAMBIAR POR ANIMEID
 
         return view;
     }
@@ -64,7 +67,7 @@ public class AnimeFragment extends Fragment {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(anime -> {
                     this.animeBinding.setAnime(anime);
-                    genreAdapter.setDataSet(anime.getGenres().subList(0, 4));
+                    genreAdapter.setDataSet(anime.getGenres());
                     AnimationUtil.collapse(progress);
                     AnimationUtil.fadeIn(mainLayout);
                 });

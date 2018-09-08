@@ -20,6 +20,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnEditorAction;
 import redix.soft.anilist.R;
+import redix.soft.anilist.fragment.AnimeFragment;
 import redix.soft.anilist.fragment.HomeFragment;
 import redix.soft.anilist.fragment.SearchFragment;
 
@@ -52,7 +53,8 @@ public class MainActivity extends AppCompatActivity
                 loadFragment(new HomeFragment(), HomeFragment.TAG);
                 break;
             case R.id.navigation_search:
-                loadFragment(new SearchFragment(), SearchFragment.TAG);
+                //TODO CAMBIAR POR SEARCH
+                loadFragment(new AnimeFragment(), AnimeFragment.TAG);
                 break;
             case R.id.navigation_account:
                 break;

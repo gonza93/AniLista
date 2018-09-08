@@ -11,7 +11,7 @@ public class ChipsLayoutManagerHelper {
        return ChipsLayoutManager.newBuilder(context)
                 .setChildGravity(Gravity.CENTER)
                 .setScrollingEnabled(true)
-                .setMaxViewsInRow(2)
+                .setMaxViewsInRow(3)
                 .setGravityResolver(position -> Gravity.CENTER)
                 .setOrientation(ChipsLayoutManager.HORIZONTAL)
                 .setRowStrategy(ChipsLayoutManager.STRATEGY_DEFAULT)

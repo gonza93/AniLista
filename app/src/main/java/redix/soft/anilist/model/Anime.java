@@ -28,8 +28,7 @@ public class Anime extends BaseObservable {
     private int episodes;
     private int members;
     private String premiered;
-    @SerializedName("aired_string")
-    private String airedString;
+    private Aired aired;
     private int rank;
 
     //Arrays
@@ -83,8 +82,8 @@ public class Anime extends BaseObservable {
         return premiered;
     }
 
-    public String getAiredString() {
-        return airedString;
+    public Aired getAired() {
+        return aired;
     }
 
     public int getRank() {
@@ -108,7 +107,7 @@ public class Anime extends BaseObservable {
     public static void loadImage(ImageView view, String imageUrl) {
         Picasso.get()
                 .load(imageUrl)
-                .transform(new RoundedCornersTransformation(15, 0))
+                .transform(new RoundedCornersTransformation(18, 0))
                 .into(view);
     }
 }
