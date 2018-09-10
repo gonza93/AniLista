@@ -30,7 +30,6 @@ public class SearchFragment extends Fragment {
     @BindView(R.id.search_progress) View progress;
 
     public static final String TAG = "searchFragment";
-    public static final String TITLE = "";
 
     private AnimeAdapter animeAdapter;
 

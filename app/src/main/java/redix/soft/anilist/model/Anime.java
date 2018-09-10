@@ -8,10 +8,10 @@ import android.widget.ImageView;
 import com.google.gson.annotations.SerializedName;
 import com.squareup.picasso.Picasso;
 
+import java.io.Serializable;
 import java.util.List;
 
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
-import redix.soft.anilist.BR;
 
 public class Anime extends BaseObservable {
 
@@ -21,7 +21,6 @@ public class Anime extends BaseObservable {
     @SerializedName("image_url")
     private String imageURL;
     private String title;
-    private String description;
     private String synopsis;
     private String type;
     private float score;
@@ -32,10 +31,15 @@ public class Anime extends BaseObservable {
     private int rank;
 
     //Arrays
-    @SerializedName("studio")
     private List<Studio> studios;
-    @SerializedName("genre")
     private List<Genre> genres;
+
+    @SerializedName("opening_themes")
+    private List<String> openingThemes;
+    @SerializedName("ending_themes")
+    private List<String> endingThemes;
+
+    private List<Character> characters;
 
     public int getId() {
         return id;
@@ -52,10 +56,6 @@ public class Anime extends BaseObservable {
     @Bindable
     public String getTitle() {
         return title;
-    }
-
-    public String getDescription() {
-        return description;
     }
 
     public String getType() {
@@ -98,15 +98,28 @@ public class Anime extends BaseObservable {
         return genres;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-        notifyPropertyChanged(BR.title);
+    public List<String> getOpeningThemes() {
+        return openingThemes;
     }
 
-    @BindingAdapter("imageUrl")
+    public List<String> getEndingThemes() {
+        return endingThemes;
+    }
+
+    public List<Character> getCharacters() {
+        return characters;
+    }
+
+    public void setCharacters(List<Character> characters) {
+        this.characters = characters;
+    }
+
+    @BindingAdapter("loadThumbnail")
     public static void loadImage(ImageView view, String imageUrl) {
         Picasso.get()
                 .load(imageUrl)
+                .fit()
+                .centerCrop()
                 .transform(new RoundedCornersTransformation(18, 0))
                 .into(view);
     }

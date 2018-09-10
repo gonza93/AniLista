@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable name="character"
+            type="redix.soft.anilist.model.Character" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:orientation="vertical"
+            android:layout_width="90dp"
+            android:layout_height="140dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp">
+
+            <ImageView
+                android:layout_width="90dp"
+                android:layout_height="140dp"
+                android:background="@color/colorSearchBar"
+                bind:loadAvatar="@{character.imageURL}"/>
+
+            <ImageView
+                android:id="@+id/character_seiyu_avatar"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_margin="5dp"/>
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:textSize="12sp"
+            android:text="@{character.name}"/>
+
+    </LinearLayout>
+
+</layout>

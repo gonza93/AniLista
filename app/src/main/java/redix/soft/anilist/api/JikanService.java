@@ -9,12 +9,11 @@ import rx.Observable;
 
 public class JikanService {
 
-    private static final String BASE_URL = "https://api.jikan.moe/v3/";
     private JikanAPI jikanAPI;
 
     public JikanService(){
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl("https://api.jikan.moe/v3/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
@@ -28,6 +27,10 @@ public class JikanService {
 
     public Observable<Anime> getAnimeInfo(int id){
         return jikanAPI.getAnimeInfo(id);
+    }
+
+    public Observable<Response> getAnimeCharacters(int id){
+        return jikanAPI.getAnimeCharacters(id);
     }
 
 }

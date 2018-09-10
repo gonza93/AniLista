@@ -4,15 +4,15 @@ import com.google.gson.annotations.SerializedName;
 
 public class Studio {
 
+    private String name;
     @SerializedName("url")
     private String URL;
-    private String name;
-
-    public String getURL() {
-        return URL;
-    }
 
     public String getName() {
         return name;
     }
+    public String getURL() {
+        return URL;
+    }
+
 }

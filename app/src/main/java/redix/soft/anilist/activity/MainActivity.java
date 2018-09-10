@@ -1,12 +1,14 @@
 package redix.soft.anilist.activity;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,16 +24,18 @@ import butterknife.OnEditorAction;
 import redix.soft.anilist.R;
 import redix.soft.anilist.fragment.AnimeFragment;
 import redix.soft.anilist.fragment.HomeFragment;
+import redix.soft.anilist.fragment.ListFragment;
 import redix.soft.anilist.fragment.SearchFragment;
 
 public class MainActivity extends AppCompatActivity
-        implements BottomNavigationView.OnNavigationItemSelectedListener, BottomNavigationView.OnNavigationItemReselectedListener {
+        implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     @BindView(R.id.toolbar_title) TextView toolbarTitle;
     @BindView(R.id.search_bar) View searchBar;
     @BindView(R.id.search_bar_input) EditText editSearchInput;
     @BindView(R.id.back_button) View backbutton;
     @BindView(R.id.navigation) BottomNavigationView navigation;
+    @BindView(R.id.toolbar_toggles) View toggles;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,31 +45,27 @@ public class MainActivity extends AppCompatActivity
         ButterKnife.bind(this);
 
         navigation.setOnNavigationItemSelectedListener(this);
-        navigation.setOnNavigationItemSelectedListener(this);
         navigation.setSelectedItemId(R.id.navigation_home);
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
+        if(item.getItemId() == navigation.getSelectedItemId())
+            return true; //TODO GO TO TOP
+
         switch (item.getItemId()) {
             case R.id.navigation_home:
                 loadFragment(new HomeFragment(), HomeFragment.TAG);
                 break;
             case R.id.navigation_search:
-                //TODO CAMBIAR POR SEARCH
-                loadFragment(new AnimeFragment(), AnimeFragment.TAG);
+                loadFragment(new SearchFragment(), SearchFragment.TAG);
                 break;
             case R.id.navigation_account:
                 break;
         }
 
         return true;
-    }
-
-    @Override
-    public void onNavigationItemReselected(@NonNull MenuItem item) {
-
     }
 
     public void loadFragment(Fragment fragment, String tag) {
@@ -79,7 +79,18 @@ public class MainActivity extends AppCompatActivity
         else
             hideSearchBar();
 
-        toolbarTitle.setText(tag);
+        String title = tag;
+
+        if(tag.equals(ListFragment.TAG)){
+            ListFragment listFragment = ((ListFragment) fragment);
+
+            if (listFragment.getTYPE().equals("Themes"))
+                toggles.setVisibility(View.VISIBLE);
+
+            title = listFragment.getTYPE();
+        }
+
+        toolbarTitle.setText(title);
 
         FragmentTransaction transaction = getSupportFragmentManager()
                 .beginTransaction()
@@ -131,15 +142,54 @@ public class MainActivity extends AppCompatActivity
         imm.hideSoftInputFromWindow(editSearchInput.getWindowToken(), 0);
     }
 
+    @OnClick(R.id.toolbar_toggle_op)
+    public void onClickToggleOp(View view){
+        changeToggle(view);
+    }
+
+    @OnClick(R.id.toolbar_toggle_ed)
+    public void onClickToggleEd(View view){
+        changeToggle(view);
+    }
+
+    private void changeToggle(View view){
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(ListFragment.TAG);
+
+        TextView otherToggle;
+        boolean isOpening = false;
+        if(view.getId() == R.id.toolbar_toggle_op) {
+            otherToggle = toggles.findViewById(R.id.toolbar_toggle_ed);
+            isOpening = true;
+        }
+        else
+            otherToggle = toggles.findViewById(R.id.toolbar_toggle_op);
+
+        ((ListFragment) fragment).toggleThemes(isOpening);
+
+        TextView selectedToggle = ((TextView) view);
+        selectedToggle.setBackgroundResource(R.drawable.bg_activated);
+        selectedToggle.setTextColor(Color.WHITE);
+
+        otherToggle.setTextColor(ContextCompat.getColor(this, R.color.colorAccent));
+        otherToggle.setBackgroundResource(R.drawable.bg_search);
+    }
+
     @OnClick(R.id.back_button)
     public void onClickBack(View view){
         onBackPressed();
     }
 
+
     @Override
     public void onBackPressed() {
         FragmentManager manager = getSupportFragmentManager();
+
+        if(manager.getBackStackEntryCount() == 0)
+            super.onBackPressed();
+
         manager.popBackStackImmediate();
+
+        toggles.setVisibility(View.INVISIBLE);
 
         if(getSupportFragmentManager().findFragmentById(R.id.fragment_container) instanceof SearchFragment) {
             showSearchBar();

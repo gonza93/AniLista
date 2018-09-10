@@ -13,7 +13,6 @@ import redix.soft.anilist.R;
 public class HomeFragment extends Fragment {
 
     public static final String TAG = "Anilist";
-    public static final String TITLE = "Anilist";
 
     @Nullable
     @Override

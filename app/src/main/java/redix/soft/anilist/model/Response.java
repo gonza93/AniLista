@@ -6,8 +6,10 @@ import java.util.List;
 
 public class Response {
 
-    @SerializedName("result")
+    @SerializedName("results")
     private List<Anime> animes;
+
+    private List<Character> characters;
 
     private int resultLastPage;
 
@@ -15,4 +17,11 @@ public class Response {
         return this.animes;
     }
 
+    public List<Character> getCharacters() {
+        return characters;
+    }
+
+    public int getResultLastPage() {
+        return resultLastPage;
+    }
 }

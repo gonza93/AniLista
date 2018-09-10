@@ -1,11 +1,24 @@
 <resources>
+    <!-- Main Activity -->
     <string name="app_name">Anilist</string>
     <string name="tab_home">Home</string>
     <string name="tab_search">Search</string>
     <string name="tab_account">Account</string>
+    <string name="search_bar">Search for anime, manga, etc.</string>
 
+    <!-- Anime Detail -->
     <string name="loading_message_anime">Loading anime detail...</string>
     <string name="episodes">ep.</string>
     <string name="ranked">Ranked:</string>
     <string name="aired">Aired:</string>
+    <string name="themes">Openings, Endings</string>
+    <string name="episodes_list">List of episodes</string>
+    <string name="synopsis">Synopsis</string>
+    <string name="expand">Expand</string>
+    <string name="studio">Studio:</string>
+    <string name="pictures">More pictures</string>
+    <string name="openings">Openings</string>
+    <string name="endings">Endings</string>
+
+
 </resources>
