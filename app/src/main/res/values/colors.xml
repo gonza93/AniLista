@@ -7,4 +7,8 @@
     <color name="colorSearchBar">#ededed</color>
     <color name="colorPrimaryLight">#80d4dfff</color>
     <color name="colorLines">#e4e4e4</color>
+    <color name="colorCanon">#8cd8ffcc</color>
+    <color name="colorCanonText">#74d158</color>
+    <color name="colorFiller">#8cffcdbc</color>
+    <color name="colorFillerText">#e17f5b</color>
 </resources>

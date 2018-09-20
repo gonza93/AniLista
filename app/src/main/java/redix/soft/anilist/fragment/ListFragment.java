@@ -16,20 +16,40 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import redix.soft.anilist.R;
+import redix.soft.anilist.activity.MainActivity;
+import redix.soft.anilist.adapter.EpisodeAdapter;
 import redix.soft.anilist.adapter.ThemeAdapter;
+import redix.soft.anilist.api.JikanService;
 import redix.soft.anilist.model.Anime;
+import redix.soft.anilist.model.Character;
 import redix.soft.anilist.model.Theme;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class ListFragment extends Fragment{
 
+    public enum TYPES { THEMES, EPISODES, PICTURES }
     public static final String TAG = "ListFragment";
-    private String TYPE;
 
+    private TYPES type;
+
+    @BindView(R.id.list_progress) View progress;
     @BindView(R.id.list) RecyclerView list;
-
     private ThemeAdapter themeAdapter;
+    private EpisodeAdapter episodeAdapter;
 
     private Anime anime;
+
+    public void setAnime(Anime anime) {
+        this.anime = anime;
+    }
+
+    public TYPES getType() {
+        return type;
+    }
+    public void setType(TYPES type) {
+        this.type = type;
+    }
 
     @Nullable
     @Override
@@ -38,10 +58,31 @@ public class ListFragment extends Fragment{
 
         ButterKnife.bind(this, view);
 
-        if (TYPE.equals("Themes"))
+        list.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        if (type.equals(TYPES.THEMES))
             populateThemes();
+        if (type.equals(TYPES.EPISODES))
+            populateEpisodes();
+        if (type.equals(TYPES.PICTURES))
+            populatePictures();
 
         return view;
+    }
+
+    private void populatePictures() {
+    }
+
+    private void populateEpisodes() {
+        new JikanService()
+                .getAnimeEpisodes(anime.getId(), 1)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(response -> {
+                    progress.setVisibility(View.GONE);
+                    episodeAdapter = new EpisodeAdapter(response.getEpisodes(), getContext());
+                    list.setAdapter(episodeAdapter);
+                });
     }
 
     private void populateThemes(){
@@ -50,9 +91,10 @@ public class ListFragment extends Fragment{
         themes.addAll(parseThemes(anime.getOpeningThemes(), true));
         themes.addAll(parseThemes(anime.getEndingThemes(), false));
 
+        progress.setVisibility(View.GONE);
+
         themeAdapter = new ThemeAdapter(themes, getContext());
-        themeAdapter.toggleThemes(true);
-        list.setLayoutManager(new LinearLayoutManager(getContext()));
+        ((MainActivity) getContext()).onClickToggleOp(((MainActivity) getContext()).findViewById(R.id.toolbar_toggle_op));
         list.setAdapter(themeAdapter);
     }
 
@@ -93,15 +135,4 @@ public class ListFragment extends Fragment{
         themeAdapter.toggleThemes(isOpening);
     }
 
-    public void setAnime(Anime anime) {
-        this.anime = anime;
-    }
-
-    public String getTYPE() {
-        return TYPE;
-    }
-
-    public void setTYPE(String TYPE) {
-        this.TYPE = TYPE;
-    }
 }

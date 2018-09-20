@@ -33,4 +33,8 @@ public class JikanService {
         return jikanAPI.getAnimeCharacters(id);
     }
 
+    public Observable<Response> getAnimeEpisodes(int id, int page){
+        return jikanAPI.getAnimeEpisodes(id, page);
+    }
+
 }

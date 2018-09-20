@@ -11,7 +11,13 @@ public class Response {
 
     private List<Character> characters;
 
-    private int resultLastPage;
+    private List<Episode> episodes;
+
+    @SerializedName("last_page")
+    private int searchLastPage;
+
+    @SerializedName("episodes_last_page")
+    private int episodesLastPage;
 
     public List<Anime> getAnimes(){
         return this.animes;
@@ -21,7 +27,15 @@ public class Response {
         return characters;
     }
 
-    public int getResultLastPage() {
-        return resultLastPage;
+    public List<Episode> getEpisodes() {
+        return episodes;
+    }
+
+    public int getSearchLastPage() {
+        return searchLastPage;
+    }
+
+    public int getEpisodesLastPage() {
+        return episodesLastPage;
     }
 }

@@ -79,7 +79,8 @@ public class AnimeFragment extends Fragment {
     }
 
     public void getAnimeInfo(int id){
-        new JikanService().getAnimeInfo(id)
+        new JikanService()
+                .getAnimeInfo(id)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(anime -> {
@@ -92,23 +93,33 @@ public class AnimeFragment extends Fragment {
     }
 
     public void getAnimeCharacters(Anime anime){
-        new JikanService().getAnimeCharacters(anime.getId())
+        new JikanService()
+                .getAnimeCharacters(anime.getId())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(response -> {
                     progressCharacters.setVisibility(View.GONE);
                     List<Character> characters = response.getCharacters();
                     anime.setCharacters(characters);
-                    if(characters.size() >= 8)
-                        characters = characters.subList(0, 8);
+                    if(characters.size() >= 9)
+                        characters = characters.subList(0, 9);
                     characterAdapter.setDataSet(characters);
                 });
     }
 
     @OnClick(R.id.anime_themes)
     public void onClickThemes(){
+        loadListFragment(ListFragment.TYPES.THEMES);
+    }
+
+    @OnClick(R.id.anime_episodes)
+    public void onClickEpisodes(){
+        loadListFragment(ListFragment.TYPES.EPISODES);
+    }
+
+    private void loadListFragment(ListFragment.TYPES type){
         ListFragment fragment = new ListFragment();
-        fragment.setTYPE("Themes");
+        fragment.setType(type);
         fragment.setAnime(animeBinding.getAnime());
 
         ((MainActivity) getContext()).loadFragment(fragment, ListFragment.TAG);

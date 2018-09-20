@@ -19,6 +19,10 @@
     <string name="pictures">More pictures</string>
     <string name="openings">Openings</string>
     <string name="endings">Endings</string>
+    <string name="characters_staff"><![CDATA[Characters & Staff]]></string>
+    <string name="canon">Canon</string>
+    <string name="filler">Filler</string>
+    <string name="recap">Recap</string>
 
 
 </resources>

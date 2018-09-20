@@ -84,10 +84,13 @@ public class MainActivity extends AppCompatActivity
         if(tag.equals(ListFragment.TAG)){
             ListFragment listFragment = ((ListFragment) fragment);
 
-            if (listFragment.getTYPE().equals("Themes"))
+            if (listFragment.getType().equals(ListFragment.TYPES.THEMES)) {
                 toggles.setVisibility(View.VISIBLE);
+                title = "Themes";
+            }
 
-            title = listFragment.getTYPE();
+            if (listFragment.getType().equals(ListFragment.TYPES.EPISODES))
+                title = "Episodes";
         }
 
         toolbarTitle.setText(title);
