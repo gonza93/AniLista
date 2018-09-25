@@ -3,6 +3,7 @@ package redix.soft.anilist.adapter;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
+import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -15,6 +16,7 @@ import java.util.List;
 import redix.soft.anilist.R;
 import redix.soft.anilist.activity.MainActivity;
 import redix.soft.anilist.databinding.ListAnimeBinding;
+import redix.soft.anilist.databinding.ListTrendingBinding;
 import redix.soft.anilist.fragment.AnimeFragment;
 import redix.soft.anilist.model.Anime;
 
@@ -23,23 +25,29 @@ public class AnimeAdapter extends RecyclerView.Adapter<AnimeAdapter.ViewHolder>{
     private List<Anime> animes;
     private Context context;
 
-    public AnimeAdapter(List<Anime> animes, Context context){
+    private int layout;
+
+    public AnimeAdapter(List<Anime> animes, Context context, int layout){
         this.animes = animes;
         this.context = context;
+        this.layout = layout;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private ListAnimeBinding mBinding;
+        private ViewDataBinding mBinding;
         private ItemClickListener listener;
 
-        public ViewHolder(ListAnimeBinding binding) {
+        public ViewHolder(ViewDataBinding binding) {
             super(binding.getRoot());
             mBinding = binding;
         }
 
         public void bind(Anime anime) {
-            mBinding.setAnime(anime);
+            if(layout == R.layout.list_anime)
+                ((ListAnimeBinding) mBinding).setAnime(anime);
+            if(layout == R.layout.list_trending)
+                ((ListTrendingBinding) mBinding).setAnime(anime);
             mBinding.executePendingBindings();
         }
 
@@ -58,7 +66,7 @@ public class AnimeAdapter extends RecyclerView.Adapter<AnimeAdapter.ViewHolder>{
     @NonNull
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        ListAnimeBinding binding = DataBindingUtil.inflate(inflater, R.layout.list_anime, parent, false);
+        ViewDataBinding binding = DataBindingUtil.inflate(inflater, layout, parent, false);
         return new ViewHolder(binding);
     }
 

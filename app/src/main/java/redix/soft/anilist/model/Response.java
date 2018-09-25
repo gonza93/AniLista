@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Response {
 
-    @SerializedName("results")
+    @SerializedName(value = "results", alternate = {"top"})
     private List<Anime> animes;
 
     private List<Character> characters;

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:bind="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable name="anime"
+            type="redix.soft.anilist.model.Anime" />
+    </data>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:paddingBottom="5dp"
+        android:layout_margin="5dp">
+
+        <ImageView
+            android:layout_width="160dp"
+            android:layout_height="230dp"
+            bind:loadThumbTrending="@{anime.imageURL}"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{anime.title}"
+            android:layout_marginStart="4dp"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_marginTop="4dp"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginStart="4dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_search"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp">
+
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_marginEnd="4dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_score" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="13sp"
+                    android:text="@{String.valueOf(anime.score)}"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimary"
+                android:paddingStart="7dp"
+                android:paddingEnd="7dp"
+                android:layout_marginStart="10dp"
+                android:textSize="13sp"
+                android:text="@{anime.type}"
+                android:background="@drawable/bg_search"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>

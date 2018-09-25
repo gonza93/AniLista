@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import butterknife.BindView;
@@ -26,14 +27,18 @@ import redix.soft.anilist.fragment.AnimeFragment;
 import redix.soft.anilist.fragment.HomeFragment;
 import redix.soft.anilist.fragment.ListFragment;
 import redix.soft.anilist.fragment.SearchFragment;
+import redix.soft.anilist.util.AnimationUtil;
 
 public class MainActivity extends AppCompatActivity
         implements BottomNavigationView.OnNavigationItemSelectedListener {
 
+    private boolean start = true;
+    private View activeFragment;
+
     @BindView(R.id.toolbar_title) TextView toolbarTitle;
     @BindView(R.id.search_bar) View searchBar;
     @BindView(R.id.search_bar_input) EditText editSearchInput;
-    @BindView(R.id.back_button) View backbutton;
+    @BindView(R.id.back_button) ImageView backbutton;
     @BindView(R.id.navigation) BottomNavigationView navigation;
     @BindView(R.id.toolbar_toggles) View toggles;
 
@@ -44,6 +49,8 @@ public class MainActivity extends AppCompatActivity
 
         ButterKnife.bind(this);
 
+        activeFragment = findViewById(R.id.fragment_container_home);
+
         navigation.setOnNavigationItemSelectedListener(this);
         navigation.setSelectedItemId(R.id.navigation_home);
     }
@@ -51,28 +58,43 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-        if(item.getItemId() == navigation.getSelectedItemId())
+        if(item.getItemId() == navigation.getSelectedItemId() && !start)
             return true; //TODO GO TO TOP
 
+        Fragment fragment;
         switch (item.getItemId()) {
             case R.id.navigation_home:
-                loadFragment(new HomeFragment(), HomeFragment.TAG);
+                fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container_home);
+                if(fragment == null)
+                    loadFragment(new HomeFragment(), HomeFragment.TAG);
+                else
+                    AnimationUtil.switchFragments(activeFragment, findViewById(R.id.fragment_container_home), this);
+
+                activeFragment = findViewById(R.id.fragment_container_home);
                 break;
             case R.id.navigation_search:
-                loadFragment(new SearchFragment(), SearchFragment.TAG);
+                AnimationUtil.switchFragments(activeFragment, findViewById(R.id.fragment_container_search), this);
+                activeFragment = findViewById(R.id.fragment_container_search);
+
+                fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container_search);
+                if(fragment == null)
+                    loadFragment(new SearchFragment(), SearchFragment.TAG);
+
                 break;
             case R.id.navigation_account:
                 break;
         }
+
+        start = false;
 
         return true;
     }
 
     public void loadFragment(Fragment fragment, String tag) {
         if(tag.equals(HomeFragment.TAG))
-            backbutton.setVisibility(View.GONE);
+            backbutton.setImageResource(R.mipmap.ic_main);
         else
-            backbutton.setVisibility(View.VISIBLE);
+            backbutton.setImageResource(R.drawable.ic_back);
 
         if(tag.equals(SearchFragment.TAG))
             showSearchBar();
@@ -99,18 +121,36 @@ public class MainActivity extends AppCompatActivity
                 .beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
 
-        if(tag.equals(HomeFragment.TAG) || tag.equals(SearchFragment.TAG))
-            transaction.replace(R.id.fragment_container, fragment, tag);
-        else {
-            transaction.hide(getSupportFragmentManager().findFragmentById(R.id.fragment_container));
-            transaction.add(R.id.fragment_container, fragment, tag);
-            transaction.addToBackStack(tag);
+        //if(tag.equals(HomeFragment.TAG) || tag.equals(SearchFragment.TAG))
+        //   transaction.replace(R.id.fragment_container, fragment, tag);
+        //else {
+        //if(getSupportFragmentManager().getFragments().size() > 0)
+        //    transaction.hide(getSupportFragmentManager().findFragmentById(R.id.fragment_container));
+
+        transaction.add(activeFragment.getId(), fragment, tag);
+        transaction.addToBackStack(tag);
+        //}
+
+        transaction.commit();
+    }
+
+    public void switchTab(String tag){
+        FragmentTransaction transaction = getSupportFragmentManager()
+                .beginTransaction()
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+
+        //transaction.hide(getSupportFragmentManager().findFragmentById(R.id.fragment_container));
+
+        for (Fragment fragment : getSupportFragmentManager().getFragments()){
+            if(fragment.getTag().equals(tag))
+                transaction.show(fragment);
         }
 
         transaction.commit();
     }
 
     private void hideSearchBar(){
+        backbutton.setVisibility(View.VISIBLE);
         toolbarTitle.setVisibility(View.VISIBLE);
         searchBar.setVisibility(View.GONE);
     }
@@ -194,8 +234,15 @@ public class MainActivity extends AppCompatActivity
 
         toggles.setVisibility(View.INVISIBLE);
 
-        if(getSupportFragmentManager().findFragmentById(R.id.fragment_container) instanceof SearchFragment) {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(activeFragment.getId());
+
+        if(fragment instanceof SearchFragment)
             showSearchBar();
+        if(fragment instanceof HomeFragment) {
+            backbutton.setImageResource(R.mipmap.ic_main);
+            toolbarTitle.setText("Anilist");
         }
+        if(fragment instanceof AnimeFragment)
+            toolbarTitle.setText(AnimeFragment.TAG);
     }
 }

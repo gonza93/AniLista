@@ -123,4 +123,14 @@ public class Anime extends BaseObservable {
                 .transform(new RoundedCornersTransformation(18, 0))
                 .into(view);
     }
+
+    @BindingAdapter("loadThumbTrending")
+    public static void loadImageTrend(ImageView view, String imageUrl) {
+        Picasso.get()
+                .load(imageUrl)
+                .fit()
+                .centerCrop()
+                .transform(new RoundedCornersTransformation(25, 0))
+                .into(view);
+    }
 }

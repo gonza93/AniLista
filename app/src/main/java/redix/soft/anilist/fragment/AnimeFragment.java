@@ -26,6 +26,7 @@ import redix.soft.anilist.databinding.FragmentAnimeBinding;
 
 import redix.soft.anilist.model.Anime;
 import redix.soft.anilist.model.Character;
+import redix.soft.anilist.model.Genre;
 import redix.soft.anilist.util.AnimationUtil;
 import redix.soft.anilist.util.ChipsLayoutManagerHelper;
 import rx.android.schedulers.AndroidSchedulers;
@@ -85,7 +86,10 @@ public class AnimeFragment extends Fragment {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(anime -> {
                     this.animeBinding.setAnime(anime);
-                    genreAdapter.setDataSet(anime.getGenres());
+                    List<Genre> genres = anime.getGenres();
+                    if(genres.size() > 5)
+                        genres = genres.subList(0, 5);
+                    genreAdapter.setDataSet(genres);
                     AnimationUtil.collapse(progress);
                     AnimationUtil.fadeIn(mainLayout);
                     getAnimeCharacters(anime);
@@ -101,7 +105,7 @@ public class AnimeFragment extends Fragment {
                     progressCharacters.setVisibility(View.GONE);
                     List<Character> characters = response.getCharacters();
                     anime.setCharacters(characters);
-                    if(characters.size() >= 9)
+                    if(characters.size() > 9)
                         characters = characters.subList(0, 9);
                     characterAdapter.setDataSet(characters);
                 });

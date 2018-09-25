@@ -7,6 +7,7 @@
     <string name="search_bar">Search for anime, manga, etc.</string>
 
     <!-- Anime Detail -->
+    <string name="anime_detail_title">Anime Details</string>
     <string name="loading_message_anime">Loading anime detail...</string>
     <string name="episodes">ep.</string>
     <string name="ranked">Ranked:</string>

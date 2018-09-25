@@ -37,4 +37,7 @@ public class JikanService {
         return jikanAPI.getAnimeEpisodes(id, page);
     }
 
+    public Observable<Response> getTrendingAnime(int page){
+        return jikanAPI.getTrendingAnime(page);
+    }
 }

@@ -40,7 +40,7 @@ public class SearchFragment extends Fragment {
 
         ButterKnife.bind(this, view);
 
-        animeAdapter = new AnimeAdapter(new ArrayList<>(), getContext());
+        animeAdapter = new AnimeAdapter(new ArrayList<>(), getContext(), R.layout.list_anime);
 
         listAnime.setLayoutManager(new LinearLayoutManager(getContext()));
         listAnime.setAdapter(animeAdapter);

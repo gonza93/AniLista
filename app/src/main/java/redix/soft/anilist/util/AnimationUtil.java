@@ -1,5 +1,7 @@
 package redix.soft.anilist.util;
 
+import android.content.Context;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
@@ -69,6 +71,49 @@ public class AnimationUtil {
         anim.setDuration(200);
         anim.setFillAfter(false);
         view.startAnimation(anim);
+    }
+
+    public static void switchFragments(View fragmentToHide, View fragmentToShow, Context context){
+        AlphaAnimation anim = new AlphaAnimation(1.0f, 0.0f);
+        anim.setDuration(150);
+        anim.setFillAfter(false);
+        anim.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                fragmentToHide.setVisibility(View.INVISIBLE);
+                AlphaAnimation anim = new AlphaAnimation(0.0f, 1.0f);
+                anim.setDuration(150);
+                anim.setFillAfter(true);
+                anim.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                        fragmentToShow.setVisibility(View.VISIBLE);
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
+                fragmentToShow.startAnimation(anim);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        fragmentToHide.startAnimation(anim);
     }
 
 }
