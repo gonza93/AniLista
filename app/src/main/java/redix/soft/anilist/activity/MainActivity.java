@@ -28,12 +28,13 @@ import redix.soft.anilist.fragment.HomeFragment;
 import redix.soft.anilist.fragment.ListFragment;
 import redix.soft.anilist.fragment.SearchFragment;
 import redix.soft.anilist.util.AnimationUtil;
+import redix.soft.anilist.util.NavigationUtil;
 
 public class MainActivity extends AppCompatActivity
         implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     private boolean start = true;
-    private View activeFragment;
+    private NavigationUtil navigationUtil;
 
     @BindView(R.id.toolbar_title) TextView toolbarTitle;
     @BindView(R.id.search_bar) View searchBar;
@@ -49,7 +50,7 @@ public class MainActivity extends AppCompatActivity
 
         ButterKnife.bind(this);
 
-        activeFragment = findViewById(R.id.fragment_container_home);
+        navigationUtil = new NavigationUtil(this);
 
         navigation.setOnNavigationItemSelectedListener(this);
         navigation.setSelectedItemId(R.id.navigation_home);
@@ -61,25 +62,12 @@ public class MainActivity extends AppCompatActivity
         if(item.getItemId() == navigation.getSelectedItemId() && !start)
             return true; //TODO GO TO TOP
 
-        Fragment fragment;
         switch (item.getItemId()) {
             case R.id.navigation_home:
-                fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container_home);
-                if(fragment == null)
-                    loadFragment(new HomeFragment(), HomeFragment.TAG);
-                else
-                    AnimationUtil.switchFragments(activeFragment, findViewById(R.id.fragment_container_home), this);
-
-                activeFragment = findViewById(R.id.fragment_container_home);
+                navigationUtil.navigateTo(HomeFragment.getInstance(), HomeFragment.TAG, item.getItemId());
                 break;
             case R.id.navigation_search:
-                AnimationUtil.switchFragments(activeFragment, findViewById(R.id.fragment_container_search), this);
-                activeFragment = findViewById(R.id.fragment_container_search);
-
-                fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container_search);
-                if(fragment == null)
-                    loadFragment(new SearchFragment(), SearchFragment.TAG);
-
+                navigationUtil.navigateTo(SearchFragment.getInstance(), SearchFragment.TAG, item.getItemId());
                 break;
             case R.id.navigation_account:
                 break;
@@ -117,36 +105,7 @@ public class MainActivity extends AppCompatActivity
 
         toolbarTitle.setText(title);
 
-        FragmentTransaction transaction = getSupportFragmentManager()
-                .beginTransaction()
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-
-        //if(tag.equals(HomeFragment.TAG) || tag.equals(SearchFragment.TAG))
-        //   transaction.replace(R.id.fragment_container, fragment, tag);
-        //else {
-        //if(getSupportFragmentManager().getFragments().size() > 0)
-        //    transaction.hide(getSupportFragmentManager().findFragmentById(R.id.fragment_container));
-
-        transaction.add(activeFragment.getId(), fragment, tag);
-        transaction.addToBackStack(tag);
-        //}
-
-        transaction.commit();
-    }
-
-    public void switchTab(String tag){
-        FragmentTransaction transaction = getSupportFragmentManager()
-                .beginTransaction()
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-
-        //transaction.hide(getSupportFragmentManager().findFragmentById(R.id.fragment_container));
-
-        for (Fragment fragment : getSupportFragmentManager().getFragments()){
-            if(fragment.getTag().equals(tag))
-                transaction.show(fragment);
-        }
-
-        transaction.commit();
+        navigationUtil.navigateTo(fragment, tag, navigation.getSelectedItemId());
     }
 
     private void hideSearchBar(){
@@ -222,19 +181,16 @@ public class MainActivity extends AppCompatActivity
         onBackPressed();
     }
 
-
     @Override
     public void onBackPressed() {
-        FragmentManager manager = getSupportFragmentManager();
-
-        if(manager.getBackStackEntryCount() == 0)
-            super.onBackPressed();
-
-        manager.popBackStackImmediate();
-
         toggles.setVisibility(View.INVISIBLE);
 
-        Fragment fragment = getSupportFragmentManager().findFragmentById(activeFragment.getId());
+        Fragment fragment = navigationUtil.goBack(navigation.getSelectedItemId());
+
+        if(fragment == null){
+            super.onBackPressed();
+            return;
+        }
 
         if(fragment instanceof SearchFragment)
             showSearchBar();

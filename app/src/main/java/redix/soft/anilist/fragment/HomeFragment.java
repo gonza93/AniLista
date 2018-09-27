@@ -24,12 +24,19 @@ import rx.schedulers.Schedulers;
 
 public class HomeFragment extends Fragment {
 
+    private static HomeFragment instance;
     public static final String TAG = "Anilist";
 
     @BindView(R.id.home_trending_list) RecyclerView trendingList;
     @BindView(R.id.home_loader_trending) View loaderTrending;
 
     private AnimeAdapter trendingAdapter;
+
+    public static HomeFragment getInstance(){
+        if(instance == null)
+            instance = new HomeFragment();
+        return instance;
+    }
 
     @Nullable
     @Override

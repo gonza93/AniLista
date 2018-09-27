@@ -26,12 +26,19 @@ import rx.schedulers.Schedulers;
 
 public class SearchFragment extends Fragment {
 
+    private static SearchFragment instance;
+    public static final String TAG = "searchFragment";
+
     @BindView(R.id.search_list) RecyclerView listAnime;
     @BindView(R.id.search_progress) View progress;
 
-    public static final String TAG = "searchFragment";
-
     private AnimeAdapter animeAdapter;
+
+    public static SearchFragment getInstance(){
+        if(instance == null)
+            instance = new SearchFragment();
+        return instance;
+    }
 
     @Nullable
     @Override
