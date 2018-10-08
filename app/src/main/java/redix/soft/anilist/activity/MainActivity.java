@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
@@ -27,7 +25,6 @@ import redix.soft.anilist.fragment.AnimeFragment;
 import redix.soft.anilist.fragment.HomeFragment;
 import redix.soft.anilist.fragment.ListFragment;
 import redix.soft.anilist.fragment.SearchFragment;
-import redix.soft.anilist.util.AnimationUtil;
 import redix.soft.anilist.util.NavigationUtil;
 
 public class MainActivity extends AppCompatActivity
@@ -42,6 +39,18 @@ public class MainActivity extends AppCompatActivity
     @BindView(R.id.back_button) ImageView backbutton;
     @BindView(R.id.navigation) BottomNavigationView navigation;
     @BindView(R.id.toolbar_toggles) View toggles;
+
+    public TextView getToolbarTitleView() {
+        return toolbarTitle;
+    }
+
+    public ImageView getBackbuttonView() {
+        return backbutton;
+    }
+
+    public View getTogglesView() {
+        return toggles;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,42 +88,16 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void loadFragment(Fragment fragment, String tag) {
-        if(tag.equals(HomeFragment.TAG))
-            backbutton.setImageResource(R.mipmap.ic_main);
-        else
-            backbutton.setImageResource(R.drawable.ic_back);
-
-        if(tag.equals(SearchFragment.TAG))
-            showSearchBar();
-        else
-            hideSearchBar();
-
-        String title = tag;
-
-        if(tag.equals(ListFragment.TAG)){
-            ListFragment listFragment = ((ListFragment) fragment);
-
-            if (listFragment.getType().equals(ListFragment.TYPES.THEMES)) {
-                toggles.setVisibility(View.VISIBLE);
-                title = "Themes";
-            }
-
-            if (listFragment.getType().equals(ListFragment.TYPES.EPISODES))
-                title = "Episodes";
-        }
-
-        toolbarTitle.setText(title);
-
         navigationUtil.navigateTo(fragment, tag, navigation.getSelectedItemId());
     }
 
-    private void hideSearchBar(){
+    public void hideSearchBar(){
         backbutton.setVisibility(View.VISIBLE);
         toolbarTitle.setVisibility(View.VISIBLE);
         searchBar.setVisibility(View.GONE);
     }
 
-    private void showSearchBar(){
+    public void showSearchBar(){
         backbutton.setVisibility(View.GONE);
         toolbarTitle.setVisibility(View.GONE);
         searchBar.setVisibility(View.VISIBLE);

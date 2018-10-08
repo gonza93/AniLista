@@ -51,6 +51,10 @@ public class ListFragment extends Fragment{
         this.type = type;
     }
 
+    private int nextPage = 1;
+
+    private boolean loading;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -62,8 +66,31 @@ public class ListFragment extends Fragment{
 
         if (type.equals(TYPES.THEMES))
             populateThemes();
-        if (type.equals(TYPES.EPISODES))
+        if (type.equals(TYPES.EPISODES)) {
+            progress.setVisibility(View.GONE);
+            episodeAdapter = new EpisodeAdapter(new ArrayList<>(), getContext());
+            list.setAdapter(episodeAdapter);
             populateEpisodes();
+
+            list.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                    if (dy > 0 && nextPage != 0) //check for scroll down
+                    {
+                        LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                        int visibleItemCount = manager.getChildCount();
+                        int totalItemCount = manager.getItemCount();
+                        int pastVisiblesItems = manager.findFirstVisibleItemPosition();
+
+                        if (!loading) {
+                            if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
+                                populateEpisodes();
+                            }
+                        }
+                    }
+                }
+            });
+        }
         if (type.equals(TYPES.PICTURES))
             populatePictures();
 
@@ -74,14 +101,22 @@ public class ListFragment extends Fragment{
     }
 
     private void populateEpisodes() {
+        episodeAdapter.startLoad();
+        loading = true;
         new JikanService()
-                .getAnimeEpisodes(anime.getId(), 1)
+                .getAnimeEpisodes(anime.getId(), nextPage)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(response -> {
-                    progress.setVisibility(View.GONE);
-                    episodeAdapter = new EpisodeAdapter(response.getEpisodes(), getContext());
-                    list.setAdapter(episodeAdapter);
+                    episodeAdapter.endLoad();
+                    loading = false;
+
+                    episodeAdapter.addEpisodes(response.getEpisodes());
+
+                    if(response.getEpisodesLastPage() > nextPage)
+                        nextPage++;
+                    else
+                        nextPage = 0;
                 });
     }
 

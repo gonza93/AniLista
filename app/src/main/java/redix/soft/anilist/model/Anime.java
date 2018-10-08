@@ -120,7 +120,7 @@ public class Anime extends BaseObservable {
                 .load(imageUrl)
                 .fit()
                 .centerCrop()
-                .transform(new RoundedCornersTransformation(18, 0))
+                .transform(new RoundedCornersTransformation(25, 0))
                 .into(view);
     }
 

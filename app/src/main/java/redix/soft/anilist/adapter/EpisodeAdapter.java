@@ -14,10 +14,13 @@ import redix.soft.anilist.R;
 import redix.soft.anilist.databinding.ListEpisodeBinding;
 import redix.soft.anilist.model.Episode;
 
-public class EpisodeAdapter extends RecyclerView.Adapter<EpisodeAdapter.ViewHolder> {
+public class EpisodeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<Episode> episodes;
     private Context context;
+
+    private static final int TYPE_ITEM = 0;
+    private static final int TYPE_PROGRESS = 1;
 
     public EpisodeAdapter(List<Episode> episodes, Context context) {
         this.episodes = episodes;
@@ -49,21 +52,50 @@ public class EpisodeAdapter extends RecyclerView.Adapter<EpisodeAdapter.ViewHold
     }
 
     @Override
-    @NonNull
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        ListEpisodeBinding binding = DataBindingUtil.inflate(inflater, R.layout.list_episode, parent, false);
-        return new ViewHolder(binding);
+    public int getItemViewType(int position) {
+        return episodes.get(position) != null ? TYPE_ITEM : TYPE_PROGRESS;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.bind(episodes.get(position));
+    @NonNull
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        if(viewType == TYPE_ITEM) {
+            ListEpisodeBinding binding = DataBindingUtil.inflate(inflater, R.layout.list_episode, parent, false);
+            return new ViewHolder(binding);
+        }
+        else { //TYPE_PROGRESS
+            View view = inflater.inflate(R.layout.list_progress, parent, false);
+            return new ProgressHolder(view);
+        }
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        if(holder instanceof ViewHolder) {
+            ViewHolder viewHolder = (ViewHolder) holder;
+            viewHolder.bind(episodes.get(position));
+        }
     }
 
     @Override
     public int getItemCount() {
         return episodes.size();
     }
-    
+
+    public List<Episode> addEpisodes(List<Episode> episodes){
+        this.episodes.addAll(episodes);
+        notifyDataSetChanged();
+        return episodes;
+    }
+
+    public void startLoad(){
+        this.episodes.add(null);
+        notifyItemInserted(this.episodes.size());
+    }
+
+    public void endLoad(){
+        this.episodes.remove(this.episodes.size() - 1);
+        notifyItemRemoved(this.episodes.size());
+    }
 }

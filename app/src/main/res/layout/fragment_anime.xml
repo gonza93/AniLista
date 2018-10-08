@@ -218,19 +218,30 @@
 
             </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@drawable/bg_line"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"/>
+
             <RelativeLayout
+                android:id="@+id/anime_synopsis_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginEnd="18dp"
-                android:layout_marginBottom="5dp">
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:layout_marginBottom="5dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?android:selectableItemBackground">
 
                 <TextView
+                    android:id="@+id/anime_synopsis_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="17sp"
                     android:textStyle="bold"
-                    android:layout_centerVertical="true"
                     android:textColor="@android:color/black"
                     android:text="@string/synopsis"/>
 
@@ -240,6 +251,7 @@
                     android:layout_alignParentEnd="true">
 
                     <ImageView
+                        android:id="@+id/anime_expand_arrow"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:rotation="-90"
@@ -256,24 +268,32 @@
 
                 </LinearLayout>
 
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginEnd="15dp">
-
-                <TextView
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:maxHeight="130dp"
-                    android:text="@{anime.synopsis}"/>
+                    android:layout_below="@+id/anime_synopsis_title">
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="130sp"
-                    android:background="@drawable/bg_fade_text"/>
+                    <at.blogc.android.views.ExpandableTextView
+                        android:id="@+id/anime_synopsis"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{anime.synopsis}"
+                        android:maxLines="5"
+                        android:ellipsize="end"
+                        bind:animation_duration="200"/>
+
+                    <!--<TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxHeight="130dp"
+                        android:text="@{anime.synopsis}"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="130sp"
+                        android:background="@drawable/bg_fade_text"/>-->
+
+                </RelativeLayout>
 
             </RelativeLayout>
 
@@ -285,32 +305,48 @@
                 android:layout_marginTop="5dp"
                 android:background="@color/colorLines">
 
-                <LinearLayout
+                <RelativeLayout
                     android:id="@+id/anime_themes"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="5dp"
+                    android:layout_height="80dp"
                     android:layout_marginTop="0.7dp"
                     android:layout_marginBottom="0.7dp"
-                    android:background="@android:color/white"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:layout_gravity="center"
+                    android:background="@android:color/white">
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_music"/>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="?selectableItemBackground">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:textSize="15sp"
-                        android:textStyle="bold"
-                        android:text="@string/themes"/>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true">
 
-                </LinearLayout>
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginBottom="3dp"
+                                android:src="@drawable/ic_music"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:textSize="15sp"
+                                android:textStyle="bold"
+                                android:text="@string/themes"/>
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+                </RelativeLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -318,58 +354,88 @@
                     android:layout_gravity="center"
                     android:orientation="horizontal">
 
-                    <LinearLayout
+                    <RelativeLayout
                         android:id="@+id/anime_episodes"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="80dp"
                         android:layout_weight="1"
-                        android:padding="5dp"
                         android:layout_marginEnd="0.7dp"
                         android:layout_marginBottom="0.7dp"
                         android:background="@android:color/white"
                         android:orientation="vertical">
 
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="5dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_episodes"/>
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="?selectableItemBackground">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:textSize="15sp"
-                            android:textStyle="bold"
-                            android:text="@string/episodes_list"/>
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_centerVertical="true"
+                                android:layout_centerHorizontal="true">
 
-                    </LinearLayout>
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginBottom="3dp"
+                                    android:src="@drawable/ic_episodes"/>
 
-                    <LinearLayout
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:textSize="15sp"
+                                    android:textStyle="bold"
+                                    android:text="@string/episodes_list"/>
+
+                            </LinearLayout>
+
+                        </RelativeLayout>
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="80dp"
                         android:background="@android:color/white"
                         android:layout_weight="1"
-                        android:padding="5dp"
                         android:orientation="vertical">
 
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="5dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_pics"/>
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="?selectableItemBackground">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:textSize="15sp"
-                            android:textStyle="bold"
-                            android:text="@string/pictures"/>
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_centerVertical="true"
+                                android:layout_centerHorizontal="true">
 
-                    </LinearLayout>
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginBottom="3dp"
+                                    android:src="@drawable/ic_pics"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:textSize="15sp"
+                                    android:textStyle="bold"
+                                    android:text="@string/pictures"/>
+
+                            </LinearLayout>
+
+                        </RelativeLayout>
+
+                    </RelativeLayout>
 
                 </LinearLayout>
 

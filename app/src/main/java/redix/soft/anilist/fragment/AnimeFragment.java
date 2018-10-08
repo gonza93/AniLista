@@ -10,10 +10,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import at.blogc.android.views.ExpandableTextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -41,6 +43,8 @@ public class AnimeFragment extends Fragment {
     @BindView(R.id.anime_main_layout) View mainLayout;
     @BindView(R.id.anime_genre_list) RecyclerView genreList;
     @BindView(R.id.anime_characters_list) RecyclerView characterList;
+    @BindView(R.id.anime_synopsis) ExpandableTextView synopsis;
+    @BindView(R.id.anime_expand_arrow) View expandArrow;
 
     private FragmentAnimeBinding animeBinding;
     private GenreAdapter genreAdapter;
@@ -111,6 +115,17 @@ public class AnimeFragment extends Fragment {
                 });
     }
 
+    @OnClick(R.id.anime_synopsis_layout)
+    public void onClickExpand(){
+        if(synopsis.isExpanded())
+            synopsis.collapse();
+        else {
+            synopsis.expand();
+        }
+
+        AnimationUtil.rotate(expandArrow, 180, 500);
+    }
+
     @OnClick(R.id.anime_themes)
     public void onClickThemes(){
         loadListFragment(ListFragment.TYPES.THEMES);
@@ -128,4 +143,5 @@ public class AnimeFragment extends Fragment {
 
         ((MainActivity) getContext()).loadFragment(fragment, ListFragment.TAG);
     }
+
 }
