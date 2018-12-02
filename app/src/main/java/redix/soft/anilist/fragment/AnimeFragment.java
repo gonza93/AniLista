@@ -23,12 +23,14 @@ import redix.soft.anilist.R;
 import redix.soft.anilist.activity.MainActivity;
 import redix.soft.anilist.adapter.CharacterAdapter;
 import redix.soft.anilist.adapter.GenreAdapter;
+import redix.soft.anilist.adapter.NewsAdapter;
 import redix.soft.anilist.api.JikanService;
 import redix.soft.anilist.databinding.FragmentAnimeBinding;
 
 import redix.soft.anilist.model.Anime;
 import redix.soft.anilist.model.Character;
 import redix.soft.anilist.model.Genre;
+import redix.soft.anilist.model.News;
 import redix.soft.anilist.util.AnimationUtil;
 import redix.soft.anilist.util.ChipsLayoutManagerHelper;
 import rx.android.schedulers.AndroidSchedulers;
@@ -40,15 +42,18 @@ public class AnimeFragment extends Fragment {
 
     @BindView(R.id.anime_progress) View progress;
     @BindView(R.id.characters_progress) View progressCharacters;
+    @BindView(R.id.news_progress) View progressNews;
     @BindView(R.id.anime_main_layout) View mainLayout;
     @BindView(R.id.anime_genre_list) RecyclerView genreList;
     @BindView(R.id.anime_characters_list) RecyclerView characterList;
     @BindView(R.id.anime_synopsis) ExpandableTextView synopsis;
     @BindView(R.id.anime_expand_arrow) View expandArrow;
+    @BindView(R.id.anime_news_list) RecyclerView newsList;
 
     private FragmentAnimeBinding animeBinding;
     private GenreAdapter genreAdapter;
     private CharacterAdapter characterAdapter;
+    private NewsAdapter newsAdapter;
 
     private int animeId;
 
@@ -77,6 +82,11 @@ public class AnimeFragment extends Fragment {
         characterAdapter = new CharacterAdapter(new ArrayList<>(), getContext());
         characterList.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         characterList.setAdapter(characterAdapter);
+
+        //News List
+        newsAdapter = new NewsAdapter(new ArrayList<>(), getContext());
+        newsList.setLayoutManager(new LinearLayoutManager(getContext()));
+        newsList.setAdapter(newsAdapter);
 
         getAnimeInfo(animeId);
 
@@ -112,6 +122,20 @@ public class AnimeFragment extends Fragment {
                     if(characters.size() > 9)
                         characters = characters.subList(0, 9);
                     characterAdapter.setDataSet(characters);
+                });
+
+        getAnimeNews(anime.getId());
+    }
+
+    private void getAnimeNews(int id){
+        new JikanService()
+                .getAnimeNews(id)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(response -> {
+                    progressNews.setVisibility(View.GONE);
+                    List<News> news = response.getArticles();
+                    newsAdapter.setDataSet(news);
                 });
     }
 

@@ -8,6 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
 
         <item name="android:colorControlHighlight">@color/colorPrimary</item>
+        <item name="android:windowLightStatusBar">true</item>
     </style>
 
 </resources>

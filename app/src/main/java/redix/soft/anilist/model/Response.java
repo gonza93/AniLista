@@ -13,6 +13,8 @@ public class Response {
 
     private List<Episode> episodes;
 
+    private List<News> articles;
+
     @SerializedName("last_page")
     private int searchLastPage;
 
@@ -29,6 +31,10 @@ public class Response {
 
     public List<Episode> getEpisodes() {
         return episodes;
+    }
+
+    public List<News> getArticles() {
+        return articles;
     }
 
     public int getSearchLastPage() {
