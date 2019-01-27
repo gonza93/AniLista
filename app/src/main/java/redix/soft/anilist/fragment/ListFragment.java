@@ -17,6 +17,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import redix.soft.anilist.R;
 import redix.soft.anilist.activity.MainActivity;
+import redix.soft.anilist.adapter.CharacterAllAdapter;
 import redix.soft.anilist.adapter.EpisodeAdapter;
 import redix.soft.anilist.adapter.ThemeAdapter;
 import redix.soft.anilist.api.JikanService;
@@ -28,7 +29,7 @@ import rx.schedulers.Schedulers;
 
 public class ListFragment extends Fragment{
 
-    public enum TYPES { THEMES, EPISODES, PICTURES }
+    public enum TYPES { THEMES, EPISODES, PICTURES, CHARACTERS }
     public static final String TAG = "ListFragment";
 
     private TYPES type;
@@ -37,12 +38,15 @@ public class ListFragment extends Fragment{
     @BindView(R.id.list) RecyclerView list;
     private ThemeAdapter themeAdapter;
     private EpisodeAdapter episodeAdapter;
+    private CharacterAllAdapter characterAdapter;
 
     private Anime anime;
+    private List<Character> characters;
 
     public void setAnime(Anime anime) {
         this.anime = anime;
     }
+    public void setCharacters(List<Character> characters) { this.characters = characters; }
 
     public TYPES getType() {
         return type;
@@ -93,11 +97,12 @@ public class ListFragment extends Fragment{
         }
         if (type.equals(TYPES.PICTURES))
             populatePictures();
+        if (type.equals(TYPES.CHARACTERS)){
+            populateCharacters();
+        }
+
 
         return view;
-    }
-
-    private void populatePictures() {
     }
 
     private void populateEpisodes() {
@@ -131,6 +136,16 @@ public class ListFragment extends Fragment{
         themeAdapter = new ThemeAdapter(themes, getContext());
         ((MainActivity) getContext()).onClickToggleOp(((MainActivity) getContext()).findViewById(R.id.toolbar_toggle_op));
         list.setAdapter(themeAdapter);
+    }
+
+    private void populateCharacters() {
+        characterAdapter = new CharacterAllAdapter(characters, getContext());
+        list.setAdapter(characterAdapter);
+        progress.setVisibility(View.GONE);
+    }
+
+    private void populatePictures() {
+
     }
 
     private List<Theme> parseThemes(List<String> themes, boolean isOpening){

@@ -22,16 +22,8 @@
             <ImageView
                 android:layout_width="90dp"
                 android:layout_height="140dp"
-                android:background="@color/colorSearchBar"
+                android:background="@drawable/bg_search"
                 bind:loadAvatar="@{character.imageURL}"/>
-
-            <ImageView
-                android:id="@+id/character_seiyu_avatar"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                android:layout_margin="5dp"/>
 
         </RelativeLayout>
 

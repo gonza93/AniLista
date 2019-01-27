@@ -2,7 +2,6 @@ package redix.soft.anilist.util;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -127,6 +126,9 @@ public class NavigationUtil {
 
             if (listFragment.getType().equals(ListFragment.TYPES.EPISODES))
                 title = "Episodes";
+
+            if (listFragment.getType().equals(ListFragment.TYPES.CHARACTERS))
+                title = "Characters";
         }
 
         activity.getToolbarTitleView().setText(title);

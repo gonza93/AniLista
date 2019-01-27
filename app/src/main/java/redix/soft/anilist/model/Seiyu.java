@@ -1,6 +1,12 @@
 package redix.soft.anilist.model;
 
+import android.databinding.BindingAdapter;
+import android.widget.ImageView;
+
 import com.google.gson.annotations.SerializedName;
+import com.squareup.picasso.Picasso;
+
+import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 public class Seiyu {
 
@@ -21,5 +27,13 @@ public class Seiyu {
         return language;
     }
 
-
+    @BindingAdapter("loadSeiyuAvatar")
+    public static void loadImage(ImageView view, String imageUrl) {
+        Picasso.get()
+                .load(imageUrl)
+                .fit()
+                .centerCrop()
+                .transform(new CropCircleTransformation())
+                .into(view);
+    }
 }

@@ -29,4 +29,5 @@ public interface JikanAPI {
     @GET("top/anime/{page}/airing")
     Observable<Response> getTrendingAnime(@Path("page") int page);
 
+
 }

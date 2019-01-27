@@ -8,6 +8,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
+
 public class Character {
 
     @SerializedName("image_url")
@@ -37,6 +39,9 @@ public class Character {
     public static void loadImage(ImageView view, String imageUrl) {
         Picasso.get()
                 .load(imageUrl)
+                .fit()
+                .centerCrop()
+                .transform(new RoundedCornersTransformation(25, 0))
                 .into(view);
     }
 }

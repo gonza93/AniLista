@@ -14,7 +14,9 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import redix.soft.anilist.R;
+import redix.soft.anilist.activity.MainActivity;
 import redix.soft.anilist.databinding.ListCharacterBinding;
+import redix.soft.anilist.fragment.ListFragment;
 import redix.soft.anilist.model.Character;
 import redix.soft.anilist.model.Seiyu;
 
@@ -23,13 +25,13 @@ public class CharacterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private static final int TYPE_ITEM = 0;
     private static final int TYPE_FOOTER = 1;
 
-    private List<Character> characters;
+    private List<Character> characters, allCharacters;
     private Context context;
 
     public CharacterAdapter(List<Character> characters, Context context){
             this.characters = characters;
             this.context = context;
-            }
+    }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
@@ -46,14 +48,14 @@ public class CharacterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             mBinding.executePendingBindings();
 
             //Get only the japanese voice actor for each character
-            ImageView seiyuAvatar = mBinding.getRoot().findViewById(R.id.character_seiyu_avatar);
+            /*ImageView seiyuAvatar = mBinding.getRoot().findViewById(R.id.character_seiyu_avatar);
             for(Seiyu s : character.getSeiyus()){
                 if(s.getLanguage().equals("Japanese")) {
                     Picasso.get()
                             .load(s.getImageURL())
                             .into(seiyuAvatar);
                 }
-            }
+            }*/
         }
 
         public void setItemClickListener(ItemClickListener listener){
@@ -70,7 +72,11 @@ public class CharacterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         public ViewFooterHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(v -> {
-                //TODO CharactersFragment
+                ListFragment fragment = new ListFragment();
+                fragment.setType(ListFragment.TYPES.CHARACTERS);
+                fragment.setCharacters(allCharacters);
+
+                ((MainActivity) context).loadFragment(fragment, ListFragment.TAG);
             });
         }
 
@@ -114,14 +120,18 @@ public class CharacterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         return characters.size();
     }
 
-    public void setDataSet(List<Character> Characters) {
-        this.characters = Characters;
+    public void setDataSet(List<Character> characters) {
+        this.characters = characters;
         notifyDataSetChanged();
     }
 
     public void clear() {
         characters.clear();
         notifyDataSetChanged();
+    }
+
+    public void setAllCharacters(List<Character> allCharacters){
+        this.allCharacters = allCharacters;
     }
 
 }

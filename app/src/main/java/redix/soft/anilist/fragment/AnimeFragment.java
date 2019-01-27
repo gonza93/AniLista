@@ -118,7 +118,7 @@ public class AnimeFragment extends Fragment {
                 .subscribe(response -> {
                     progressCharacters.setVisibility(View.GONE);
                     List<Character> characters = response.getCharacters();
-                    anime.setCharacters(characters);
+                    characterAdapter.setAllCharacters(characters);
                     if(characters.size() > 9)
                         characters = characters.subList(0, 9);
                     characterAdapter.setDataSet(characters);
