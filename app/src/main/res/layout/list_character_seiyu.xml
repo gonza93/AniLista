@@ -10,24 +10,25 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="5dp"
-        android:paddingEnd="5dp"
-        android:orientation="horizontal">
+        android:paddingEnd="8dp"
+        android:paddingTop="1dp"
+        android:paddingBottom="1dp"
+        android:layout_marginBottom="8dp"
+        android:orientation="horizontal"
+        android:background="@drawable/bg_rounded">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="23dp"
+            android:layout_height="23dp"
+            android:layout_marginEnd="5dp"
+            android:layout_gravity="center"
             bind:loadSeiyuAvatar="@{seiyu.imageURL}"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingStart="7dp"
-            android:paddingEnd="7dp"
-            android:paddingTop="2dp"
-            android:paddingBottom="2dp"
-            android:background="@drawable/bg_search"
             android:textColor="@color/colorPrimary"
+            android:layout_gravity="center"
             android:text="@{seiyu.name}"/>
 
     </LinearLayout>

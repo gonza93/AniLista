@@ -11,6 +11,7 @@ import java.util.Stack;
 
 import redix.soft.anilist.R;
 import redix.soft.anilist.activity.MainActivity;
+import redix.soft.anilist.fragment.AnimeFragment;
 import redix.soft.anilist.fragment.HomeFragment;
 import redix.soft.anilist.fragment.ListFragment;
 import redix.soft.anilist.fragment.SearchFragment;
@@ -104,15 +105,26 @@ public class NavigationUtil {
     private void changeToolbar(Fragment fragment, String tag) {
         ImageView backbutton = activity.getBackbuttonView();
 
-        if(tag.equals(HomeFragment.TAG))
+        if(tag.equals(HomeFragment.TAG) && fragmentStacks.get(TAB.HOME).size() <= 1)
             backbutton.setImageResource(R.mipmap.ic_main);
         else
             backbutton.setImageResource(R.drawable.ic_back);
 
-        if(tag.equals(SearchFragment.TAG))
+        if(tag.equals(SearchFragment.TAG) && fragmentStacks.get(TAB.SEARCH).size() <= 1)
             activity.showSearchBar();
         else
             activity.hideSearchBar();
+
+        activity.getTogglesView().setVisibility(View.GONE);
+
+        if(tag.equals(HomeFragment.TAG) && fragmentStacks.get(TAB.HOME).size() > 0) {
+            tag = fragmentStacks.get(TAB.HOME).peek().getTag();
+            fragment = fragmentStacks.get(TAB.HOME).peek();
+        }
+        if(tag.equals(SearchFragment.TAG) && fragmentStacks.get(TAB.SEARCH).size() > 0) {
+            tag = fragmentStacks.get(TAB.SEARCH).peek().getTag();
+            fragment = fragmentStacks.get(TAB.SEARCH).peek();
+        }
 
         String title = tag;
 

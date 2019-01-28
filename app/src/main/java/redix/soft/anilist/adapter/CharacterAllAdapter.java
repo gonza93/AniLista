@@ -3,16 +3,21 @@ package redix.soft.anilist.adapter;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+
+import com.beloo.widget.chipslayoutmanager.ChipsLayoutManager;
 
 import java.util.List;
 
 import redix.soft.anilist.R;
 import redix.soft.anilist.databinding.ListCharacterAllBinding;
 import redix.soft.anilist.model.Character;
+import redix.soft.anilist.util.ChipsLayoutManagerHelper;
 
 public class CharacterAllAdapter extends RecyclerView.Adapter<CharacterAllAdapter.ViewHolder> {
 
@@ -37,6 +42,12 @@ public class CharacterAllAdapter extends RecyclerView.Adapter<CharacterAllAdapte
         public void bind(Character character) {
             mBinding.setCharacter(character);
             mBinding.executePendingBindings();
+
+            //Each character seiyu's list
+            RecyclerView listSeiyus = mBinding.getRoot().findViewById(R.id.character_seiyu_list);
+            SeiyuAdapter adapter = new SeiyuAdapter(character.getSeiyus(), context);
+            listSeiyus.setLayoutManager(new LinearLayoutManager(context));
+            listSeiyus.setAdapter(adapter);
         }
 
         public void setItemClickListener(ItemClickListener listener){
