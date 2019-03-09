@@ -141,6 +141,9 @@ public class NavigationUtil {
 
             if (listFragment.getType().equals(ListFragment.TYPES.CHARACTERS))
                 title = "Characters";
+
+            if(listFragment.getType().equals(ListFragment.TYPES.PICTURES))
+                title = "Pictures";
         }
 
         activity.getToolbarTitleView().setText(title);

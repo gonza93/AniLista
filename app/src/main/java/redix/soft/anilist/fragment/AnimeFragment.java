@@ -160,6 +160,11 @@ public class AnimeFragment extends Fragment {
         loadListFragment(ListFragment.TYPES.EPISODES);
     }
 
+    @OnClick(R.id.anime_pictures)
+    public void onClickPictures(){
+        loadListFragment(ListFragment.TYPES.PICTURES);
+    }
+
     private void loadListFragment(ListFragment.TYPES type){
         ListFragment fragment = new ListFragment();
         fragment.setType(type);

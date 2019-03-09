@@ -13,7 +13,7 @@
         android:paddingEnd="8dp"
         android:paddingTop="1dp"
         android:paddingBottom="1dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="10dp"
         android:orientation="horizontal"
         android:background="@drawable/bg_rounded">
 

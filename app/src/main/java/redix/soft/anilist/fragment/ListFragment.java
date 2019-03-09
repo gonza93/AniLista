@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,7 @@ import redix.soft.anilist.R;
 import redix.soft.anilist.activity.MainActivity;
 import redix.soft.anilist.adapter.CharacterAllAdapter;
 import redix.soft.anilist.adapter.EpisodeAdapter;
+import redix.soft.anilist.adapter.PictureAdapter;
 import redix.soft.anilist.adapter.ThemeAdapter;
 import redix.soft.anilist.api.JikanService;
 import redix.soft.anilist.model.Anime;
@@ -40,6 +42,7 @@ public class ListFragment extends Fragment{
     private ThemeAdapter themeAdapter;
     private EpisodeAdapter episodeAdapter;
     private CharacterAllAdapter characterAdapter;
+    private PictureAdapter pictureAdapter;
 
     private Anime anime;
     private List<Character> characters;
@@ -71,42 +74,40 @@ public class ListFragment extends Fragment{
 
         if (type.equals(TYPES.THEMES))
             populateThemes();
-        if (type.equals(TYPES.EPISODES)) {
-            progress.setVisibility(View.GONE);
-            episodeAdapter = new EpisodeAdapter(new ArrayList<>(), getContext());
-            list.setAdapter(episodeAdapter);
+        if (type.equals(TYPES.EPISODES))
             populateEpisodes();
-
-            list.addOnScrollListener(new RecyclerView.OnScrollListener() {
-                @Override
-                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                    if (dy > 0 && nextPage != 0) //check for scroll down
-                    {
-                        LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
-                        int visibleItemCount = manager.getChildCount();
-                        int totalItemCount = manager.getItemCount();
-                        int pastVisiblesItems = manager.findFirstVisibleItemPosition();
-
-                        if (!loading) {
-                            if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
-                                populateEpisodes();
-                            }
-                        }
-                    }
-                }
-            });
-        }
         if (type.equals(TYPES.PICTURES))
             populatePictures();
-        if (type.equals(TYPES.CHARACTERS)){
+        if (type.equals(TYPES.CHARACTERS))
             populateCharacters();
-        }
-
 
         return view;
     }
 
     private void populateEpisodes() {
+        progress.setVisibility(View.GONE);
+        episodeAdapter = new EpisodeAdapter(new ArrayList<>(), getContext());
+        list.setAdapter(episodeAdapter);
+
+        list.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0 && nextPage != 0)
+                {
+                    LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                    int visibleItemCount = manager.getChildCount();
+                    int totalItemCount = manager.getItemCount();
+                    int pastVisiblesItems = manager.findFirstVisibleItemPosition();
+
+                    if (!loading) {
+                        if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
+                            populateEpisodes();
+                        }
+                    }
+                }
+            }
+        });
+
         episodeAdapter.startLoad();
         loading = true;
         new JikanService()
@@ -146,7 +147,19 @@ public class ListFragment extends Fragment{
     }
 
     private void populatePictures() {
+        pictureAdapter = new PictureAdapter(new ArrayList<>(), getContext());
 
+        list.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        list.setAdapter(pictureAdapter);
+
+        new JikanService()
+                .getAnimePictures(anime.getId())
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(response -> {
+                    pictureAdapter.addPictures(response.getPictures());
+                    progress.setVisibility(View.GONE);
+                });
     }
 
     private List<Theme> parseThemes(List<String> themes, boolean isOpening){

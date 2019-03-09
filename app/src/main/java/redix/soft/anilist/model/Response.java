@@ -15,6 +15,8 @@ public class Response {
 
     private List<News> articles;
 
+    private List<Picture> pictures;
+
     @SerializedName("last_page")
     private int searchLastPage;
 
@@ -35,6 +37,10 @@ public class Response {
 
     public List<News> getArticles() {
         return articles;
+    }
+
+    public List<Picture> getPictures() {
+        return pictures;
     }
 
     public int getSearchLastPage() {

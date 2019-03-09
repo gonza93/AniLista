@@ -41,441 +41,443 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:id="@+id/anime_main_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="invisible">
-
             <LinearLayout
+                android:id="@+id/anime_main_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:orientation="horizontal"
-                android:visibility="visible">
-
-                <ImageView
-                    android:layout_width="330dp"
-                    android:layout_height="245dp"
-                    bind:loadThumbnail="@{anime.imageURL}"
-                    android:layout_weight="1"
-                    android:layout_marginEnd="15dp"
-                    tools:ignore="ContentDescription" />
+                android:orientation="vertical"
+                android:visibility="invisible">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_weight="1">
+                    android:layout_margin="10dp"
+                    android:orientation="horizontal"
+                    android:visibility="visible">
+
+                    <ImageView
+                        android:layout_width="330dp"
+                        android:layout_height="245dp"
+                        bind:loadThumbnail="@{anime.imageURL}"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="15dp"
+                        tools:ignore="ContentDescription" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:textColor="@android:color/black"
+                            android:text="@{anime.title}"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="16sp"
+                                android:text="@{anime.premiered}"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="16sp"
+                                android:layout_marginStart="5dp"
+                                android:text="@{`| ` + anime.type}"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="2dp">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/bg_search"
+                                android:paddingStart="7dp"
+                                android:paddingEnd="7dp"
+                                android:paddingTop="2dp"
+                                android:paddingBottom="2dp">
+
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:layout_marginEnd="4dp"
+                                    android:src="@mipmap/ic_score"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/colorPrimary"
+                                    android:text="@{String.valueOf(anime.score)}"/>
+
+                            </LinearLayout>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingStart="7dp"
+                                android:paddingEnd="7dp"
+                                android:paddingTop="2dp"
+                                android:paddingBottom="2dp"
+                                android:layout_marginStart="7dp"
+                                android:background="@drawable/bg_search"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="15sp"
+                                android:text="@{String.valueOf(anime.episodes) + ` ` + @string/episodes}"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="16sp"
+                                android:text="@string/ranked"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                android:layout_marginStart="5dp"
+                                android:text="@{`#` + String.valueOf(anime.rank)}"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="16sp"
+                                android:text="@string/aired"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                android:layout_marginStart="5dp"
+                                android:text="@{anime.aired.string}"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="16sp"
+                                android:text="@string/studio"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                android:layout_marginStart="5dp"
+                                android:text="@{anime.studios.get(0).name}"/>
+
+                        </LinearLayout>
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/anime_genre_list"
+                            android:layout_marginTop="5dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@drawable/bg_line"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"/>
+
+                <RelativeLayout
+                    android:id="@+id/anime_synopsis_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:layout_marginBottom="5dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?android:selectableItemBackground">
 
                     <TextView
+                        android:id="@+id/anime_synopsis_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="18sp"
                         android:textStyle="bold"
                         android:textColor="@android:color/black"
-                        android:text="@{anime.title}"/>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="16sp"
-                            android:text="@{anime.premiered}"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="16sp"
-                            android:layout_marginStart="5dp"
-                            android:text="@{`| ` + anime.type}"/>
-
-                    </LinearLayout>
+                        android:text="@string/synopsis"/>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="2dp">
+                        android:layout_alignParentEnd="true">
 
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/bg_search"
-                            android:paddingStart="7dp"
-                            android:paddingEnd="7dp"
-                            android:paddingTop="2dp"
-                            android:paddingBottom="2dp">
-
-                            <ImageView
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
-                                android:layout_marginEnd="4dp"
-                                android:src="@drawable/ic_score"/>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textColor="@color/colorPrimary"
-                                android:text="@{String.valueOf(anime.score)}"/>
-
-                        </LinearLayout>
+                        <ImageView
+                            android:id="@+id/anime_expand_arrow"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:rotation="-90"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_back"/>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:paddingStart="7dp"
-                            android:paddingEnd="7dp"
-                            android:paddingTop="2dp"
-                            android:paddingBottom="2dp"
-                            android:layout_marginStart="7dp"
-                            android:background="@drawable/bg_search"
-                            android:textColor="@color/colorPrimary"
-                            android:textSize="15sp"
-                            android:text="@{String.valueOf(anime.episodes) + ` ` + @string/episodes}"/>
+                            android:textSize="14sp"
+                            android:layout_gravity="center"
+                            android:textColor="@android:color/black"
+                            android:text="@string/expand"/>
 
                     </LinearLayout>
 
-                    <LinearLayout
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:orientation="horizontal">
+                        android:layout_below="@+id/anime_synopsis_title">
 
-                        <TextView
+                        <at.blogc.android.views.ExpandableTextView
+                            android:id="@+id/anime_synopsis"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="16sp"
-                            android:text="@string/ranked"/>
+                            android:text="@{anime.synopsis}"
+                            android:maxLines="5"
+                            android:ellipsize="end"
+                            bind:animation_duration="200"/>
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:layout_marginStart="5dp"
-                            android:text="@{`#` + String.valueOf(anime.rank)}"/>
+                    </RelativeLayout>
 
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="16sp"
-                            android:text="@string/aired"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:layout_marginStart="5dp"
-                            android:text="@{anime.aired.string}"/>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="16sp"
-                            android:text="@string/studio"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:layout_marginStart="5dp"
-                            android:text="@{anime.studios.get(0).name}"/>
-
-                    </LinearLayout>
-
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/anime_genre_list"
-                        android:layout_marginTop="5dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@drawable/bg_line"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"/>
-
-            <RelativeLayout
-                android:id="@+id/anime_synopsis_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingStart="15dp"
-                android:paddingEnd="15dp"
-                android:layout_marginBottom="5dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:background="?android:selectableItemBackground">
-
-                <TextView
-                    android:id="@+id/anime_synopsis_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="17sp"
-                    android:textStyle="bold"
-                    android:textColor="@android:color/black"
-                    android:text="@string/synopsis"/>
+                </RelativeLayout>
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true">
+                    android:layout_gravity="center"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_marginTop="12dp">
 
-                    <ImageView
-                        android:id="@+id/anime_expand_arrow"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:rotation="-90"
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_back"/>
+                        <RelativeLayout
+                            android:id="@+id/anime_themes"
+                            android:layout_width="75dp"
+                            android:layout_height="75dp"
+                            android:layout_marginEnd="25dp"
+                            android:background="@drawable/bg_button_anime">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="14sp"
-                        android:layout_gravity="center"
-                        android:textColor="@android:color/black"
-                        android:text="@string/expand"/>
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_centerHorizontal="true"
+                                android:layout_centerVertical="true">
+
+                                <ImageView
+                                    android:layout_width="35dp"
+                                    android:layout_height="35dp"
+                                    android:layout_gravity="center"
+                                    android:layout_marginBottom="3dp"
+                                    android:src="@mipmap/ic_music"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:textSize="13sp"
+                                    android:textColor="@color/colorPrimary"
+                                    android:textStyle="bold"
+                                    android:text="@string/themes"/>
+
+                            </LinearLayout>
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/anime_episodes"
+                            android:layout_width="75dp"
+                            android:layout_height="75dp"
+                            android:layout_marginEnd="25dp"
+                            android:background="@drawable/bg_button_anime">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_centerVertical="true"
+                                android:layout_centerHorizontal="true">
+
+                                <ImageView
+                                    android:layout_width="35dp"
+                                    android:layout_height="35dp"
+                                    android:layout_gravity="center"
+                                    android:layout_marginBottom="2dp"
+                                    android:src="@mipmap/ic_episodes"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:textSize="13sp"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/colorPrimary"
+                                    android:text="@string/episodes_list"/>
+
+                            </LinearLayout>
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/anime_pictures"
+                            android:layout_width="75dp"
+                            android:layout_height="75dp"
+                            android:background="@drawable/bg_button_anime">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_centerVertical="true"
+                                android:layout_centerHorizontal="true">
+
+                                <ImageView
+                                    android:layout_width="35dp"
+                                    android:layout_height="35dp"
+                                    android:layout_gravity="center"
+                                    android:layout_marginBottom="3dp"
+                                    android:src="@mipmap/ic_pics"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:textColor="@color/colorPrimary"
+                                    android:textSize="13sp"
+                                    android:textStyle="bold"
+                                    android:text="@string/pictures"/>
+
+                            </LinearLayout>
+
+                        </RelativeLayout>
 
                 </LinearLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/anime_synopsis_title">
+                    android:layout_marginTop="12dp">
 
-                    <at.blogc.android.views.ExpandableTextView
-                        android:id="@+id/anime_synopsis"
-                        android:layout_width="wrap_content"
+                    <ProgressBar
+                        android:id="@+id/characters_progress"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:padding="30dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@{anime.synopsis}"
-                        android:maxLines="5"
-                        android:ellipsize="end"
-                        bind:animation_duration="200"/>
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:layout_marginStart="15dp"
+                            android:textColor="@android:color/black"
+                            android:text="@string/characters_staff"/>
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/anime_characters_list"
+                            android:paddingStart="20dp"
+                            android:paddingEnd="10dp"
+                            android:clipToPadding="false"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                    </LinearLayout>
 
                 </RelativeLayout>
 
-            </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:orientation="horizontal"
-                android:gravity="center"
-                android:layout_marginTop="5dp">
+                    <ProgressBar
+                        android:id="@+id/news_progress"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:padding="30dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"/>
 
-                    <RelativeLayout
-                        android:id="@+id/anime_themes"
-                        android:layout_width="85dp"
-                        android:layout_height="85dp"
-                        android:layout_marginEnd="25dp"
-                        android:background="@drawable/bg_button_anime">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
-                        <LinearLayout
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:layout_centerHorizontal="true"
-                            android:layout_centerVertical="true">
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:layout_marginStart="15dp"
+                            android:textColor="@android:color/black"
+                            android:text="@string/news"/>
 
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_marginBottom="3dp"
-                                android:src="@drawable/ic_music"/>
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/anime_news_list"
+                            android:clipToPadding="false"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:nestedScrollingEnabled="false"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:textSize="15sp"
-                                android:textColor="@color/colorPrimary"
-                                android:textStyle="bold"
-                                android:text="@string/themes"/>
+                    </LinearLayout>
 
-                        </LinearLayout>
-
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:id="@+id/anime_episodes"
-                        android:layout_width="85dp"
-                        android:layout_height="85dp"
-                        android:layout_marginEnd="25dp"
-                        android:background="@drawable/bg_button_anime">
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:layout_centerVertical="true"
-                            android:layout_centerHorizontal="true">
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_marginBottom="2dp"
-                                android:src="@drawable/ic_episodes"/>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:textSize="15sp"
-                                android:textStyle="bold"
-                                android:textColor="@color/colorPrimary"
-                                android:text="@string/episodes_list"/>
-
-                        </LinearLayout>
-
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="85dp"
-                        android:layout_height="85dp"
-                        android:background="@drawable/bg_button_anime">
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:layout_centerVertical="true"
-                            android:layout_centerHorizontal="true">
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_marginBottom="3dp"
-                                android:src="@drawable/ic_pics"/>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:textColor="@color/colorPrimary"
-                                android:textSize="15sp"
-                                android:textStyle="bold"
-                                android:text="@string/pictures"/>
-
-                        </LinearLayout>
-
-                    </RelativeLayout>
+                </RelativeLayout>
 
             </LinearLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp">
-
-                <ProgressBar
-                    android:id="@+id/characters_progress"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:padding="30dp"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="17sp"
-                        android:textStyle="bold"
-                        android:layout_marginStart="15dp"
-                        android:textColor="@android:color/black"
-                        android:text="@string/characters_staff"/>
-
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/anime_characters_list"
-                        android:paddingStart="25dp"
-                        android:paddingEnd="10dp"
-                        android:clipToPadding="false"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-
-                </LinearLayout>
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp">
-
-                <ProgressBar
-                    android:id="@+id/news_progress"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:padding="30dp"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="17sp"
-                        android:textStyle="bold"
-                        android:layout_marginStart="15dp"
-                        android:textColor="@android:color/black"
-                        android:text="@string/news"/>
-
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/anime_news_list"
-                        android:clipToPadding="false"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-
-                </LinearLayout>
-
-            </RelativeLayout>
-
-        </LinearLayout>
 
         </android.support.v4.widget.NestedScrollView>
 
