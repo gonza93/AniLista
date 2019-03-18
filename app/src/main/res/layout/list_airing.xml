@@ -56,7 +56,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorPrimary"
                     android:textSize="13sp"
-                    android:text="@{String.valueOf(anime.score)}"/>
+                    android:text="@{String.format(@string/score_format, anime.score)}"/>
 
             </LinearLayout>
 

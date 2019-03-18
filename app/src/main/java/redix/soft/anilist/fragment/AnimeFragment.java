@@ -74,7 +74,7 @@ public class AnimeFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         //Genres List
-        genreAdapter = new GenreAdapter(new ArrayList<>(), getContext());
+        genreAdapter = new GenreAdapter(new ArrayList<>(), getContext(), R.layout.list_genre);
         genreList.setLayoutManager(ChipsLayoutManagerHelper.build(getContext()));
         genreList.setAdapter(genreAdapter);
 

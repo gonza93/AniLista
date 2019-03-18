@@ -4,21 +4,24 @@ package redix.soft.anilist.adapter;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import redix.soft.anilist.R;
 import redix.soft.anilist.activity.MainActivity;
+import redix.soft.anilist.databinding.ListAiringBinding;
 import redix.soft.anilist.databinding.ListAnimeBinding;
-import redix.soft.anilist.databinding.ListTrendingBinding;
+import redix.soft.anilist.databinding.ListAnimeDayBinding;
 import redix.soft.anilist.fragment.AnimeFragment;
 import redix.soft.anilist.model.Anime;
+import redix.soft.anilist.model.Genre;
 
 public class AnimeAdapter extends RecyclerView.Adapter<AnimeAdapter.ViewHolder>{
 
@@ -44,10 +47,22 @@ public class AnimeAdapter extends RecyclerView.Adapter<AnimeAdapter.ViewHolder>{
         }
 
         public void bind(Anime anime) {
-            if(layout == R.layout.list_anime)
+            if (layout == R.layout.list_anime)
                 ((ListAnimeBinding) mBinding).setAnime(anime);
-            if(layout == R.layout.list_trending)
-                ((ListTrendingBinding) mBinding).setAnime(anime);
+            if (layout == R.layout.list_airing)
+                ((ListAiringBinding) mBinding).setAnime(anime);
+            if (layout == R.layout.list_anime_day){
+                ((ListAnimeDayBinding) mBinding).setAnime(anime);
+
+                List<Genre> genres = new ArrayList<>();
+                if(anime.getGenres().size() >= 3)
+                    genres = anime.getGenres().subList(0, 3);
+
+                RecyclerView listGenre = mBinding.getRoot().findViewById(R.id.anime_genre_list);
+                GenreAdapter adapter = new GenreAdapter(genres, context, R.layout.list_genre_2);
+                listGenre.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+                listGenre.setAdapter(adapter);
+            }
             mBinding.executePendingBindings();
         }
 

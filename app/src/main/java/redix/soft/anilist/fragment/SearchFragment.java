@@ -62,7 +62,7 @@ public class SearchFragment extends Fragment {
         progress.setVisibility(View.VISIBLE);
 
         new JikanService()
-                .searchAnime(query, 1)
+                .searchAnime(query, 1, 30)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(response -> {

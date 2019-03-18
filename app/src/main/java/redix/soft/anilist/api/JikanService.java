@@ -21,8 +21,8 @@ public class JikanService {
         jikanAPI = retrofit.create(JikanAPI.class);
     }
 
-    public Observable<Response> searchAnime(String query, int page){
-        return jikanAPI.searchAnime(query, page);
+    public Observable<Response> searchAnime(String query, int page, int limit){
+        return jikanAPI.searchAnime(query, page, limit);
     }
 
     public Observable<Anime> getAnimeInfo(int id){
@@ -45,7 +45,15 @@ public class JikanService {
         return jikanAPI.getAnimePictures(id);
     }
 
-    public Observable<Response> getTrendingAnime(int page){
-        return jikanAPI.getTrendingAnime(page);
+    public Observable<Response> getAiringAnime(int page){
+        return jikanAPI.getAnime(page, "airing");
+    }
+
+    public Observable<Response> getFavoriteAnime(int page){
+        return jikanAPI.getAnime(page, "favorite");
+    }
+
+    public Observable<Response> getSchedule(String day){
+        return jikanAPI.getSchedule(day);
     }
 }

@@ -11,7 +11,8 @@ public interface JikanAPI {
 
     @GET("search/anime")
     Observable<Response> searchAnime(@Query("q") String query,
-                                     @Query("page") int page);
+                                     @Query("page") int page,
+                                     @Query("limit") int limit);
 
     @GET("anime/{id}")
     Observable<Anime> getAnimeInfo(@Path("id") int id);
@@ -29,7 +30,11 @@ public interface JikanAPI {
     @GET("anime/{id}/pictures")
     Observable<Response> getAnimePictures(@Path("id") int id);
 
-    @GET("top/anime/{page}/airing")
-    Observable<Response> getTrendingAnime(@Path("page") int page);
+    @GET("top/anime/{page}/{subtype}")
+    Observable<Response> getAnime(@Path("page") int page,
+                                  @Path("subtype") String subtype);
+
+    @GET("schedule/{day}")
+    Observable<Response> getSchedule(@Path("day") String day);
 
 }

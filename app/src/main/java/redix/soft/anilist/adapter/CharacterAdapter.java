@@ -46,16 +46,6 @@ public class CharacterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         public void bind(Character character) {
             mBinding.setCharacter(character);
             mBinding.executePendingBindings();
-
-            //Get only the japanese voice actor for each character
-            /*ImageView seiyuAvatar = mBinding.getRoot().findViewById(R.id.character_seiyu_avatar);
-            for(Seiyu s : character.getSeiyus()){
-                if(s.getLanguage().equals("Japanese")) {
-                    Picasso.get()
-                            .load(s.getImageURL())
-                            .into(seiyuAvatar);
-                }
-            }*/
         }
 
         public void setItemClickListener(ItemClickListener listener){

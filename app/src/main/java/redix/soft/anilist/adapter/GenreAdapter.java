@@ -2,6 +2,7 @@ package redix.soft.anilist.adapter;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
+import android.databinding.ViewDataBinding;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,30 +13,36 @@ import java.util.List;
 
 import redix.soft.anilist.R;
 import redix.soft.anilist.databinding.ListGenreBinding;
+import redix.soft.anilist.databinding.ListGenre2Binding;
 import redix.soft.anilist.model.Genre;
 
 public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.ViewHolder>{
     
     private List<Genre> genres;
     private Context context;
+    private int layout;
 
-    public GenreAdapter(List<Genre> genres, Context context){
+    public GenreAdapter(List<Genre> genres, Context context, int layout){
         this.genres = genres;
         this.context = context;
+        this.layout = layout;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private ListGenreBinding mBinding;
+        private ViewDataBinding mBinding;
         private ItemClickListener listener;
     
-        public ViewHolder(ListGenreBinding binding) {
+        public ViewHolder(ViewDataBinding binding) {
             super(binding.getRoot());
             mBinding = binding;
         }
     
         public void bind(Genre genre) {
-            mBinding.setGenre(genre);
+            if (layout == R.layout.list_genre)
+                ((ListGenreBinding) mBinding).setGenre(genre);
+            if (layout == R.layout.list_genre_2)
+                ((ListGenre2Binding) mBinding).setGenre(genre);
             mBinding.executePendingBindings();
         }
     
@@ -54,7 +61,7 @@ public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.ViewHolder>{
     @NonNull
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        ListGenreBinding binding = DataBindingUtil.inflate(inflater, R.layout.list_genre, parent, false);
+        ViewDataBinding binding = DataBindingUtil.inflate(inflater, layout, parent, false);
         return new ViewHolder(binding);
     }
 

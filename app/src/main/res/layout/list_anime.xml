@@ -64,7 +64,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/colorPrimary"
                         android:layout_gravity="center"
-                        android:text="@{String.valueOf(anime.score)}"/>
+                        android:text="@{String.format(@string/score_format, anime.score)}"/>
 
                 </LinearLayout>
 

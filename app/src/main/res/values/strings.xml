@@ -6,11 +6,16 @@
     <string name="tab_account">Account</string>
     <string name="search_bar">Search for anime, manga, etc.</string>
 
+    <!-- Home -->
+    <string name="today">Today</string>
+    <string name="airing">Airing</string>
+
     <!-- Anime Detail -->
     <string name="anime_detail_title">Anime Details</string>
     <string name="loading_message_anime">Loading anime detail...</string>
     <string name="episodes">ep.</string>
     <string name="ranked">Ranked:</string>
+    <string name="score_format">%.2f</string>
     <string name="aired">Aired:</string>
     <string name="themes">Songs</string>
     <string name="episodes_list">Episodes</string>

@@ -123,7 +123,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:textColor="@color/colorPrimary"
-                                    android:text="@{String.valueOf(anime.score)}"/>
+                                    android:text="@{String.format(@string/score_format, anime.score)}"/>
 
                             </LinearLayout>
 
@@ -236,14 +236,28 @@
                     android:focusable="true"
                     android:background="?android:selectableItemBackground">
 
-                    <TextView
+                    <LinearLayout
                         android:id="@+id/anime_synopsis_title"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        android:textColor="@android:color/black"
-                        android:text="@string/synopsis"/>
+                        android:layout_height="wrap_content">
+
+                        <View
+                            android:layout_width="5dp"
+                            android:layout_height="16dp"
+                            android:layout_marginTop="4dp"
+                            android:background="@drawable/bg_activated"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/spinnaker"
+                            android:layout_marginStart="7dp"
+                            android:textSize="21sp"
+                            android:textStyle="bold"
+                            android:textColor="@android:color/black"
+                            android:text="@string/synopsis"/>
+
+                    </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -263,7 +277,6 @@
                             android:layout_height="wrap_content"
                             android:textSize="14sp"
                             android:layout_gravity="center"
-                            android:textColor="@android:color/black"
                             android:text="@string/expand"/>
 
                     </LinearLayout>
@@ -271,6 +284,7 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
                         android:layout_below="@+id/anime_synopsis_title">
 
                         <at.blogc.android.views.ExpandableTextView
@@ -400,7 +414,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp">
+                    android:layout_marginTop="18dp">
 
                     <ProgressBar
                         android:id="@+id/characters_progress"
@@ -415,14 +429,29 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
-                        <TextView
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="18sp"
-                            android:textStyle="bold"
-                            android:layout_marginStart="15dp"
-                            android:textColor="@android:color/black"
-                            android:text="@string/characters_staff"/>
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginStart="15dp">
+
+                            <View
+                                android:layout_width="5dp"
+                                android:layout_height="16dp"
+                                android:layout_marginTop="4dp"
+                                android:background="@drawable/bg_activated"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/spinnaker"
+                                android:layout_marginStart="7dp"
+                                android:textSize="21sp"
+                                android:textStyle="bold"
+                                android:textColor="@android:color/black"
+                                android:text="@string/characters_staff"/>
+
+                        </LinearLayout>
 
                         <android.support.v7.widget.RecyclerView
                             android:id="@+id/anime_characters_list"
@@ -439,7 +468,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp">
+                    android:layout_marginTop="15dp">
 
                     <ProgressBar
                         android:id="@+id/news_progress"
@@ -452,16 +481,32 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
                         android:orientation="vertical">
 
-                        <TextView
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="18sp"
-                            android:textStyle="bold"
-                            android:layout_marginStart="15dp"
-                            android:textColor="@android:color/black"
-                            android:text="@string/news"/>
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginStart="15dp">
+
+                            <View
+                                android:layout_width="5dp"
+                                android:layout_height="16dp"
+                                android:layout_marginTop="4dp"
+                                android:background="@drawable/bg_activated"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/spinnaker"
+                                android:textSize="21sp"
+                                android:textStyle="bold"
+                                android:layout_marginStart="7dp"
+                                android:textColor="@android:color/black"
+                                android:text="@string/news"/>
+
+                        </LinearLayout>
 
                         <android.support.v7.widget.RecyclerView
                             android:id="@+id/anime_news_list"
