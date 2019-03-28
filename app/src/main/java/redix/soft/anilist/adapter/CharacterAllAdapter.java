@@ -45,7 +45,7 @@ public class CharacterAllAdapter extends RecyclerView.Adapter<CharacterAllAdapte
 
             //Each character seiyu's list
             RecyclerView listSeiyus = mBinding.getRoot().findViewById(R.id.character_seiyu_list);
-            SeiyuAdapter adapter = new SeiyuAdapter(character.getSeiyus(), context);
+            SeiyuAdapter adapter = new SeiyuAdapter(character.getSeiyus(), context, R.layout.list_character_seiyu);
             listSeiyus.setLayoutManager(new LinearLayoutManager(context));
             listSeiyus.setAdapter(adapter);
         }

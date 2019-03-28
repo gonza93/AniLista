@@ -17,9 +17,11 @@ public class Anime extends BaseObservable {
 
     @SerializedName("mal_id")
     private int id;
+    @SerializedName("url")
     private String URL;
     @SerializedName("image_url")
     private String imageURL;
+    @SerializedName(value = "title", alternate = "name")
     private String title;
     private String synopsis;
     private String type;
@@ -29,16 +31,15 @@ public class Anime extends BaseObservable {
     private String premiered;
     private Aired aired;
     private int rank;
+    private Related related;
 
     //Arrays
     private List<Studio> studios;
     private List<Genre> genres;
-
     @SerializedName("opening_themes")
     private List<String> openingThemes;
     @SerializedName("ending_themes")
     private List<String> endingThemes;
-
     private List<Character> characters;
 
     public int getId() {
@@ -108,6 +109,10 @@ public class Anime extends BaseObservable {
 
     public List<Character> getCharacters() {
         return characters;
+    }
+
+    public Related getRelated() {
+        return related;
     }
 
     public void setCharacters(List<Character> characters) {

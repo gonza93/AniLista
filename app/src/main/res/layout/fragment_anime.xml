@@ -312,7 +312,7 @@
                             android:id="@+id/anime_themes"
                             android:layout_width="75dp"
                             android:layout_height="75dp"
-                            android:layout_marginEnd="25dp"
+                            android:layout_marginEnd="15dp"
                             android:background="@drawable/bg_button_anime">
 
                             <LinearLayout
@@ -346,7 +346,7 @@
                             android:id="@+id/anime_episodes"
                             android:layout_width="75dp"
                             android:layout_height="75dp"
-                            android:layout_marginEnd="25dp"
+                            android:layout_marginEnd="15dp"
                             android:background="@drawable/bg_button_anime">
 
                             <LinearLayout
@@ -380,6 +380,7 @@
                             android:id="@+id/anime_pictures"
                             android:layout_width="75dp"
                             android:layout_height="75dp"
+                            android:layout_marginEnd="15dp"
                             android:background="@drawable/bg_button_anime">
 
                             <LinearLayout
@@ -408,6 +409,39 @@
                             </LinearLayout>
 
                         </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/anime_news"
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
+                        android:background="@drawable/bg_button_anime">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_centerVertical="true"
+                            android:layout_centerHorizontal="true">
+
+                            <ImageView
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:layout_gravity="center"
+                                android:layout_marginBottom="3dp"
+                                android:src="@mipmap/ic_news"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="13sp"
+                                android:textStyle="bold"
+                                android:text="News"/>
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
 
                 </LinearLayout>
 
@@ -465,29 +499,64 @@
 
                 </RelativeLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginStart="15dp">
+
+                        <View
+                            android:layout_width="5dp"
+                            android:layout_height="16dp"
+                            android:layout_marginTop="4dp"
+                            android:background="@drawable/bg_activated"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/spinnaker"
+                            android:textSize="21sp"
+                            android:textStyle="bold"
+                            android:layout_marginStart="7dp"
+                            android:textColor="@android:color/black"
+                            android:text="@string/related"/>
+
+                    </LinearLayout>
+
+                    <include layout="@layout/include_related"/>
+
+                </LinearLayout>
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp">
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="18dp">
 
                     <ProgressBar
-                        android:id="@+id/news_progress"
+                        android:id="@+id/recommendations_progress"
                         android:layout_width="100dp"
                         android:layout_height="100dp"
                         android:padding="30dp"
-                        android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true"/>
+                        android:layout_marginTop="30dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_centerHorizontal="true"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
                         android:orientation="vertical">
 
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="5dp"
+                            android:layout_marginBottom="10dp"
                             android:layout_marginStart="15dp">
 
                             <View
@@ -500,21 +569,19 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/spinnaker"
+                                android:layout_marginStart="7dp"
                                 android:textSize="21sp"
                                 android:textStyle="bold"
-                                android:layout_marginStart="7dp"
                                 android:textColor="@android:color/black"
-                                android:text="@string/news"/>
+                                android:text="@string/recommendations"/>
 
                         </LinearLayout>
 
                         <android.support.v7.widget.RecyclerView
-                            android:id="@+id/anime_news_list"
+                            android:id="@+id/anime_recommendations_list"
+                            android:paddingStart="20dp"
+                            android:paddingEnd="10dp"
                             android:clipToPadding="false"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginEnd="10dp"
-                            android:nestedScrollingEnabled="false"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"/>
 

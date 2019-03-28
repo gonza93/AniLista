@@ -2,6 +2,7 @@ package redix.soft.anilist.api;
 
 import redix.soft.anilist.model.Anime;
 import redix.soft.anilist.model.Response;
+import redix.soft.anilist.model.ResponseSeiyu;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -21,8 +22,8 @@ public class JikanService {
         jikanAPI = retrofit.create(JikanAPI.class);
     }
 
-    public Observable<Response> searchAnime(String query, int page, int limit){
-        return jikanAPI.searchAnime(query, page, limit);
+    public Observable<Response> search(String type, String query, int page, int limit){
+        return jikanAPI.search(type, query, page, limit);
     }
 
     public Observable<Anime> getAnimeInfo(int id){
@@ -45,12 +46,24 @@ public class JikanService {
         return jikanAPI.getAnimePictures(id);
     }
 
+    public Observable<Response> getAnimeRecommendations(int id) {
+        return jikanAPI.getAnimeRecommendations(id);
+    }
+
     public Observable<Response> getAiringAnime(int page){
-        return jikanAPI.getAnime(page, "airing");
+        return jikanAPI.getTopAnime( page, "airing");
     }
 
     public Observable<Response> getFavoriteAnime(int page){
-        return jikanAPI.getAnime(page, "favorite");
+        return jikanAPI.getTopAnime( page, "favorite");
+    }
+
+    public Observable<Response> getPopulareAnime(int page){
+        return jikanAPI.getTopAnime( page, "bypopularity");
+    }
+
+    public Observable<ResponseSeiyu> getPopularPeople(int page){
+        return jikanAPI.getTopPeople(page);
     }
 
     public Observable<Response> getSchedule(String day){

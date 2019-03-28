@@ -2,6 +2,7 @@
 <layout xmlns:bind="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <import type="android.view.View"/>
         <variable name="anime"
             type="redix.soft.anilist.model.Anime" />
     </data>
@@ -9,14 +10,14 @@
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical"
-        android:layout_width="160dp"
+        android:layout_width="130dp"
         android:layout_height="wrap_content"
         android:paddingBottom="5dp"
         android:layout_margin="5dp">
 
         <ImageView
-            android:layout_width="160dp"
-            android:layout_height="230dp"
+            android:layout_width="130dp"
+            android:layout_height="210dp"
             bind:loadThumbTrending="@{anime.imageURL}"/>
 
         <TextView
@@ -35,7 +36,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:layout_marginStart="4dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="@{anime.type != null ? View.VISIBLE : View.GONE}">
 
             <LinearLayout
                 android:layout_width="wrap_content"

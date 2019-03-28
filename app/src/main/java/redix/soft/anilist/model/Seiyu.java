@@ -10,8 +10,9 @@ import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 public class Seiyu {
 
+    @SerializedName(value = "name", alternate = {"title"})
     private String name;
-    @SerializedName("image_url")
+    @SerializedName(value = "image_url")
     private String imageURL;
     private String language;
 

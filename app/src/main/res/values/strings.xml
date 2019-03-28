@@ -9,6 +9,11 @@
     <!-- Home -->
     <string name="today">Today</string>
     <string name="airing">Airing</string>
+    <string name="popular">Popular</string>
+    <string name="ranking">Ranking</string>
+    <string name="upcoming">Upcoming</string>
+    <string name="season">Season</string>
+    <string name="genres">Genres</string>
 
     <!-- Anime Detail -->
     <string name="anime_detail_title">Anime Details</string>
@@ -30,6 +35,18 @@
     <string name="filler">Filler</string>
     <string name="recap">Recap</string>
     <string name="news">Recent News</string>
+    <string name="related">Related</string>
+    <string name="recommendations">Recommendations</string>
+    <string name="reviews">Reviews</string>
+    <string name="adaptation">Adaptation:</string>
+    <string name="side_story">Side story:</string>
+    <string name="prequel">Prequel:</string>
+    <string name="sequel">Sequel:</string>
+    <string name="alternative_version">Alternative version:</string>
+    <string name="summary">Summary:</string>
+    <string name="character">Character:</string>
+    <string name="spin_off">Spin-off:</string>
+    <string name="other">Other:</string>
 
 
 </resources>

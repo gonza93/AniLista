@@ -19,6 +19,7 @@ import redix.soft.anilist.activity.MainActivity;
 import redix.soft.anilist.databinding.ListAiringBinding;
 import redix.soft.anilist.databinding.ListAnimeBinding;
 import redix.soft.anilist.databinding.ListAnimeDayBinding;
+import redix.soft.anilist.databinding.ListRelatedBinding;
 import redix.soft.anilist.fragment.AnimeFragment;
 import redix.soft.anilist.model.Anime;
 import redix.soft.anilist.model.Genre;
@@ -63,6 +64,9 @@ public class AnimeAdapter extends RecyclerView.Adapter<AnimeAdapter.ViewHolder>{
                 listGenre.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
                 listGenre.setAdapter(adapter);
             }
+            if (layout == R.layout.list_related)
+                ((ListRelatedBinding) mBinding).setAnime(anime);
+
             mBinding.executePendingBindings();
         }
 
