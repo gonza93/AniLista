@@ -128,22 +128,14 @@ public class NavigationUtil {
 
         String title = tag;
 
+
         if(tag.equals(ListFragment.TAG)){
             ListFragment listFragment = ((ListFragment) fragment);
 
-            if (listFragment.getType().equals(ListFragment.TYPES.THEMES)) {
+            if (listFragment.getType().equals(ListFragment.TYPES.THEMES))
                 activity.getTogglesView().setVisibility(View.VISIBLE);
-                title = "Themes";
-            }
 
-            if (listFragment.getType().equals(ListFragment.TYPES.EPISODES))
-                title = "Episodes";
-
-            if (listFragment.getType().equals(ListFragment.TYPES.CHARACTERS))
-                title = "Characters";
-
-            if(listFragment.getType().equals(ListFragment.TYPES.PICTURES))
-                title = "Pictures";
+            title = listFragment.getType().toString();
         }
 
         activity.getToolbarTitleView().setText(title);

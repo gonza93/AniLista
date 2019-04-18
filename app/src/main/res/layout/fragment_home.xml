@@ -69,10 +69,12 @@
             android:orientation="horizontal">
 
             <LinearLayout
+                android:id="@+id/home_ranking"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:background="?android:selectableItemBackgroundBorderless">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -91,10 +93,12 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/home_upcoming"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:background="?android:selectableItemBackgroundBorderless">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -113,10 +117,12 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/home_season"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:background="?android:selectableItemBackgroundBorderless">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -135,10 +141,12 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/home_genres"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:background="?android:selectableItemBackgroundBorderless">
 
                 <ImageView
                     android:layout_width="wrap_content"

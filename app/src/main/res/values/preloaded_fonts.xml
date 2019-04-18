@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <array name="preloaded_fonts" translatable="false">
+        <item>@font/amiko</item>
+        <item>@font/audiowide</item>
+        <item>@font/baloo</item>
+        <item>@font/cherry_cream_soda</item>
+        <item>@font/luckiest_guy</item>
+        <item>@font/shojumaru</item>
+        <item>@font/sniglet</item>
         <item>@font/spinnaker</item>
     </array>
 </resources>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="10dp">
+
+        <com.elyeproj.loaderviewlibrary.LoaderImageView
+            android:layout_width="70dp"
+            android:layout_height="105dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="10dp"
+            app:corners="30"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:orientation="vertical">
+
+            <com.elyeproj.loaderviewlibrary.LoaderImageView
+                android:layout_width="140dp"
+                android:layout_height="17dp"
+                app:corners="30"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="2dp">
+
+                <com.elyeproj.loaderviewlibrary.LoaderImageView
+                    android:layout_width="50dp"
+                    android:layout_height="22dp"
+                    app:corners="30"/>
+
+                <com.elyeproj.loaderviewlibrary.LoaderImageView
+                    android:layout_width="40dp"
+                    android:layout_height="22dp"
+                    android:layout_marginStart="7dp"
+                    app:corners="30"/>
+
+            </LinearLayout>
+
+            <com.elyeproj.loaderviewlibrary.LoaderImageView
+                android:layout_width="240dp"
+                android:layout_height="10dp"
+                android:layout_marginTop="4dp"
+                app:corners="30"/>
+
+            <com.elyeproj.loaderviewlibrary.LoaderImageView
+                android:layout_width="240dp"
+                android:layout_height="10dp"
+                android:layout_marginTop="4dp"
+                app:corners="30"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

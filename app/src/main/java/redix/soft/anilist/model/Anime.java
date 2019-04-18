@@ -6,6 +6,7 @@ import android.databinding.BindingAdapter;
 import android.widget.ImageView;
 
 import com.google.gson.annotations.SerializedName;
+import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.io.Serializable;
@@ -31,6 +32,10 @@ public class Anime extends BaseObservable {
     private String premiered;
     private Aired aired;
     private int rank;
+    @SerializedName("start_date")
+    private String startDate;
+    @SerializedName("end_date")
+    private String endDate;
     private Related related;
 
     //Arrays
@@ -111,6 +116,14 @@ public class Anime extends BaseObservable {
         return characters;
     }
 
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
     public Related getRelated() {
         return related;
     }
@@ -126,6 +139,7 @@ public class Anime extends BaseObservable {
                 .fit()
                 .centerCrop()
                 .transform(new RoundedCornersTransformation(25, 0))
+                .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
                 .into(view);
     }
 
@@ -136,6 +150,7 @@ public class Anime extends BaseObservable {
                 .fit()
                 .centerCrop()
                 .transform(new RoundedCornersTransformation(25, 0))
+                .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
                 .into(view);
     }
 }

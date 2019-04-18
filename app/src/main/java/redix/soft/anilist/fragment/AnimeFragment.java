@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -124,18 +125,21 @@ public class AnimeFragment extends Fragment {
                 .getAnimeInfo(id)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(anime -> {
-                    this.animeBinding.setAnime(anime);
-                    List<Genre> genres = anime.getGenres();
-                    if(genres.size() > 5)
-                        genres = genres.subList(0, 5);
-                    genreAdapter.setDataSet(genres);
+                .subscribe(
+                        anime -> {
+                            this.animeBinding.setAnime(anime);
+                            List<Genre> genres = anime.getGenres();
+                            if(genres.size() > 5)
+                                genres = genres.subList(0, 5);
+                            genreAdapter.setDataSet(genres);
 
-                    setRelatedList();
+                            setRelatedList();
 
-                    AnimationUtil.collapse(progress);
-                    AnimationUtil.fadeIn(mainLayout);
-                });
+                            AnimationUtil.collapse(progress);
+                            AnimationUtil.fadeIn(mainLayout);
+                            },
+                        throwable -> Log.d("ERROR", throwable.getMessage())
+                );
     }
 
     private void getAnimeCharacters(int id){
@@ -143,14 +147,17 @@ public class AnimeFragment extends Fragment {
                 .getAnimeCharacters(id)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(response -> {
-                    progressCharacters.setVisibility(View.GONE);
-                    List<Character> characters = response.getCharacters();
-                    characterAdapter.setAllCharacters(characters);
-                    if(characters.size() > 9)
-                        characters = characters.subList(0, 9);
-                    characterAdapter.setDataSet(characters);
-                });
+                .subscribe(
+                        response -> {
+                            progressCharacters.setVisibility(View.GONE);
+                            List<Character> characters = response.getCharacters();
+                            characterAdapter.setAllCharacters(characters);
+                            if(characters.size() > 9)
+                                characters = characters.subList(0, 9);
+                            characterAdapter.setDataSet(characters);
+                            },
+                        throwable -> Log.d("ERROR", throwable.getMessage())
+                );
     }
 
     /*private void getAnimeNews(int id){
@@ -170,13 +177,16 @@ public class AnimeFragment extends Fragment {
                 .getAnimeRecommendations(id)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(response -> {
-                    List<Anime> animes = response.getAnimes();
-                    if(animes.size() > 10)
-                        animes = animes.subList(0, 10);
-                    recommendationsAdapter.setDataSet(animes);
-                    progressRecom.setVisibility(View.GONE);
-                });
+                .subscribe(
+                        response -> {
+                            List<Anime> animes = response.getAnimes();
+                            if(animes.size() > 10)
+                                animes = animes.subList(0, 10);
+                            recommendationsAdapter.setDataSet(animes);
+                            progressRecom.setVisibility(View.GONE);
+                            },
+                        throwable -> Log.d("ERROR", throwable.getMessage())
+                );
     }
 
     private void setRelatedList() {

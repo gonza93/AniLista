@@ -42,11 +42,15 @@
     <string name="side_story">Side story:</string>
     <string name="prequel">Prequel:</string>
     <string name="sequel">Sequel:</string>
-    <string name="alternative_version">Alternative version:</string>
+    <string name="alternative_version">Alternative:</string>
     <string name="summary">Summary:</string>
     <string name="character">Character:</string>
     <string name="spin_off">Spin-off:</string>
     <string name="other">Other:</string>
+    <string name="winter">Winter</string>
+    <string name="spring">Spring</string>
+    <string name="summer">Summer</string>
+    <string name="autumn">Fall</string>
 
 
 </resources>

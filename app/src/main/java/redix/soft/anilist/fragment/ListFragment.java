@@ -22,6 +22,7 @@ import redix.soft.anilist.activity.MainActivity;
 import redix.soft.anilist.adapter.CharacterAllAdapter;
 import redix.soft.anilist.adapter.EpisodeAdapter;
 import redix.soft.anilist.adapter.PictureAdapter;
+import redix.soft.anilist.adapter.RankingAdapter;
 import redix.soft.anilist.adapter.ThemeAdapter;
 import redix.soft.anilist.api.JikanService;
 import redix.soft.anilist.model.Anime;
@@ -32,17 +33,13 @@ import rx.schedulers.Schedulers;
 
 public class ListFragment extends Fragment{
 
-    public enum TYPES { THEMES, EPISODES, PICTURES, CHARACTERS }
+    public enum TYPES { THEMES, EPISODES, PICTURES, CHARACTERS, RANKING, UPCOMING }
     public static final String TAG = "ListFragment";
 
     private TYPES type;
 
     @BindView(R.id.list_progress) View progress;
     @BindView(R.id.list) RecyclerView list;
-    private ThemeAdapter themeAdapter;
-    private EpisodeAdapter episodeAdapter;
-    private CharacterAllAdapter characterAdapter;
-    private PictureAdapter pictureAdapter;
 
     private Anime anime;
     private List<Character> characters;
@@ -80,13 +77,17 @@ public class ListFragment extends Fragment{
             populatePictures();
         if (type.equals(TYPES.CHARACTERS))
             populateCharacters();
+        if (type.equals(TYPES.RANKING))
+            populateTop("");
+        if (type.equals(TYPES.UPCOMING))
+            populateTop("upcoming");
 
         return view;
     }
 
     private void populateEpisodes() {
         progress.setVisibility(View.GONE);
-        episodeAdapter = new EpisodeAdapter(new ArrayList<>(), getContext());
+        EpisodeAdapter episodeAdapter = new EpisodeAdapter(new ArrayList<>(), getContext());
         list.setAdapter(episodeAdapter);
 
         list.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -101,30 +102,36 @@ public class ListFragment extends Fragment{
 
                     if (!loading) {
                         if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
-                            populateEpisodes();
+                            fetchEpisodes();
                         }
                     }
                 }
             }
         });
 
-        episodeAdapter.startLoad();
+        fetchEpisodes();
+    }
+    private void fetchEpisodes(){
+        ((EpisodeAdapter) list.getAdapter()).startLoad();
         loading = true;
         new JikanService()
                 .getAnimeEpisodes(anime.getId(), nextPage)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(response -> {
-                    episodeAdapter.endLoad();
-                    loading = false;
+                .subscribe(
+                        response -> {
+                            ((EpisodeAdapter) list.getAdapter()).endLoad();
+                            loading = false;
 
-                    episodeAdapter.addEpisodes(response.getEpisodes());
+                            ((EpisodeAdapter) list.getAdapter()).addEpisodes(response.getEpisodes());
 
-                    if(response.getEpisodesLastPage() > nextPage)
-                        nextPage++;
-                    else
-                        nextPage = 0;
-                });
+                            if(response.getEpisodesLastPage() > nextPage)
+                                nextPage++;
+                            else
+                                nextPage = 0;
+                            },
+                        throwable -> Log.d("ERROR", throwable.getMessage())
+                );
     }
 
     private void populateThemes(){
@@ -135,19 +142,19 @@ public class ListFragment extends Fragment{
 
         progress.setVisibility(View.GONE);
 
-        themeAdapter = new ThemeAdapter(themes, getContext());
+        ThemeAdapter themeAdapter = new ThemeAdapter(themes, getContext());
         ((MainActivity) getContext()).onClickToggleOp(((MainActivity) getContext()).findViewById(R.id.toolbar_toggle_op));
         list.setAdapter(themeAdapter);
     }
 
     private void populateCharacters() {
-        characterAdapter = new CharacterAllAdapter(characters, getContext());
+        CharacterAllAdapter characterAdapter = new CharacterAllAdapter(characters, getContext());
         list.setAdapter(characterAdapter);
         progress.setVisibility(View.GONE);
     }
 
     private void populatePictures() {
-        pictureAdapter = new PictureAdapter(new ArrayList<>(), getContext());
+        PictureAdapter pictureAdapter = new PictureAdapter(new ArrayList<>(), getContext());
 
         list.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         list.setAdapter(pictureAdapter);
@@ -156,10 +163,60 @@ public class ListFragment extends Fragment{
                 .getAnimePictures(anime.getId())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(response -> {
-                    pictureAdapter.addPictures(response.getPictures());
-                    progress.setVisibility(View.GONE);
-                });
+                .subscribe(
+                        response -> {
+                            ((PictureAdapter) list.getAdapter()).addPictures(response.getPictures());
+                            progress.setVisibility(View.GONE);
+                            },
+                        throwable -> Log.d("ERROR", throwable.getMessage())
+                );
+    }
+
+    private void populateTop(String subtype){
+        progress.setVisibility(View.GONE);
+        RankingAdapter adapter = new RankingAdapter(new ArrayList<>(), getContext());
+        list.setAdapter(adapter);
+
+        list.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0 && nextPage != 0)
+                {
+                    LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                    int visibleItemCount = manager.getChildCount();
+                    int totalItemCount = manager.getItemCount();
+                    int pastVisiblesItems = manager.findFirstVisibleItemPosition();
+
+                    if (!loading) {
+                        if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
+                            fetchTop(subtype);
+                        }
+                    }
+                }
+            }
+        });
+
+        fetchTop(subtype);
+    }
+
+    private void fetchTop(String subtype){
+        ((RankingAdapter) list.getAdapter()).startLoad();
+        loading = true;
+        new JikanService()
+                .getTopAnime(subtype, nextPage)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        response -> {
+                            ((RankingAdapter) list.getAdapter()).endLoad();
+                            loading = false;
+
+                            ((RankingAdapter) list.getAdapter()).addAnimes(response.getAnimes());
+
+                            nextPage++;
+                            },
+                        throwable -> Log.d("ERROR", throwable.getMessage())
+                );
     }
 
     private List<Theme> parseThemes(List<String> themes, boolean isOpening){
@@ -196,7 +253,7 @@ public class ListFragment extends Fragment{
     }
 
     public void toggleThemes(boolean isOpening){
-        themeAdapter.toggleThemes(isOpening);
+        ((ThemeAdapter) list.getAdapter()).toggleThemes(isOpening);
     }
 
 }

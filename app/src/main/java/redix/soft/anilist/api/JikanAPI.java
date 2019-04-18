@@ -45,4 +45,8 @@ public interface JikanAPI {
     @GET("schedule/{day}")
     Observable<Response> getSchedule(@Path("day") String day);
 
+    @GET("season/{year}/{season}")
+    Observable<Response> getSeasonAnime(@Path("year") int year,
+                                        @Path("season") String season);
+
 }

@@ -11,4 +11,6 @@
     <color name="colorCanonText">#74d158</color>
     <color name="colorFiller">#8cffcdbc</color>
     <color name="colorFillerText">#e17f5b</color>
+    <color name="colorBorder">#9ec6c6c6</color>
+    <color name="colorBackground">#bedcdcdc</color>
 </resources>

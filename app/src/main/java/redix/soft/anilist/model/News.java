@@ -4,6 +4,7 @@ import android.databinding.BindingAdapter;
 import android.widget.ImageView;
 
 import com.google.gson.annotations.SerializedName;
+import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.Date;
@@ -59,6 +60,7 @@ public class News {
                 .fit()
                 .centerCrop()
                 .transform(new RoundedCornersTransformation(25, 0))
+                .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
                 .into(view);
     }
 }

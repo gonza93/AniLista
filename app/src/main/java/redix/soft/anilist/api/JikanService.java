@@ -54,6 +54,10 @@ public class JikanService {
         return jikanAPI.getTopAnime( page, "airing");
     }
 
+    public Observable<Response> getTopAnime(String subtype, int page){
+        return jikanAPI.getTopAnime( page, subtype);
+    }
+
     public Observable<Response> getFavoriteAnime(int page){
         return jikanAPI.getTopAnime( page, "favorite");
     }
@@ -68,5 +72,9 @@ public class JikanService {
 
     public Observable<Response> getSchedule(String day){
         return jikanAPI.getSchedule(day);
+    }
+
+    public Observable<Response> getSeasonAnime(int year, String season){
+        return jikanAPI.getSeasonAnime(year, season);
     }
 }

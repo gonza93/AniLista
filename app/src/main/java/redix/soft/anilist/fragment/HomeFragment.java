@@ -5,8 +5,8 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,13 +19,12 @@ import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import redix.soft.anilist.R;
+import redix.soft.anilist.activity.MainActivity;
 import redix.soft.anilist.adapter.AnimeAdapter;
 import redix.soft.anilist.adapter.SeiyuAdapter;
 import redix.soft.anilist.api.JikanService;
-import redix.soft.anilist.model.Anime;
-import redix.soft.anilist.model.Seiyu;
-import rx.Scheduler;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -80,8 +79,8 @@ public class HomeFragment extends Fragment {
 
         getScheduleAnimes();
         new Handler().postDelayed(this::getPopularAnimes, 1000);
-        new Handler().postDelayed(this::getAiringAnimes, 2000);
-        new Handler().postDelayed(this::getPopularPeople, 3000);
+        new Handler().postDelayed(this::getAiringAnimes, 1000);
+        new Handler().postDelayed(this::getPopularPeople, 2000);
 
         return view;
     }
@@ -91,7 +90,8 @@ public class HomeFragment extends Fragment {
                 .getSchedule(getDayOfWeek())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(response -> fillList(scheduleList.getAdapter(), response.getAnimes(), 10, loaderSchedule));
+                .subscribe( response    -> fillList(scheduleList.getAdapter(), response.getAnimes(), 10, loaderSchedule),
+                            throwable   -> Log.d("ERROR", throwable.getMessage()));
     }
 
     private void getAiringAnimes(){
@@ -99,7 +99,8 @@ public class HomeFragment extends Fragment {
                 .getAiringAnime(1)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(response -> fillList(airingAdapter, response.getAnimes(), 15, loaderAiring));
+                .subscribe( response -> fillList(airingAdapter, response.getAnimes(), 15, loaderAiring),
+                            throwable   -> Log.d("ERROR", throwable.getMessage()));
     }
 
     private void getPopularAnimes(){
@@ -107,7 +108,8 @@ public class HomeFragment extends Fragment {
                 .getPopulareAnime(1)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(response -> fillList(popularAdapter, response.getAnimes(), 15, loaderPopular));
+                .subscribe( response -> fillList(popularAdapter, response.getAnimes(), 15, loaderPopular),
+                            throwable   -> Log.d("ERROR", throwable.getMessage()));
     }
 
     private void getPopularPeople(){
@@ -115,10 +117,14 @@ public class HomeFragment extends Fragment {
                 .getPopularPeople(1)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(response -> fillList(popularSeiyuAdapter, response.getSeiyus(), 20, loaderSeiyu));
+                .subscribe( response -> fillList(popularSeiyuAdapter, response.getSeiyus(), 20, loaderSeiyu),
+                            throwable   -> Log.d("ERROR", throwable.getMessage()));
     }
 
     private void fillList(RecyclerView.Adapter adapter, List dataset, int limit, View loader){
+        if(dataset == null)
+            return;
+
         List subList = dataset;
         if(subList.size() > limit)
             subList = subList.subList(0, limit);
@@ -134,5 +140,28 @@ public class HomeFragment extends Fragment {
     private String getDayOfWeek(){
         SimpleDateFormat sdf = new SimpleDateFormat("EEEE", Locale.ENGLISH);
         return sdf.format(new Date()).toLowerCase();
+    }
+
+    @OnClick(R.id.home_ranking)
+    public void onClickRanking(){
+        ListFragment fragment = new ListFragment();
+        fragment.setType(ListFragment.TYPES.RANKING);
+
+        ((MainActivity) getContext()).loadFragment(fragment, ListFragment.TAG);
+    }
+
+    @OnClick(R.id.home_upcoming)
+    public void onClickUpcoming(){
+        ListFragment fragment = new ListFragment();
+        fragment.setType(ListFragment.TYPES.UPCOMING);
+
+        ((MainActivity) getContext()).loadFragment(fragment, ListFragment.TAG);
+    }
+
+    @OnClick(R.id.home_season)
+    public void onClickSeason(){
+        SeasonFragment fragment = new SeasonFragment();
+
+        ((MainActivity) getContext()).loadFragment(fragment, SeasonFragment.TAG);
     }
 }
