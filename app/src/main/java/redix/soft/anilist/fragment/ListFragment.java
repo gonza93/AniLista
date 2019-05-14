@@ -63,7 +63,7 @@ public class ListFragment extends Fragment{
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_list, null);
+        View view = inflater.inflate(R.layout.fragment_list, container, false);
 
         ButterKnife.bind(this, view);
 
@@ -116,7 +116,7 @@ public class ListFragment extends Fragment{
         loading = true;
         new JikanService()
                 .getAnimeEpisodes(anime.getId(), nextPage)
-                .subscribeOn(Schedulers.newThread())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         response -> {
@@ -161,7 +161,7 @@ public class ListFragment extends Fragment{
 
         new JikanService()
                 .getAnimePictures(anime.getId())
-                .subscribeOn(Schedulers.newThread())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         response -> {
@@ -204,7 +204,7 @@ public class ListFragment extends Fragment{
         loading = true;
         new JikanService()
                 .getTopAnime(subtype, nextPage)
-                .subscribeOn(Schedulers.newThread())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         response -> {

@@ -10,8 +10,9 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_marginStart="15dp">
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:background="?android:selectableItemBackgroundBorderless">
 
         <ImageView
             android:layout_width="100dp"

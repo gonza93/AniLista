@@ -67,8 +67,7 @@ public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.ViewHolder>{
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Genre genre = genres.get(position);
-        holder.bind(genre);
+        holder.bind(genres.get(position));
         holder.setItemClickListener(new ItemClickListener() {
             @Override
             public void onItemClick(Genre genre) {

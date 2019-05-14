@@ -59,8 +59,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        News article = news.get(position);
-        holder.bind(article);
+        holder.bind(news.get(position));
         holder.setItemClickListener(new ItemClickListener() {
             @Override
             public void onItemClick(News news) {

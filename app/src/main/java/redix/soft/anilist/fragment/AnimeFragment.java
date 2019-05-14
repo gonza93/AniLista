@@ -123,7 +123,7 @@ public class AnimeFragment extends Fragment {
     private void getAnimeInfo(int id){
         new JikanService()
                 .getAnimeInfo(id)
-                .subscribeOn(Schedulers.newThread())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         anime -> {
@@ -145,7 +145,7 @@ public class AnimeFragment extends Fragment {
     private void getAnimeCharacters(int id){
         new JikanService()
                 .getAnimeCharacters(id)
-                .subscribeOn(Schedulers.newThread())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         response -> {
@@ -163,7 +163,7 @@ public class AnimeFragment extends Fragment {
     /*private void getAnimeNews(int id){
         new JikanService()
                 .getAnimeNews(id)
-                .subscribeOn(Schedulers.newThread())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(response -> {
                     progressNews.setVisibility(View.GONE);
@@ -175,7 +175,7 @@ public class AnimeFragment extends Fragment {
     private void getAnimeRecommendations(int id){
         new JikanService()
                 .getAnimeRecommendations(id)
-                .subscribeOn(Schedulers.newThread())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         response -> {

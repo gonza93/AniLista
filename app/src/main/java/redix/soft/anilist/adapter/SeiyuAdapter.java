@@ -12,8 +12,10 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import redix.soft.anilist.R;
+import redix.soft.anilist.activity.MainActivity;
 import redix.soft.anilist.databinding.ListCharacterSeiyuBinding;
 import redix.soft.anilist.databinding.ListSeiyuBinding;
+import redix.soft.anilist.fragment.SeiyuFragment;
 import redix.soft.anilist.model.Seiyu;
 
 public class SeiyuAdapter extends RecyclerView.Adapter<SeiyuAdapter.ViewHolder> {
@@ -53,7 +55,7 @@ public class SeiyuAdapter extends RecyclerView.Adapter<SeiyuAdapter.ViewHolder> 
         }
 
         @Override
-        public void onClick(View view) { }
+        public void onClick(View view) { listener.onItemClick(seiyus.get(getAdapterPosition()));}
     }
 
     @NonNull
@@ -66,8 +68,16 @@ public class SeiyuAdapter extends RecyclerView.Adapter<SeiyuAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Seiyu seiyu = seiyus.get(position);
-        holder.bind(seiyu);
+        holder.bind(seiyus.get(position));
+        holder.setItemClickListener(new ItemClickListener() {
+            @Override
+            public void onItemClick(Seiyu seiyu) {
+                SeiyuFragment fragment = new SeiyuFragment();
+                fragment.setPersonId(seiyu.getId());
+
+                ((MainActivity) context).loadFragment(fragment, SeiyuFragment.TAG);
+            }
+        });
     }
 
     @Override

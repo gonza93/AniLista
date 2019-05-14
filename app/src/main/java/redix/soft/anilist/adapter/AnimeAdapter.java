@@ -91,8 +91,7 @@ public class AnimeAdapter extends RecyclerView.Adapter<AnimeAdapter.ViewHolder>{
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Anime anime = animes.get(position);
-        holder.bind(anime);
+        holder.bind(animes.get(position));
         holder.setItemClickListener(new ItemClickListener() {
             @Override
             public void onItemClick(Anime anime) {

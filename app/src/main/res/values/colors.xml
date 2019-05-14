@@ -6,6 +6,7 @@
 
     <color name="colorSearchBar">#ededed</color>
     <color name="colorPrimaryLight">#80d4dfff</color>
+    <color name="colorPrimaryLight2">#d4dfff</color>
     <color name="colorLines">#e4e4e4</color>
     <color name="colorCanon">#8cd8ffcc</color>
     <color name="colorCanonText">#74d158</color>
@@ -13,4 +14,5 @@
     <color name="colorFillerText">#e17f5b</color>
     <color name="colorBorder">#9ec6c6c6</color>
     <color name="colorBackground">#bedcdcdc</color>
+    <color name="colorBackSeiyu">#ededed</color>
 </resources>

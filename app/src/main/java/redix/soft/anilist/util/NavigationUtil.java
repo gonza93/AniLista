@@ -135,7 +135,8 @@ public class NavigationUtil {
             if (listFragment.getType().equals(ListFragment.TYPES.THEMES))
                 activity.getTogglesView().setVisibility(View.VISIBLE);
 
-            title = listFragment.getType().toString();
+            title = listFragment.getType().toString().substring(0, 1) +
+                    listFragment.getType().toString().substring(1).toLowerCase();
         }
 
         activity.getToolbarTitleView().setText(title);

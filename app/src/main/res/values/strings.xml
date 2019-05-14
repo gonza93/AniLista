@@ -51,6 +51,9 @@
     <string name="spring">Spring</string>
     <string name="summer">Summer</string>
     <string name="autumn">Fall</string>
+    <string name="voice_acting_roles">Voice acting roles</string>
+    <string name="show_more">Show more</string>
+    <string name="view_all">View all</string>
 
 
 </resources>

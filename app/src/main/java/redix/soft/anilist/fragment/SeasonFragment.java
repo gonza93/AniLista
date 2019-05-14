@@ -66,7 +66,7 @@ public class SeasonFragment extends Fragment {
 
         new JikanService()
                 .getSeasonAnime(Calendar.getInstance().get(Calendar.YEAR), selectedSeason)
-                .subscribeOn(Schedulers.newThread())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         response -> {

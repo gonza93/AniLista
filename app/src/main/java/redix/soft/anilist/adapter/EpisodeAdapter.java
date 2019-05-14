@@ -83,10 +83,9 @@ public class EpisodeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         return episodes.size();
     }
 
-    public List<Episode> addEpisodes(List<Episode> episodes){
+    public void addEpisodes(List<Episode> episodes){
         this.episodes.addAll(episodes);
         notifyDataSetChanged();
-        return episodes;
     }
 
     public void startLoad(){

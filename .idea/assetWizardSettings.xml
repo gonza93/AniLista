@@ -35,8 +35,8 @@
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
                                       <entry key="iconShape" value="NONE" />
-                                      <entry key="imageAsset" value="C:\Users\Gonza\Downloads\icons8-otoño-80.png" />
-                                      <entry key="outputName" value="ic_autumn" />
+                                      <entry key="imageAsset" value="C:\Users\Gonza\Downloads\icons8-micrófono-96.png" />
+                                      <entry key="outputName" value="ic_mic" />
                                     </map>
                                   </option>
                                 </PersistentState>

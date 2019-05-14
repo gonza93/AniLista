@@ -69,8 +69,7 @@ public class CharacterAllAdapter extends RecyclerView.Adapter<CharacterAllAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Character character = characters.get(position);
-        holder.bind(character);
+        holder.bind(characters.get(position));
     }
 
     @Override

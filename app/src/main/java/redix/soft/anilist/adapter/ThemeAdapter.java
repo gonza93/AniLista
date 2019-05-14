@@ -61,8 +61,7 @@ public class ThemeAdapter extends RecyclerView.Adapter<ThemeAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Theme theme = themesToDisplay.get(position);
-        holder.bind(theme);
+        holder.bind(themesToDisplay.get(position));
     }
 
     @Override

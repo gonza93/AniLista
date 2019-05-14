@@ -98,8 +98,7 @@ public class CharacterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         //Items
         if(holder instanceof ViewHolder) {
             ViewHolder characterHolder = (ViewHolder) holder;
-            Character Character = characters.get(position);
-            characterHolder.bind(Character);
+            characterHolder.bind(characters.get(position));
         }
     }
 

@@ -57,7 +57,7 @@ public class HomeFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home, null);
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         ButterKnife.bind(this, view);
 
@@ -88,37 +88,40 @@ public class HomeFragment extends Fragment {
     private void getScheduleAnimes(){
         new JikanService()
                 .getSchedule(getDayOfWeek())
-                .subscribeOn(Schedulers.newThread())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe( response    -> fillList(scheduleList.getAdapter(), response.getAnimes(), 10, loaderSchedule),
-                            throwable   -> Log.d("ERROR", throwable.getMessage()));
+                            throwable   -> Log.d("ERROR SCHEDULE", throwable.getMessage()));
     }
 
     private void getAiringAnimes(){
         new JikanService()
                 .getAiringAnime(1)
-                .subscribeOn(Schedulers.newThread())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe( response -> fillList(airingAdapter, response.getAnimes(), 15, loaderAiring),
-                            throwable   -> Log.d("ERROR", throwable.getMessage()));
+                            throwable   -> Log.d("ERROR AIRING", throwable.getMessage()));
     }
 
     private void getPopularAnimes(){
         new JikanService()
                 .getPopulareAnime(1)
-                .subscribeOn(Schedulers.newThread())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe( response -> fillList(popularAdapter, response.getAnimes(), 15, loaderPopular),
-                            throwable   -> Log.d("ERROR", throwable.getMessage()));
+                            throwable   -> Log.d("ERROR POPULAR ANIME", throwable.getMessage()));
     }
 
     private void getPopularPeople(){
         new JikanService()
                 .getPopularPeople(1)
-                .subscribeOn(Schedulers.newThread())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe( response -> fillList(popularSeiyuAdapter, response.getSeiyus(), 20, loaderSeiyu),
-                            throwable   -> Log.d("ERROR", throwable.getMessage()));
+                            throwable   -> {
+                                Log.d("ERROR TOP PEOPLE", throwable.getMessage());
+                                getPopularPeople();
+                            });
     }
 
     private void fillList(RecyclerView.Adapter adapter, List dataset, int limit, View loader){
