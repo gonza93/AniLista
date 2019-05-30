@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -19,21 +20,27 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import redix.soft.anilist.R;
 import redix.soft.anilist.activity.MainActivity;
+import redix.soft.anilist.adapter.AnimeAdapter;
 import redix.soft.anilist.adapter.CharacterAllAdapter;
 import redix.soft.anilist.adapter.EpisodeAdapter;
+import redix.soft.anilist.adapter.GenreAdapter;
+import redix.soft.anilist.adapter.NewsAdapter;
 import redix.soft.anilist.adapter.PictureAdapter;
 import redix.soft.anilist.adapter.RankingAdapter;
 import redix.soft.anilist.adapter.ThemeAdapter;
 import redix.soft.anilist.api.JikanService;
 import redix.soft.anilist.model.Anime;
 import redix.soft.anilist.model.Character;
+import redix.soft.anilist.model.Genre;
+import redix.soft.anilist.model.News;
 import redix.soft.anilist.model.Theme;
+import redix.soft.anilist.util.ChipsLayoutManagerHelper;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 public class ListFragment extends Fragment{
 
-    public enum TYPES { THEMES, EPISODES, PICTURES, CHARACTERS, RANKING, UPCOMING }
+    public enum TYPES { THEMES, EPISODES, PICTURES, NEWS, CHARACTERS, RANKING, UPCOMING, GENRE }
     public static final String TAG = "ListFragment";
 
     private TYPES type;
@@ -81,6 +88,10 @@ public class ListFragment extends Fragment{
             populateTop("");
         if (type.equals(TYPES.UPCOMING))
             populateTop("upcoming");
+        if (type.equals(TYPES.NEWS))
+            populateNews();
+        if (type.equals(TYPES.GENRE))
+            populateGenre(1);
 
         return view;
     }
@@ -143,8 +154,8 @@ public class ListFragment extends Fragment{
         progress.setVisibility(View.GONE);
 
         ThemeAdapter themeAdapter = new ThemeAdapter(themes, getContext());
-        ((MainActivity) getContext()).onClickToggleOp(((MainActivity) getContext()).findViewById(R.id.toolbar_toggle_op));
         list.setAdapter(themeAdapter);
+        ((MainActivity) getContext()).onClickToggleOp(((MainActivity) getContext()).findViewById(R.id.toolbar_toggle_op));
     }
 
     private void populateCharacters() {
@@ -254,6 +265,37 @@ public class ListFragment extends Fragment{
 
     public void toggleThemes(boolean isOpening){
         ((ThemeAdapter) list.getAdapter()).toggleThemes(isOpening);
+    }
+
+    private void populateNews() {
+        NewsAdapter adapter = new NewsAdapter(new ArrayList<>(), getContext());
+        list.setAdapter(adapter);
+
+        new JikanService()
+                .getAnimeNews(anime.getId())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(response -> {
+                    progress.setVisibility(View.GONE);
+                    List<News> news = response.getArticles();
+                    ((NewsAdapter) list.getAdapter()).setDataSet(news);
+                });
+    }
+
+    public void populateGenre(int id){
+        progress.setVisibility(View.VISIBLE);
+        AnimeAdapter adapter = new AnimeAdapter(new ArrayList<>(), getContext(), R.layout.list_anime_genre);
+        list.setLayoutManager(new GridLayoutManager(getContext(), 3));
+        list.setAdapter(adapter);
+
+        new JikanService()
+                .getGenreAnime(id, 1)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(response -> {
+                    progress.setVisibility(View.GONE);
+                    ((AnimeAdapter) list.getAdapter()).setDataSet(response.getAnimes());
+                });
     }
 
 }

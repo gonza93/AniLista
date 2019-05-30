@@ -5,7 +5,9 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SnapHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -64,6 +66,8 @@ public class HomeFragment extends Fragment {
         //Schedule animes list
         scheduleAdapter = new AnimeAdapter(new ArrayList<>(), getContext(), R.layout.list_anime_day);
         scheduleList.setAdapter(scheduleAdapter);
+        SnapHelper snapHelper = new PagerSnapHelper();
+        snapHelper.attachToRecyclerView(scheduleList);
 
         //Popular animes list
         popularAdapter = new AnimeAdapter(new ArrayList<>(), getContext(), R.layout.list_airing);
@@ -166,5 +170,13 @@ public class HomeFragment extends Fragment {
         SeasonFragment fragment = new SeasonFragment();
 
         ((MainActivity) getContext()).loadFragment(fragment, SeasonFragment.TAG);
+    }
+
+    @OnClick(R.id.home_genres)
+    public void onClickGenres(){
+        ListFragment fragment = new ListFragment();
+        fragment.setType(ListFragment.TYPES.GENRE);
+
+        ((MainActivity) getContext()).loadFragment(fragment, ListFragment.TAG);
     }
 }

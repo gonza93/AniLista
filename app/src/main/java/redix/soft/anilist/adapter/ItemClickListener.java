@@ -7,7 +7,7 @@ import redix.soft.anilist.model.Seiyu;
 
 public abstract class ItemClickListener {
     public void onItemClick(Anime anime){}
-    public void onItemClick(Genre genre){}
+    public void onItemClick(Genre genre, int position){}
     public void onItemClick(News news){}
     public void onItemClick(Seiyu seiyu){}
 }

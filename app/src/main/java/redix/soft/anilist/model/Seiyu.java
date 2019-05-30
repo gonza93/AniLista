@@ -7,6 +7,7 @@ import com.google.gson.annotations.SerializedName;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -70,8 +71,7 @@ public class Seiyu {
     }
 
     public String getFormattedBirthday(){
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-        return formatter.format(birthday);
+        return DateFormat.getDateInstance().format(birthday);
     }
 
     public String getMemberFavorites() {

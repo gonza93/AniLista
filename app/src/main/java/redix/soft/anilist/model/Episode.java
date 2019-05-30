@@ -2,16 +2,20 @@ package redix.soft.anilist.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.text.DateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 public class Episode {
 
     @SerializedName("episode_id")
     private int id;
     private String title;
-    @SerializedName("titile_japanese")
+    @SerializedName("title_japanese")
     private String titleJapanese;
-    @SerializedName("titile_romaji")
+    @SerializedName("title_romanji")
     private String titleRomaji;
-    private Aired aired;
+    private Date aired;
     private boolean filler;
     private boolean recap;
 
@@ -31,8 +35,8 @@ public class Episode {
         return titleRomaji;
     }
 
-    public Aired getAired() {
-        return aired;
+    public String getAired() {
+        return aired != null ? DateFormat.getDateInstance().format(aired) : null;
     }
 
     public boolean isFiller() {

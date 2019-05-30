@@ -46,18 +46,11 @@
                     android:text="@{`by ` + news.authorName}"
                     android:layout_marginBottom="5dp"/>
 
-                <!--<TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{news.date}"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginBottom="5dp"/>-->
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{String.valueOf(news.comments) + ` comments`}"
-                    android:layout_marginStart="15dp"
+                    android:text="@{news.date}"
+                    android:layout_marginStart="10dp"
                     android:layout_marginBottom="5dp"/>
 
             </LinearLayout>

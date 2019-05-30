@@ -15,4 +15,10 @@
     <color name="colorBorder">#9ec6c6c6</color>
     <color name="colorBackground">#bedcdcdc</color>
     <color name="colorBackSeiyu">#ededed</color>
+    <color name="colorDim">#80505050</color>
+    <color name="colorGray">#A0A0A0</color>
+    <color name="colorGray2">#AFAFAF</color>
+
+    <drawable name="drawable_genre">@drawable/bg_search</drawable>
+    <drawable name="drawable_genre_selected">@drawable/bg_primary</drawable>
 </resources>

@@ -1,5 +1,6 @@
 package redix.soft.anilist.util;
 
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
@@ -52,9 +53,11 @@ public class NavigationUtil {
     public Fragment goBack(int tabId){
         TAB tab = getSelectedTab(tabId);
         if(fragmentStacks.get(tab).size() > 1) {
-            Fragment fragment = fragmentStacks.get(tab).pop();
-            fragmentTransaction(fragment, fragment.getTag(), ACTION.CLOSE, tabId);
-            return fragmentStacks.get(tab).peek();
+            Fragment fragmentToRemove = fragmentStacks.get(tab).pop();
+            fragmentTransaction(fragmentToRemove, fragmentToRemove.getTag(), ACTION.CLOSE, tabId);
+            Fragment fragment = fragmentStacks.get(tab).peek();
+            changeToolbar(fragment, fragment.getTag());
+            return fragment;
         }
         else
             return null;
@@ -104,6 +107,7 @@ public class NavigationUtil {
 
     private void changeToolbar(Fragment fragment, String tag) {
         ImageView backbutton = activity.getBackbuttonView();
+        activity.setFilterState(BottomSheetBehavior.STATE_HIDDEN);
 
         if(tag.equals(HomeFragment.TAG) && fragmentStacks.get(TAB.HOME).size() <= 1)
             backbutton.setImageResource(R.mipmap.ic_main);
@@ -116,6 +120,7 @@ public class NavigationUtil {
             activity.hideSearchBar();
 
         activity.getTogglesView().setVisibility(View.GONE);
+        activity.getToolbarGenre().setVisibility(View.GONE);
 
         if(tag.equals(HomeFragment.TAG) && fragmentStacks.get(TAB.HOME).size() > 0) {
             tag = fragmentStacks.get(TAB.HOME).peek().getTag();
@@ -135,10 +140,27 @@ public class NavigationUtil {
             if (listFragment.getType().equals(ListFragment.TYPES.THEMES))
                 activity.getTogglesView().setVisibility(View.VISIBLE);
 
+            if (listFragment.getType().equals(ListFragment.TYPES.GENRE))
+                activity.getToolbarGenre().setVisibility(View.VISIBLE);
+
             title = listFragment.getType().toString().substring(0, 1) +
                     listFragment.getType().toString().substring(1).toLowerCase();
         }
 
+        if(fragment instanceof SearchFragment)
+            activity.showSearchBar();
+        if(fragment instanceof HomeFragment) {
+            backbutton.setImageResource(R.mipmap.ic_main);
+            activity.getToolbarTitleView().setText("Anilist");
+        }
+        if(fragment instanceof AnimeFragment)
+            activity.getToolbarTitleView().setText(AnimeFragment.TAG);
+
         activity.getToolbarTitleView().setText(title);
+
+    }
+
+    public Fragment getCurrentPage(){
+        return fragmentStacks.get(getSelectedTab(lastSelectedTab)).peek();
     }
 }

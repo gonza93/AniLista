@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable name="genre"
+            type="redix.soft.anilist.model.Genre" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingEnd="7dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="7dp"
+            android:paddingEnd="7dp"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:background="@{genre.selected ? @drawable/drawable_genre_selected : @drawable/drawable_genre}"
+            android:textSize="15sp"
+            android:textColor="@{genre.selected ? @color/colorPrimary : @color/colorGray}"
+            android:text="@{genre.name}"/>
+
+    </LinearLayout>
+
+</layout>

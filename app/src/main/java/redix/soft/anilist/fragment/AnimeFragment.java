@@ -25,14 +25,12 @@ import redix.soft.anilist.activity.MainActivity;
 import redix.soft.anilist.adapter.AnimeAdapter;
 import redix.soft.anilist.adapter.CharacterAdapter;
 import redix.soft.anilist.adapter.GenreAdapter;
-import redix.soft.anilist.adapter.NewsAdapter;
 import redix.soft.anilist.api.JikanService;
 import redix.soft.anilist.databinding.FragmentAnimeBinding;
 
 import redix.soft.anilist.model.Anime;
 import redix.soft.anilist.model.Character;
 import redix.soft.anilist.model.Genre;
-import redix.soft.anilist.model.News;
 import redix.soft.anilist.model.Related;
 import redix.soft.anilist.util.AnimationUtil;
 import redix.soft.anilist.util.ChipsLayoutManagerHelper;
@@ -114,8 +112,7 @@ public class AnimeFragment extends Fragment {
 
         getAnimeInfo(animeId);
         getAnimeCharacters(animeId);
-        //new Handler().postDelayed(() -> getAnimeNews(animeId), 3000);
-        new Handler().postDelayed(() -> getAnimeRecommendations(animeId), 3000);
+        new Handler().postDelayed(() -> getAnimeRecommendations(animeId), 2000);
 
         return view;
     }
@@ -131,7 +128,7 @@ public class AnimeFragment extends Fragment {
                             List<Genre> genres = anime.getGenres();
                             if(genres.size() > 5)
                                 genres = genres.subList(0, 5);
-                            genreAdapter.setDataSet(genres);
+                            genreAdapter.setItems(genres);
 
                             setRelatedList();
 
@@ -159,18 +156,6 @@ public class AnimeFragment extends Fragment {
                         throwable -> Log.d("ERROR", throwable.getMessage())
                 );
     }
-
-    /*private void getAnimeNews(int id){
-        new JikanService()
-                .getAnimeNews(id)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(response -> {
-                    progressNews.setVisibility(View.GONE);
-                    List<News> news = response.getArticles();
-                    newsAdapter.setDataSet(news);
-                });
-    }*/
 
     private void getAnimeRecommendations(int id){
         new JikanService()
@@ -264,6 +249,11 @@ public class AnimeFragment extends Fragment {
     @OnClick(R.id.anime_pictures)
     public void onClickPictures(){
         loadListFragment(ListFragment.TYPES.PICTURES);
+    }
+
+    @OnClick(R.id.anime_news)
+    public void onClickNews(){
+        loadListFragment(ListFragment.TYPES.NEWS);
     }
 
     private void loadListFragment(ListFragment.TYPES type){

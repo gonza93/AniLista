@@ -53,4 +53,8 @@ public interface JikanAPI {
     @GET("person/{id}")
     Single<Seiyu> getPerson(@Path("id") int id);
 
+    @GET("genre/anime/{id}/{page}")
+    Single<Response> getGenreAnime(@Path("id") int idGenre,
+                                   @Path("page") int page);
+
 }

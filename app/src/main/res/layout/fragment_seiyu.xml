@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingBottom="10dp"
+        android:clipToPadding="false"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
 
 </LinearLayout>

@@ -82,4 +82,8 @@ public class JikanService {
     public Single<Seiyu> getPerson(int id){
         return jikanAPI.getPerson(id);
     }
+
+    public Single<Response> getGenreAnime(int idGenre, int page){
+        return jikanAPI.getGenreAnime(idGenre, page);
+    }
 }

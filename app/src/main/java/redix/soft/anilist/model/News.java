@@ -7,6 +7,7 @@ import com.google.gson.annotations.SerializedName;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 
+import java.text.DateFormat;
 import java.util.Date;
 
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
@@ -33,8 +34,8 @@ public class News {
         return title;
     }
 
-    public Date getDate() {
-        return date;
+    public String getDate() {
+        return DateFormat.getDateInstance().format(date);
     }
 
     public String getAuthorName() {

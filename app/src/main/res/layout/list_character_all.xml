@@ -30,7 +30,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="12dp"
                 android:layout_marginTop="5dp"
                 android:textSize="16sp"
                 android:textColor="@android:color/black"
@@ -40,7 +40,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="12dp"
                 android:layout_marginTop="5dp"
                 android:textSize="14sp"
                 android:text="@{`Role: ` + character.role}"/>
@@ -49,7 +49,7 @@
                 android:id="@+id/character_seiyu_list"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="12dp"
                 android:layout_marginTop="5dp"/>
 
         </LinearLayout>

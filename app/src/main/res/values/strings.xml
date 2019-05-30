@@ -6,6 +6,11 @@
     <string name="tab_account">Account</string>
     <string name="search_bar">Search for anime, manga, etc.</string>
 
+    <!-- Toolbar -->
+    <string name="openings">Openings</string>
+    <string name="endings">Endings</string>
+    <string name="active_genre">Action</string>
+
     <!-- Home -->
     <string name="today">Today</string>
     <string name="airing">Airing</string>
@@ -28,8 +33,6 @@
     <string name="expand">Expand</string>
     <string name="studio">Studio:</string>
     <string name="pictures">Pictures</string>
-    <string name="openings">Openings</string>
-    <string name="endings">Endings</string>
     <string name="characters_staff"><![CDATA[Characters & Staff]]></string>
     <string name="canon">Canon</string>
     <string name="filler">Filler</string>
@@ -55,5 +58,8 @@
     <string name="show_more">Show more</string>
     <string name="view_all">View all</string>
 
+    <!-- Filters -->
+    <string name="filters_apply">APPLY</string>
+    <string name="filters_filters">Filters</string>
 
 </resources>

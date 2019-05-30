@@ -49,37 +49,53 @@
 
             <LinearLayout
                 android:id="@+id/search_bar"
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="14dp"
-                android:layout_marginEnd="14dp"
                 android:layout_centerVertical="true"
-                android:padding="4dp"
-                android:background="@drawable/bg_search"
-                android:visibility="invisible">
+                android:layout_marginStart="14dp"
+                android:layout_marginEnd="5dp"
+                android:orientation="horizontal"
+                android:visibility="gone">
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:src="@drawable/ic_search"
-                    android:layout_marginStart="5dp"
-                    android:layout_gravity="center"
-                    android:layout_weight="12"/>
-
-                <EditText
-                    android:id="@+id/search_bar_input"
+                <LinearLayout
+                    android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_weight="1"
-                    android:background="@android:color/transparent"
-                    android:fontFamily="@font/spinnaker"
-                    android:hint="Search for anime, manga, etc."
-                    android:imeOptions="actionSearch"
-                    android:inputType="text" />
+                    android:padding="4dp"
+                    android:background="@drawable/bg_search"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_search"
+                        android:layout_marginStart="5dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="12"/>
+
+                    <EditText
+                        android:id="@+id/search_bar_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:fontFamily="@font/spinnaker"
+                        android:hint="Search for anime, manga, etc."
+                        android:imeOptions="actionSearch"
+                        android:inputType="text" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/toolbar_filters"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:src="@mipmap/ic_filter"
+                    android:layout_weight="7"/>
 
             </LinearLayout>
 
@@ -119,6 +135,25 @@
 
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/toolbar_active_genre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:layout_marginEnd="18dp"
+                android:background="@drawable/bg_activated"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:visibility="gone"
+                android:textAlignment="center"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:text="@string/active_genre"/>
+
         </RelativeLayout>
 
     </android.support.design.widget.AppBarLayout>
@@ -138,12 +173,15 @@
         android:layout_marginBottom="48dp"
         android:visibility="invisible"/>
 
+    <include layout="@layout/dialog_filters"/>
+
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:background="?android:attr/windowBackground"
         android:layout_gravity="bottom"
+        app:itemBackground="?android:attr/windowBackground"
+        android:elevation="0dp"
         app:menu="@menu/navigation" />
 
 </android.support.design.widget.CoordinatorLayout>

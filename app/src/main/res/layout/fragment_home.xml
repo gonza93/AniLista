@@ -186,7 +186,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="7dp"
                 android:fontFamily="@font/spinnaker"
-                android:text="@string/popular"
+                android:text="@string/airing"
                 android:textColor="@android:color/black"
                 android:textSize="22sp"
                 android:textStyle="bold" />
@@ -198,7 +198,7 @@
             android:layout_height="wrap_content">
 
             <LinearLayout
-                android:id="@+id/home_loader_popular"
+                android:id="@+id/home_loader_airing"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
@@ -228,7 +228,7 @@
             </LinearLayout>
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/home_popular_list"
+                android:id="@+id/home_airing_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingStart="10dp"
@@ -339,7 +339,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="7dp"
                 android:fontFamily="@font/spinnaker"
-                android:text="@string/airing"
+                android:text="@string/popular"
                 android:textColor="@android:color/black"
                 android:textSize="22sp"
                 android:textStyle="bold" />
@@ -351,7 +351,7 @@
             android:layout_height="wrap_content">
 
             <LinearLayout
-                android:id="@+id/home_loader_airing"
+                android:id="@+id/home_loader_popular"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
@@ -381,7 +381,7 @@
             </LinearLayout>
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/home_airing_list"
+                android:id="@+id/home_popular_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingStart="10dp"
