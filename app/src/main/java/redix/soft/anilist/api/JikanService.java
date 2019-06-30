@@ -1,5 +1,7 @@
 package redix.soft.anilist.api;
 
+import java.util.Map;
+
 import redix.soft.anilist.model.Anime;
 import redix.soft.anilist.model.Response;
 import redix.soft.anilist.model.ResponseSeiyu;
@@ -25,6 +27,10 @@ public class JikanService {
 
     public Single<Response> search(String type, String query, int page, int limit){
         return jikanAPI.search(type, query, page, limit);
+    }
+
+    public Single<Response> search(String type, Map<String, String> params){
+        return jikanAPI.search(type, params);
     }
 
     public Single<Anime> getAnimeInfo(int id){

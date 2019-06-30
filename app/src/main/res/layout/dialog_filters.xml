@@ -10,80 +10,367 @@
     app:behavior_hideable="true"
     app:behavior_peekHeight="96dp"
     android:clickable="true"
-    android:focusable="true">
+    android:focusable="true"
+    android:background="@drawable/bg_rounded_4">
 
-    <LinearLayout
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/bg_rounded_4"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/filters_main_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:fontFamily="@font/spinnaker"
-            android:padding="5dp"
-            android:textAlignment="center"
-            android:textSize="22sp"
-            android:textColor="@android:color/black"
-            android:textStyle="bold"
-            android:layout_gravity="center"
-            android:text="@string/filters_filters"/>
+        android:layout_height="match_parent">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:orientation="horizontal">
-
-            <View
-                android:layout_width="5dp"
-                android:layout_height="16dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginStart="7dp"
-                android:background="@drawable/bg_activated"/>
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <TextView
+                android:id="@+id/filters_main_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:fontFamily="@font/spinnaker"
+                android:padding="5dp"
+                android:textAlignment="center"
+                android:textSize="22sp"
+                android:textColor="@android:color/black"
+                android:textStyle="bold"
+                android:layout_gravity="center"
+                android:text="@string/filters_filters"/>
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="7dp"
-                android:fontFamily="@font/spinnaker"
-                android:text="@string/genres"
-                android:textColor="@android:color/black"
-                android:textSize="22sp"
-                android:textStyle="bold" />
+                android:layout_marginStart="10dp"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="5dp"
+                    android:layout_height="16dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginStart="7dp"
+                    android:background="@drawable/bg_activated"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="7dp"
+                    android:fontFamily="@font/spinnaker"
+                    android:text="@string/genres"
+                    android:textColor="@android:color/black"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/filters_list_genre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:paddingStart="15dp"
+                android:clipToPadding="false"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="5dp"
+                    android:layout_height="16dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginStart="7dp"
+                    android:background="@drawable/bg_activated"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="7dp"
+                    android:fontFamily="@font/spinnaker"
+                    android:text="@string/score"
+                    android:textColor="@android:color/black"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/filters_score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:fontFamily="@font/spinnaker"
+                    android:text="@string/filters_score"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp"
+                    android:textStyle="bold"/>
+
+            </LinearLayout>
+
+            <org.adw.library.widgets.discreteseekbar.DiscreteSeekBar
+                android:id="@+id/filters_score_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="25dp"
+                app:dsb_min="0"
+                app:dsb_max="10"
+                app:dsb_indicatorColor="@color/colorPrimary"
+                app:dsb_progressColor="@color/colorPrimary"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp">
+
+                        <View
+                            android:layout_width="5dp"
+                            android:layout_height="16dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginStart="7dp"
+                            android:background="@drawable/bg_activated"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="7dp"
+                            android:fontFamily="@font/spinnaker"
+                            android:text="@string/filters_order"
+                            android:textColor="@android:color/black"
+                            android:textSize="22sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:tag="title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/filters_order_title"
+                            android:textColor="@color/colorGrayText"
+                            android:paddingStart="10dp"
+                            android:paddingEnd="10dp"
+                            android:paddingTop="4dp"
+                            android:paddingBottom="4dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginStart="20dp"
+                            android:onClick="onClickFiltersOrderBy"
+                            android:background="@drawable/drawable_genre"/>
+
+                        <TextView
+                            android:tag="startdate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/filters_order_startdate"
+                            android:textColor="@color/colorGrayText"
+                            android:paddingStart="10dp"
+                            android:paddingEnd="10dp"
+                            android:paddingTop="4dp"
+                            android:paddingBottom="4dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginStart="20dp"
+                            android:onClick="onClickFiltersOrderBy"
+                            android:background="@drawable/drawable_genre"/>
+
+                        <TextView
+                            android:tag="enddate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/filters_order_enddate"
+                            android:textColor="@color/colorGrayText"
+                            android:paddingStart="10dp"
+                            android:paddingEnd="10dp"
+                            android:paddingTop="4dp"
+                            android:paddingBottom="4dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginStart="20dp"
+                            android:onClick="onClickFiltersOrderBy"
+                            android:background="@drawable/drawable_genre"/>
+
+                        <TextView
+                            android:tag="score"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/filters_order_score"
+                            android:textColor="@color/colorGrayText"
+                            android:paddingStart="10dp"
+                            android:paddingEnd="10dp"
+                            android:paddingTop="4dp"
+                            android:paddingBottom="4dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginStart="20dp"
+                            android:onClick="onClickFiltersOrderBy"
+                            android:background="@drawable/drawable_genre"/>
+
+                        <TextView
+                            android:tag="type"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/filters_order_type"
+                            android:textColor="@color/colorGrayText"
+                            android:paddingStart="10dp"
+                            android:paddingEnd="10dp"
+                            android:paddingTop="4dp"
+                            android:paddingBottom="4dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginStart="20dp"
+                            android:onClick="onClickFiltersOrderBy"
+                            android:background="@drawable/drawable_genre"/>
+
+                        <TextView
+                            android:tag="episodes"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/filters_order_episodes"
+                            android:textColor="@color/colorGrayText"
+                            android:paddingStart="10dp"
+                            android:paddingEnd="10dp"
+                            android:paddingTop="4dp"
+                            android:paddingBottom="4dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginStart="20dp"
+                            android:onClick="onClickFiltersOrderBy"
+                            android:background="@drawable/drawable_genre"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp">
+
+                        <View
+                            android:layout_width="5dp"
+                            android:layout_height="16dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginStart="7dp"
+                            android:background="@drawable/bg_activated"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="7dp"
+                            android:fontFamily="@font/spinnaker"
+                            android:text="@string/filters_sort"
+                            android:textColor="@android:color/black"
+                            android:textSize="22sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/filters_sort_asc"
+                            android:textColor="@color/colorGrayText"
+                            android:paddingStart="10dp"
+                            android:paddingEnd="10dp"
+                            android:paddingTop="4dp"
+                            android:paddingBottom="4dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginStart="20dp"
+                            android:background="@drawable/drawable_genre"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/filters_sort_desc"
+                            android:textColor="@color/colorGrayText"
+                            android:paddingStart="10dp"
+                            android:paddingEnd="10dp"
+                            android:paddingTop="4dp"
+                            android:paddingBottom="4dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginStart="20dp"
+                            android:background="@drawable/drawable_genre"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
 
         </LinearLayout>
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/filters_list_genre"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="5dp"
-            android:paddingStart="15dp"
-            android:clipToPadding="false"/>
+    </android.support.v4.widget.NestedScrollView>
 
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/filters_apply"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="54dp"
-        android:paddingStart="50dp"
-        android:paddingEnd="50dp"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
-        android:background="@drawable/bg_button"
-        android:elevation="3dp"
-        android:fontFamily="@font/spinnaker"
-        android:textColor="@android:color/white"
-        android:textSize="21sp"
-        android:textStyle="bold"
-        android:text="@string/filters_apply"/>
+        android:layout_marginBottom="52dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/filters_clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="40dp"
+            android:paddingEnd="40dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/bg_rounded"
+            android:elevation="2dp"
+            android:fontFamily="@font/spinnaker"
+            android:textSize="21sp"
+            android:textStyle="bold"
+            android:text="@string/filters_clear"/>
+
+        <TextView
+            android:id="@+id/filters_apply"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="40dp"
+            android:paddingEnd="40dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/bg_button"
+            android:elevation="2dp"
+            android:fontFamily="@font/spinnaker"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:text="@string/filters_apply"/>
+
+    </LinearLayout>
+
+
 
 </RelativeLayout>

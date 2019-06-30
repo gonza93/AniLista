@@ -21,7 +21,7 @@
             android:paddingBottom="2dp"
             android:background="@{genre.selected ? @drawable/drawable_genre_selected : @drawable/drawable_genre}"
             android:textSize="15sp"
-            android:textColor="@{genre.selected ? @color/colorPrimary : @color/colorGray}"
+            android:textColor="@{genre.selected ? @color/colorPrimary : @color/colorGrayText}"
             android:text="@{genre.name}"/>
 
     </LinearLayout>

@@ -95,6 +95,13 @@ public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.ViewHolder>{
                     genre.select(!genre.isSelected());
                     notifyItemChanged(position);
                 }
+                else if(layout == R.layout.list_genre){
+                    ListFragment fragment = new ListFragment();
+                    fragment.setType(ListFragment.TYPES.GENRE);
+                    fragment.setGenre(genre);
+
+                    ((MainActivity) context).loadFragment(fragment, ListFragment.TAG);
+                }
             }
         });
     }
@@ -116,7 +123,8 @@ public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.ViewHolder>{
     }
 
     public void clear() {
-        genres.clear();
+        for(Genre g : genres)
+            g.select(false);
         notifyDataSetChanged();
     }
 

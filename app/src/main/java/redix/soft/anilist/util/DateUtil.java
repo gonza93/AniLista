@@ -1,6 +1,9 @@
 package redix.soft.anilist.util;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class DateUtil {
 
@@ -39,6 +42,11 @@ public class DateUtil {
                 break;
         }
         return season;
+    }
+
+    public static String getDayOfWeek(){
+        SimpleDateFormat sdf = new SimpleDateFormat("EEEE", Locale.ENGLISH);
+        return sdf.format(new Date()).toLowerCase();
     }
 
 }

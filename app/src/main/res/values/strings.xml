@@ -57,9 +57,25 @@
     <string name="voice_acting_roles">Voice acting roles</string>
     <string name="show_more">Show more</string>
     <string name="view_all">View all</string>
+    <string name="not_available">N/A</string>
 
     <!-- Filters -->
     <string name="filters_apply">APPLY</string>
     <string name="filters_filters">Filters</string>
+    <string name="score">Score</string>
+    <string name="filters_score">Not selected</string>
+    <string name="filters_score_near">Near</string>
+    <string name="filters_result">Filtered results</string>
+    <string name="filters_clear">CLEAR</string>
+    <string name="filters_order">Order by</string>
+    <string name="filters_sort">Sort by</string>
+    <string name="filters_order_title">Title</string>
+    <string name="filters_order_startdate">Start Date</string>
+    <string name="filters_order_enddate">End Date</string>
+    <string name="filters_order_score">Score</string>
+    <string name="filters_order_type">Type</string>
+    <string name="filters_order_episodes">Episodes</string>
+    <string name="filters_sort_asc">Ascending</string>
+    <string name="filters_sort_desc">Descending</string>
 
 </resources>

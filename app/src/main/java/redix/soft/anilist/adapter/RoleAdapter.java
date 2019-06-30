@@ -30,7 +30,6 @@ public class RoleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_ITEM = 1;
-    private static final int TYPE_FOOTER = 2;
 
     public RoleAdapter(Context context){
         this.context = context;
@@ -80,29 +79,6 @@ public class RoleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         }
     }
 
-    public class ViewFooterHolder extends RecyclerView.ViewHolder{
-
-        public ViewFooterHolder(View itemView) {
-            super(itemView);
-            itemView.setOnClickListener(v -> {
-                hideMoreButton();
-
-                boolean hideMoreButton;
-                int rolesToFetch = 50;
-                List<Role> rolesToAdd;
-                if(hideMoreButton = (roles.size() - 1) + 50 > allRoles.size())
-                    rolesToFetch = allRoles.size() - (roles.size() - 1);
-
-                rolesToAdd = allRoles.subList(roles.size(), roles.size() + rolesToFetch);
-
-                addRoles(rolesToAdd);
-
-                if(!hideMoreButton)
-                    showMoreButton();
-            });
-        }
-    }
-
     @Override
     public int getItemViewType(int position) {
         return position == 0 ? TYPE_HEADER : TYPE_ITEM;
@@ -120,10 +96,6 @@ public class RoleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             ListRoleBinding binding = DataBindingUtil.inflate(inflater, R.layout.list_role, parent, false);
             return new ViewHolder(binding);
         }
-        /*else {
-            View view = inflater.inflate(R.layout.list_role_footer, parent, false);
-            return new ViewFooterHolder(view);
-        }*/
     }
 
     @Override

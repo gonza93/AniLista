@@ -18,6 +18,7 @@
     <color name="colorDim">#80505050</color>
     <color name="colorGray">#A0A0A0</color>
     <color name="colorGray2">#AFAFAF</color>
+    <color name="colorGrayText">#8A8A8A</color>
 
     <drawable name="drawable_genre">@drawable/bg_search</drawable>
     <drawable name="drawable_genre_selected">@drawable/bg_primary</drawable>

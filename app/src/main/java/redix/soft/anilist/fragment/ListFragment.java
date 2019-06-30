@@ -1,6 +1,7 @@
 package redix.soft.anilist.fragment;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -50,11 +51,13 @@ public class ListFragment extends Fragment{
 
     private Anime anime;
     private List<Character> characters;
+    private Genre genre;
 
     public void setAnime(Anime anime) {
         this.anime = anime;
     }
     public void setCharacters(List<Character> characters) { this.characters = characters; }
+    public void setGenre(Genre genre) { this.genre = genre; }
 
     public TYPES getType() {
         return type;
@@ -91,7 +94,7 @@ public class ListFragment extends Fragment{
         if (type.equals(TYPES.NEWS))
             populateNews();
         if (type.equals(TYPES.GENRE))
-            populateGenre(1);
+            populateGenre(genre);
 
         return view;
     }
@@ -100,6 +103,9 @@ public class ListFragment extends Fragment{
         progress.setVisibility(View.GONE);
         EpisodeAdapter episodeAdapter = new EpisodeAdapter(new ArrayList<>(), getContext());
         list.setAdapter(episodeAdapter);
+
+        loading = true;
+        ((EpisodeAdapter) list.getAdapter()).startLoad();
 
         list.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -113,7 +119,9 @@ public class ListFragment extends Fragment{
 
                     if (!loading) {
                         if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
-                            fetchEpisodes();
+                            loading = true;
+                            ((EpisodeAdapter) list.getAdapter()).startLoad();
+                            new Handler().postDelayed(() -> fetchEpisodes(), 4000);
                         }
                     }
                 }
@@ -122,9 +130,8 @@ public class ListFragment extends Fragment{
 
         fetchEpisodes();
     }
+
     private void fetchEpisodes(){
-        ((EpisodeAdapter) list.getAdapter()).startLoad();
-        loading = true;
         new JikanService()
                 .getAnimeEpisodes(anime.getId(), nextPage)
                 .subscribeOn(Schedulers.io())
@@ -141,7 +148,11 @@ public class ListFragment extends Fragment{
                             else
                                 nextPage = 0;
                             },
-                        throwable -> Log.d("ERROR", throwable.getMessage())
+                        throwable -> {
+                            Log.d("ERROR", throwable.getMessage());
+                            loading = false;
+                            ((EpisodeAdapter) list.getAdapter()).endLoad();
+                        }
                 );
     }
 
@@ -282,14 +293,15 @@ public class ListFragment extends Fragment{
                 });
     }
 
-    public void populateGenre(int id){
+    public void populateGenre(Genre genre){
         progress.setVisibility(View.VISIBLE);
+        ((MainActivity) getContext()).getToolbarGenre().setText(genre.getName());
         AnimeAdapter adapter = new AnimeAdapter(new ArrayList<>(), getContext(), R.layout.list_anime_genre);
         list.setLayoutManager(new GridLayoutManager(getContext(), 3));
         list.setAdapter(adapter);
 
         new JikanService()
-                .getGenreAnime(id, 1)
+                .getGenreAnime(genre.getId(), 1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(response -> {

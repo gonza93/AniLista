@@ -110,9 +110,9 @@ public class AnimeFragment extends Fragment {
         recommendationsList.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         recommendationsList.setAdapter(recommendationsAdapter);
 
-        getAnimeInfo(animeId);
-        getAnimeCharacters(animeId);
-        new Handler().postDelayed(() -> getAnimeRecommendations(animeId), 2000);
+        new Handler().postDelayed(() -> getAnimeInfo(animeId), 4000);
+        new Handler().postDelayed(() -> getAnimeCharacters(animeId), 8000);
+        new Handler().postDelayed(() -> getAnimeRecommendations(animeId), 12000);
 
         return view;
     }

@@ -3,6 +3,7 @@ package redix.soft.anilist.fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,15 +14,20 @@ import android.view.ViewGroup;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import redix.soft.anilist.R;
+import redix.soft.anilist.activity.MainActivity;
 import redix.soft.anilist.adapter.AnimeAdapter;
 import redix.soft.anilist.api.JikanService;
 import redix.soft.anilist.model.Anime;
 import redix.soft.anilist.model.Response;
+import redix.soft.anilist.util.ElevationRecyclerView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -34,6 +40,20 @@ public class SearchFragment extends Fragment {
     @BindView(R.id.search_progress) View progress;
 
     private AnimeAdapter animeAdapter;
+    private HashMap<String, String> searchParams;
+
+    public void setQuery(String query) {
+        searchParams.put("q", query);
+    }
+    public HashMap<String, String> getSearchParams() {
+        return searchParams;
+    }
+    public void clearSearchParams(){
+        String q = searchParams.get("q");
+        searchParams.clear();
+        searchParams.put("q", q);
+        searchAnime();
+    }
 
     public static SearchFragment getInstance(){
         if(instance == null)
@@ -53,17 +73,22 @@ public class SearchFragment extends Fragment {
         listAnime.setLayoutManager(new LinearLayoutManager(getContext()));
         listAnime.setAdapter(animeAdapter);
 
-        searchAnime("Air");
+        searchParams = new HashMap<>();
+        searchParams.put("q", "Air");
+        searchParams.put("page", "1");
+        searchParams.put("limit", "30");
+
+        searchAnime();
 
         return view;
     }
 
-    public void searchAnime(String query){
+    public void searchAnime(){
         animeAdapter.clear();
         progress.setVisibility(View.VISIBLE);
 
         new JikanService()
-                .search("anime", query, 1, 30)
+                .search("anime", searchParams)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
