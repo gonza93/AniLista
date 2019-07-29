@@ -6,6 +6,7 @@ import redix.soft.anilist.model.Anime;
 import redix.soft.anilist.model.Response;
 import redix.soft.anilist.model.ResponseSeiyu;
 import redix.soft.anilist.model.Seiyu;
+import redix.soft.anilist.model.User;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -14,6 +15,7 @@ import rx.Single;
 public class JikanService {
 
     private JikanAPI jikanAPI;
+    public static int apiDelay = 2000;
 
     public JikanService(){
         Retrofit retrofit = new Retrofit.Builder()
@@ -91,5 +93,9 @@ public class JikanService {
 
     public Single<Response> getGenreAnime(int idGenre, int page){
         return jikanAPI.getGenreAnime(idGenre, page);
+    }
+
+    public Single<User> getUser(String username){
+        return jikanAPI.getUser(username);
     }
 }

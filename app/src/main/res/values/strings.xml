@@ -78,4 +78,12 @@
     <string name="filters_sort_asc">Ascending</string>
     <string name="filters_sort_desc">Descending</string>
 
+    <!-- User -->
+    <string name="anime_stats">Anime stats</string>
+    <string name="completed">Completed</string>
+    <string name="watching">Watching</string>
+    <string name="anime_list">Anime List</string>
+    <string name="manga_list">Manga List</string>
+    <string name="favorites">Favorites</string>
+
 </resources>

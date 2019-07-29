@@ -74,7 +74,7 @@ public class AnimationUtil {
         view.startAnimation(anim);
     }
 
-    public static void switchFragments(View fragmentToHide, View fragmentToShow, Context context){
+    public static void switchFragments(View fragmentToHide, View fragmentToShow){
         AlphaAnimation anim = new AlphaAnimation(1.0f, 0.0f);
         anim.setDuration(150);
         anim.setFillAfter(false);

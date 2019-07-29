@@ -6,6 +6,7 @@ import redix.soft.anilist.model.Anime;
 import redix.soft.anilist.model.Response;
 import redix.soft.anilist.model.ResponseSeiyu;
 import redix.soft.anilist.model.Seiyu;
+import redix.soft.anilist.model.User;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -65,5 +66,8 @@ public interface JikanAPI {
     @GET("genre/anime/{id}/{page}")
     Single<Response> getGenreAnime(@Path("id") int idGenre,
                                    @Path("page") int page);
+
+    @GET("user/{username}")
+    Single<User> getUser(@Path("username") String username);
 
 }

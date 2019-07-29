@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -49,9 +50,9 @@ public class HomeFragment extends Fragment {
         listHome.setAdapter(homeAdapter);
 
         getScheduleAnimes();
-        new Handler().postDelayed(this::getAiringAnimes, 4000);
-        new Handler().postDelayed(this::getPopularPeople, 8000);
-        new Handler().postDelayed(this::getPopularAnimes, 12000);
+        new Handler().postDelayed(this::getAiringAnimes, JikanService.apiDelay);
+        new Handler().postDelayed(this::getPopularPeople, JikanService.apiDelay * 2);
+        new Handler().postDelayed(this::getPopularAnimes, JikanService.apiDelay * 3);
 
         return view;
     }
@@ -110,35 +111,4 @@ public class HomeFragment extends Fragment {
             homeAdapter.setPopularItems(subList);
     }
 
-    /*@OnClick(R.id.home_ranking)
-    public void onClickRanking(){
-        ListFragment fragment = new ListFragment();
-        fragment.setType(ListFragment.TYPES.RANKING);
-
-        ((MainActivity) getContext()).loadFragment(fragment, ListFragment.TAG);
-    }
-
-    @OnClick(R.id.home_upcoming)
-    public void onClickUpcoming(){
-        ListFragment fragment = new ListFragment();
-        fragment.setType(ListFragment.TYPES.UPCOMING);
-
-        ((MainActivity) getContext()).loadFragment(fragment, ListFragment.TAG);
-    }
-
-    @OnClick(R.id.home_season)
-    public void onClickSeason(){
-        SeasonFragment fragment = new SeasonFragment();
-
-        ((MainActivity) getContext()).loadFragment(fragment, SeasonFragment.TAG);
-    }
-
-    @OnClick(R.id.home_genres)
-    public void onClickGenres(){
-        ListFragment fragment = new ListFragment();
-        fragment.setType(ListFragment.TYPES.GENRE);
-        fragment.setGenre(new Genre(1, "Action"));
-
-        ((MainActivity) getContext()).loadFragment(fragment, ListFragment.TAG);
-    }*/
 }

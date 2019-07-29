@@ -13,7 +13,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import redix.soft.anilist.R;
+import redix.soft.anilist.activity.MainActivity;
+import redix.soft.anilist.fragment.ListFragment;
+import redix.soft.anilist.fragment.SeasonFragment;
 import redix.soft.anilist.model.Anime;
+import redix.soft.anilist.model.Genre;
 import redix.soft.anilist.model.Seiyu;
 
 public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
@@ -51,7 +55,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         }
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder{
 
         public ViewHolder(View view){
             super(view);
@@ -93,6 +97,32 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
 
             SnapHelper snapHelper = new PagerSnapHelper();
             snapHelper.attachToRecyclerView(scheduleList);
+        }
+        if (holder.getItemViewType() == TYPE_MENU){
+            holder.findView(R.id.home_ranking).setOnClickListener(view -> {
+                ListFragment fragment = new ListFragment();
+                fragment.setType(ListFragment.TYPES.RANKING);
+
+                ((MainActivity) context).loadFragment(fragment, ListFragment.TAG);
+            });
+            holder.findView(R.id.home_upcoming).setOnClickListener(view -> {
+                ListFragment fragment = new ListFragment();
+                fragment.setType(ListFragment.TYPES.UPCOMING);
+
+                ((MainActivity) context).loadFragment(fragment, ListFragment.TAG);
+            });
+            holder.findView(R.id.home_season).setOnClickListener(view -> {
+                SeasonFragment fragment = new SeasonFragment();
+
+                ((MainActivity) context).loadFragment(fragment, SeasonFragment.TAG);
+            });
+            holder.findView(R.id.home_genres).setOnClickListener(view -> {
+                ListFragment fragment = new ListFragment();
+                fragment.setType(ListFragment.TYPES.GENRE);
+                fragment.setGenre(new Genre(1, "Action"));
+
+                ((MainActivity) context).loadFragment(fragment, ListFragment.TAG);
+            });
         }
         if (holder.getItemViewType() == TYPE_AIRING){
             loaderAiring = holder.findView(R.id.home_loader_airing);

@@ -42,6 +42,7 @@ import redix.soft.anilist.fragment.AnimeFragment;
 import redix.soft.anilist.fragment.HomeFragment;
 import redix.soft.anilist.fragment.ListFragment;
 import redix.soft.anilist.fragment.SearchFragment;
+import redix.soft.anilist.fragment.UserFragment;
 import redix.soft.anilist.model.Genre;
 import redix.soft.anilist.util.ChipsLayoutManagerHelper;
 import redix.soft.anilist.util.NavigationUtil;
@@ -94,13 +95,6 @@ public class MainActivity extends AppCompatActivity
 
         navigationUtil = new NavigationUtil(this);
 
-        coordinatorLayout.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
-            @Override
-            public void onLayoutChange(View view, int i, int i1, int i2, int i3, int i4, int i5, int i6, int i7) {
-
-            }
-        });
-
         navigation.setOnNavigationItemSelectedListener(this);
         navigation.setSelectedItemId(R.id.navigation_home);
 
@@ -121,6 +115,7 @@ public class MainActivity extends AppCompatActivity
                 navigationUtil.navigateTo(SearchFragment.getInstance(), SearchFragment.TAG, item.getItemId());
                 break;
             case R.id.navigation_account:
+                navigationUtil.navigateTo(UserFragment.getInstance(), UserFragment.TAG, item.getItemId());
                 break;
         }
 

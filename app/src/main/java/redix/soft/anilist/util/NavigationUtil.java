@@ -16,6 +16,7 @@ import redix.soft.anilist.fragment.AnimeFragment;
 import redix.soft.anilist.fragment.HomeFragment;
 import redix.soft.anilist.fragment.ListFragment;
 import redix.soft.anilist.fragment.SearchFragment;
+import redix.soft.anilist.fragment.UserFragment;
 
 public class NavigationUtil {
 
@@ -66,7 +67,7 @@ public class NavigationUtil {
     private void switchTab(int tabId){
         View fragmentToShow = getSelectedFragmentView(tabId);
         View fragmentToHide = getSelectedFragmentView(lastSelectedTab);
-        AnimationUtil.switchFragments(fragmentToHide, fragmentToShow, activity);
+        AnimationUtil.switchFragments(fragmentToHide, fragmentToShow);
     }
 
     private void fragmentTransaction(Fragment fragment, String tag, ACTION action, int tabId){
@@ -101,7 +102,7 @@ public class NavigationUtil {
             case R.id.navigation_search:
                 return activity.findViewById(R.id.fragment_container_search);
             default:
-                return activity.findViewById(R.id.fragment_container_home);
+                return activity.findViewById(R.id.fragment_container_account);
         }
     }
 
@@ -111,6 +112,8 @@ public class NavigationUtil {
 
         if(tag.equals(HomeFragment.TAG) && fragmentStacks.get(TAB.HOME).size() <= 1)
             backbutton.setImageResource(R.mipmap.ic_main);
+        else if (tag.equals(UserFragment.TAG))
+            backbutton.setImageResource(R.mipmap.ic_tab_search);
         else
             backbutton.setImageResource(R.drawable.ic_back);
 
@@ -155,6 +158,9 @@ public class NavigationUtil {
         }
         if(fragment instanceof AnimeFragment)
             activity.getToolbarTitleView().setText(AnimeFragment.TAG);
+        if(fragment instanceof UserFragment){
+            //activity.getToolbarTitleView().setText("User ");
+        }
 
         activity.getToolbarTitleView().setText(title);
 

@@ -41,7 +41,7 @@ import rx.schedulers.Schedulers;
 
 public class ListFragment extends Fragment{
 
-    public enum TYPES { THEMES, EPISODES, PICTURES, NEWS, CHARACTERS, RANKING, UPCOMING, GENRE }
+    public enum TYPES { THEMES, EPISODES, PICTURES, NEWS, CHARACTERS, RANKING, UPCOMING, GENRE, USER }
     public static final String TAG = "ListFragment";
 
     private TYPES type;
@@ -95,6 +95,8 @@ public class ListFragment extends Fragment{
             populateNews();
         if (type.equals(TYPES.GENRE))
             populateGenre(genre);
+        if (type.equals(TYPES.USER))
+            populateUser();
 
         return view;
     }
@@ -308,6 +310,10 @@ public class ListFragment extends Fragment{
                     progress.setVisibility(View.GONE);
                     ((AnimeAdapter) list.getAdapter()).setDataSet(response.getAnimes());
                 });
+    }
+
+    private void populateUser() {
+        progress.setVisibility(View.GONE);
     }
 
 }
