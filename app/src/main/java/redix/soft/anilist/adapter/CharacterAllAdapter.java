@@ -8,16 +8,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-
-import com.beloo.widget.chipslayoutmanager.ChipsLayoutManager;
 
 import java.util.List;
 
 import redix.soft.anilist.R;
 import redix.soft.anilist.databinding.ListCharacterAllBinding;
+import redix.soft.anilist.listener.ItemClickListener;
 import redix.soft.anilist.model.Character;
-import redix.soft.anilist.util.ChipsLayoutManagerHelper;
 
 public class CharacterAllAdapter extends RecyclerView.Adapter<CharacterAllAdapter.ViewHolder> {
 

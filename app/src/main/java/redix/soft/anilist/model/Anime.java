@@ -3,7 +3,10 @@ package redix.soft.anilist.model;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.databinding.BindingAdapter;
+import android.support.v4.content.ContextCompat;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.gson.annotations.SerializedName;
 import com.squareup.picasso.MemoryPolicy;
@@ -13,6 +16,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
+import redix.soft.anilist.R;
 
 public class Anime extends BaseObservable {
 
@@ -46,6 +50,14 @@ public class Anime extends BaseObservable {
     @SerializedName("ending_themes")
     private List<String> endingThemes;
     private List<Character> characters;
+
+    //User anime list
+    @SerializedName("watching_status")
+    private int watchingStatus;
+    @SerializedName("watched_episodes")
+    private int watchedEpisodes;
+    @SerializedName("total_episodes")
+    private int totalEpisodes;
 
     public int getId() {
         return id;
@@ -128,8 +140,32 @@ public class Anime extends BaseObservable {
         return related;
     }
 
+    public int getWatchingStatus() {
+        return watchingStatus;
+    }
+
+    public int getWatchedEpisodes() {
+        return watchedEpisodes;
+    }
+
+    public int getTotalEpisodes() {
+        return totalEpisodes;
+    }
+
     public void setCharacters(List<Character> characters) {
         this.characters = characters;
+    }
+
+    public void setOpeningThemes(List<String> openingThemes) {
+        this.openingThemes = openingThemes;
+    }
+
+    public void setEndingThemes(List<String> endingThemes) {
+        this.endingThemes = endingThemes;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @BindingAdapter("loadThumbnail")
@@ -152,5 +188,36 @@ public class Anime extends BaseObservable {
                 .transform(new RoundedCornersTransformation(25, 0))
                 .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
                 .into(view);
+    }
+
+    @BindingAdapter("setAnimeStatus")
+    public static void setAnimeStatus(TextView view, int status) {
+        switch (status){
+            case 1: //Watching
+                view.setBackgroundResource(R.drawable.bg_canon);
+                view.setTextColor(ContextCompat.getColor(view.getContext(), R.color.colorCanonText));
+                view.setText(R.string.watching);
+                break;
+            case 2: //Completed
+                view.setBackgroundResource(R.drawable.bg_primary);
+                view.setTextColor(ContextCompat.getColor(view.getContext(), R.color.colorPrimary));
+                view.setText(R.string.completed);
+                break;
+            case 3: //On Hold
+                view.setBackgroundResource(R.drawable.bg_yellow);
+                view.setTextColor(ContextCompat.getColor(view.getContext(), R.color.colorYellowText));
+                view.setText(R.string.on_hold);
+                break;
+            case 4: //Dropped
+                view.setBackgroundResource(R.drawable.bg_red);
+                view.setTextColor(ContextCompat.getColor(view.getContext(), R.color.colorRedText));
+                view.setText(R.string.dropped);
+                break;
+            case 6: //Plan to Watch
+                view.setBackgroundResource(R.drawable.bg_gray);
+                view.setTextColor(ContextCompat.getColor(view.getContext(), R.color.colorGrayText));
+                view.setText(R.string.plan_to_watch);
+                break;
+        }
     }
 }

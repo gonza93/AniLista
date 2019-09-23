@@ -16,6 +16,7 @@ import redix.soft.anilist.activity.MainActivity;
 import redix.soft.anilist.databinding.ListCharacterSeiyuBinding;
 import redix.soft.anilist.databinding.ListSeiyuBinding;
 import redix.soft.anilist.fragment.SeiyuFragment;
+import redix.soft.anilist.listener.ItemClickListener;
 import redix.soft.anilist.model.Seiyu;
 
 public class SeiyuAdapter extends RecyclerView.Adapter<SeiyuAdapter.ViewHolder> {
@@ -86,6 +87,11 @@ public class SeiyuAdapter extends RecyclerView.Adapter<SeiyuAdapter.ViewHolder> 
     }
 
     public void setDataSet(List<Seiyu> seiyus){
+        this.seiyus = seiyus;
+        notifyDataSetChanged();
+    }
+
+    public void addSeiyu(List<Seiyu> seiyus){
         this.seiyus.addAll(seiyus);
         notifyDataSetChanged();
     }

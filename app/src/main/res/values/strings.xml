@@ -4,12 +4,13 @@
     <string name="tab_home">Home</string>
     <string name="tab_search">Search</string>
     <string name="tab_account">Account</string>
-    <string name="search_bar">Search for anime, manga, etc.</string>
 
     <!-- Toolbar -->
     <string name="openings">Openings</string>
     <string name="endings">Endings</string>
     <string name="active_genre">Action</string>
+    <string name="search_username">Enter username</string>
+    <string name="search_bar">Search for anime, manga, etc.</string>
 
     <!-- Home -->
     <string name="today">Today</string>
@@ -17,6 +18,7 @@
     <string name="popular">Popular</string>
     <string name="ranking">Ranking</string>
     <string name="upcoming">Upcoming</string>
+    <string name="top_people">Top people</string>
     <string name="season">Season</string>
     <string name="genres">Genres</string>
 
@@ -85,5 +87,23 @@
     <string name="anime_list">Anime List</string>
     <string name="manga_list">Manga List</string>
     <string name="favorites">Favorites</string>
+    <string name="anime">Anime</string>
+    <string name="manga">Manga</string>
+    <string name="characters">Characters</string>
+    <string name="people">People</string>
+    <string name="user_score_format">%.0f</string>
+    <string name="user_intro_label">Enter your MAL user above to see all your info.</string>
+    <string name="user_save_1">Save as current user</string>
+    <string name="user_save_2">Current user</string>
+    <string name="user_not_found">We couldn\'t find the user.</string>
+
+    <!-- List -->
+    <string name="all">All</string>
+    <string name="on_hold">On Hold</string>
+    <string name="dropped">Dropped</string>
+    <string name="plan_to_watch">Plan to Watch</string>
+
+    <!-- Misc -->
+    <string name="preference_file_key">.PREFERENCE_FILE_KEY</string>
 
 </resources>

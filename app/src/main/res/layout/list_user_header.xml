@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:bind="http://schemas.android.com/apk/res-auto">
+<layout
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
         <variable
@@ -9,27 +10,25 @@
     </data>
 
     <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="180dp"
+            android:layout_height="160dp"
             android:background="@drawable/bg_rounded_primary"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="5dp"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="340dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:layout_gravity="center"
+                android:layout_marginTop="7dp"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -37,16 +36,23 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <ImageView
-                        android:layout_width="110dp"
-                        android:layout_height="200dp"
-                        android:src="@color/colorGray"
-                        bind:loadUserAvatar="@{user.imageURL}"/>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        xmlns:bind="http://schemas.android.com/apk/res-auto">
+
+                        <ImageView
+                            android:layout_width="110dp"
+                            android:layout_height="190dp"
+                            android:src="@color/colorGray"
+                            bind:loadUserAvatar="@{user.imageURL}"/>
+
+                    </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
+                        android:layout_marginStart="10dp"
                         android:orientation="vertical">
 
                         <TextView
@@ -219,30 +225,12 @@
 
             </LinearLayout>
 
-            <LinearLayout
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:orientation="horizontal">
-
-                <View
-                    android:layout_width="5dp"
-                    android:layout_height="16dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginStart="7dp"
-                    android:background="@drawable/bg_activated"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="7dp"
-                    android:fontFamily="@font/spinnaker"
-                    android:text="@string/favorites"
-                    android:textColor="@android:color/black"
-                    android:textSize="22sp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
+                android:text="@{user.about}"
+                android:textSize="15sp"
+                android:layout_margin="12dp"/>
 
         </LinearLayout>
 

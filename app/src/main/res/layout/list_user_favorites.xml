@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="5dp"
+            android:layout_height="16dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="7dp"
+            android:background="@drawable/bg_activated"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="7dp"
+            android:fontFamily="@font/spinnaker"
+            android:text="@string/favorites"
+            android:textColor="@android:color/black"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="29dp"
+        android:layout_marginTop="5dp"
+        android:fontFamily="@font/spinnaker"
+        android:text="@string/anime"
+        android:textColor="@android:color/black"
+        android:textSize="22sp"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/user_list_favorite_anime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingEnd="30dp"
+        android:paddingStart="30dp"
+        android:clipToPadding="false"
+        android:orientation="horizontal"
+        android:nestedScrollingEnabled="false"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="29dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/spinnaker"
+        android:text="@string/manga"
+        android:textColor="@android:color/black"
+        android:textSize="22sp"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/user_list_favorite_manga"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingEnd="30dp"
+        android:paddingStart="30dp"
+        android:clipToPadding="false"
+        android:orientation="horizontal"
+        android:nestedScrollingEnabled="false"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="29dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/spinnaker"
+        android:text="@string/characters"
+        android:textColor="@android:color/black"
+        android:textSize="22sp"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/user_list_favorite_characters"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingEnd="30dp"
+        android:paddingStart="30dp"
+        android:clipToPadding="false"
+        android:orientation="horizontal"
+        android:nestedScrollingEnabled="false"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="29dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/spinnaker"
+        android:text="@string/people"
+        android:textColor="@android:color/black"
+        android:textSize="22sp"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/user_list_favorite_people"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingEnd="30dp"
+        android:paddingStart="30dp"
+        android:clipToPadding="false"
+        android:orientation="horizontal"
+        android:nestedScrollingEnabled="false"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
+
+</LinearLayout>

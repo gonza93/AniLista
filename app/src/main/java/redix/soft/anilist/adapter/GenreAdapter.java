@@ -9,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -19,6 +18,7 @@ import redix.soft.anilist.databinding.ListGenre3Binding;
 import redix.soft.anilist.databinding.ListGenreBinding;
 import redix.soft.anilist.databinding.ListGenre2Binding;
 import redix.soft.anilist.fragment.ListFragment;
+import redix.soft.anilist.listener.ItemClickListener;
 import redix.soft.anilist.model.Genre;
 
 public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.ViewHolder>{

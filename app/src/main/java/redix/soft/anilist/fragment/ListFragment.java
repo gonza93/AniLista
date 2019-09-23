@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,23 +42,31 @@ import rx.schedulers.Schedulers;
 
 public class ListFragment extends Fragment{
 
-    public enum TYPES { THEMES, EPISODES, PICTURES, NEWS, CHARACTERS, RANKING, UPCOMING, GENRE, USER }
+    public enum TYPES { THEMES, EPISODES, PICTURES, NEWS, CHARACTERS, RANKING, UPCOMING, GENRE, USER_LIST }
     public static final String TAG = "ListFragment";
 
     private TYPES type;
 
     @BindView(R.id.list_progress) View progress;
-    @BindView(R.id.list) RecyclerView list;
+    @Nullable @BindView(R.id.list) RecyclerView list;
 
     private Anime anime;
     private List<Character> characters;
     private Genre genre;
+    private String username;
+    private String filter;
+    private String orderBy, sort;
 
     public void setAnime(Anime anime) {
         this.anime = anime;
     }
     public void setCharacters(List<Character> characters) { this.characters = characters; }
     public void setGenre(Genre genre) { this.genre = genre; }
+    public void setUser(String username) { this.username = username; }
+    public void setNextPage(int nextPage) { this.nextPage = nextPage; }
+    public void setFilter(String filter) { this.filter = filter; }
+    public void setOrderBy(String orderBy) { this.orderBy = orderBy; }
+    public void setSort(String sort) { this.sort = sort; }
 
     public TYPES getType() {
         return type;
@@ -70,6 +79,21 @@ public class ListFragment extends Fragment{
 
     private boolean loading;
 
+    public ListFragment withType(TYPES type){
+        this.type = type;
+        return this;
+    }
+
+    public ListFragment withUser(String user){
+        this.username = user;
+        return this;
+    }
+
+    public ListFragment withFilter(String filter){
+        this.filter = filter;
+        return this;
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -78,6 +102,8 @@ public class ListFragment extends Fragment{
         ButterKnife.bind(this, view);
 
         list.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        onRestoreState(savedInstanceState);
 
         if (type.equals(TYPES.THEMES))
             populateThemes();
@@ -95,10 +121,61 @@ public class ListFragment extends Fragment{
             populateNews();
         if (type.equals(TYPES.GENRE))
             populateGenre(genre);
-        if (type.equals(TYPES.USER))
-            populateUser();
+        if (type.equals(TYPES.USER_LIST))
+            populateUserList();
 
         return view;
+    }
+
+    public void onRestoreState(Bundle savedInstanceState){
+        if (savedInstanceState != null){
+            switch (savedInstanceState.getString("type").toUpperCase()){
+                case "THEMES":
+                    type = TYPES.THEMES;
+                    break;
+                case "EPISDOES":
+                    type = TYPES.EPISODES;
+                    break;
+                case "PICTURES":
+                    type = TYPES.PICTURES;
+                    break;
+                case "CHARACTERS":
+                    type = TYPES.CHARACTERS;
+                    break;
+                case "RANKING":
+                    type = TYPES.RANKING;
+                    break;
+                case "UPCOMING":
+                    type = TYPES.UPCOMING;
+                    break;
+                case "NEWS":
+                    type = TYPES.NEWS;
+                    break;
+                case "GENRE":
+                    type = TYPES.GENRE;
+                    break;
+                case "USER_LIST":
+                    type = TYPES.USER_LIST;
+                    break;
+            }
+
+            if (anime == null){
+                anime = new Anime();
+                anime.setId(savedInstanceState.getInt("anime_id"));
+                anime.setOpeningThemes(savedInstanceState.getStringArrayList("theme_op"));
+                anime.setEndingThemes(savedInstanceState.getStringArrayList("theme_ed"));
+            }
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putString("type", type.toString());
+        outState.putStringArrayList("theme_op", (ArrayList<String>) anime.getOpeningThemes());
+        outState.putStringArrayList("theme_ed", (ArrayList<String>) anime.getEndingThemes());
+        outState.putInt("anime_id", anime.getId());
     }
 
     private void populateEpisodes() {
@@ -123,7 +200,7 @@ public class ListFragment extends Fragment{
                         if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
                             loading = true;
                             ((EpisodeAdapter) list.getAdapter()).startLoad();
-                            new Handler().postDelayed(() -> fetchEpisodes(), 4000);
+                            fetchEpisodes();
                         }
                     }
                 }
@@ -172,9 +249,26 @@ public class ListFragment extends Fragment{
     }
 
     private void populateCharacters() {
-        CharacterAllAdapter characterAdapter = new CharacterAllAdapter(characters, getContext());
-        list.setAdapter(characterAdapter);
-        progress.setVisibility(View.GONE);
+        if (characters == null){
+            progress.setVisibility(View.VISIBLE);
+            new JikanService()
+                    .getAnimeCharacters(anime.getId())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                            response -> {
+                                CharacterAllAdapter characterAdapter = new CharacterAllAdapter(characters, getContext());
+                                list.setAdapter(characterAdapter);
+                                progress.setVisibility(View.GONE);
+                            },
+                            throwable -> Log.d("ERROR CHAR RESTORE", throwable.getMessage())
+                    );
+        }
+        else {
+            CharacterAllAdapter characterAdapter = new CharacterAllAdapter(characters, getContext());
+            list.setAdapter(characterAdapter);
+            progress.setVisibility(View.GONE);
+        }
     }
 
     private void populatePictures() {
@@ -312,8 +406,60 @@ public class ListFragment extends Fragment{
                 });
     }
 
-    private void populateUser() {
+    public void populateUserList(){
         progress.setVisibility(View.GONE);
+        list.setAdapter(new AnimeAdapter(new ArrayList<>(), getContext(), R.layout.list_user_list));
+        ((MainActivity) getContext()).getToolbar().setElevation(0);
+        list.clearOnScrollListeners();
+
+        list.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0 && nextPage != 0 && !loading)
+                {
+                    LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                    int visibleItemCount = manager.getChildCount();
+                    int totalItemCount = manager.getItemCount();
+                    int pastVisiblesItems = manager.findFirstVisibleItemPosition();
+
+                    if ((visibleItemCount + pastVisiblesItems) >= totalItemCount)
+                        fetchUserList();
+                }
+            }
+        });
+
+        fetchUserList();
+    }
+
+    public void fetchUserList(){
+        loading = true;
+        AnimeAdapter adapter = (AnimeAdapter) list.getAdapter();
+
+        if (nextPage == 1)
+            adapter.clear();
+
+        adapter.startLoad();
+
+        new JikanService()
+                .getUserAnimeList(username, filter, nextPage, orderBy, sort)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        response -> {
+                            loading = false;
+                            progress.setVisibility(View.GONE);
+                            ((AnimeAdapter) list.getAdapter()).endLoad();
+                            ((AnimeAdapter) list.getAdapter()).addAnime(response.getAnimes());
+
+                            nextPage = response.getAnimes().size() > 0? ++nextPage : 0;
+                        },
+                        throwable -> {
+                            progress.setVisibility(View.GONE);
+                            ((AnimeAdapter) list.getAdapter()).endLoad();
+                            Log.d("ERROR UserList", throwable.getMessage());
+                            Toast.makeText(getContext(), throwable.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                );
     }
 
 }

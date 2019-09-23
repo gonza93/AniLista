@@ -20,17 +20,23 @@ import redix.soft.anilist.databinding.ListAiringBinding;
 import redix.soft.anilist.databinding.ListAnimeBinding;
 import redix.soft.anilist.databinding.ListAnimeDayBinding;
 import redix.soft.anilist.databinding.ListAnimeGenreBinding;
+import redix.soft.anilist.databinding.ListFavoritesBinding;
 import redix.soft.anilist.databinding.ListRelatedBinding;
+import redix.soft.anilist.databinding.ListUserListBinding;
 import redix.soft.anilist.fragment.AnimeFragment;
+import redix.soft.anilist.listener.ItemClickListener;
 import redix.soft.anilist.model.Anime;
 import redix.soft.anilist.model.Genre;
 
-public class AnimeAdapter extends RecyclerView.Adapter<AnimeAdapter.ViewHolder>{
+public class AnimeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     private List<Anime> animes;
     private Context context;
 
     private int layout;
+
+    private static final int TYPE_ITEM = 0;
+    private static final int TYPE_PROGRESS = 1;
 
     public AnimeAdapter(List<Anime> animes, Context context, int layout){
         this.animes = animes;
@@ -69,6 +75,10 @@ public class AnimeAdapter extends RecyclerView.Adapter<AnimeAdapter.ViewHolder>{
                 ((ListRelatedBinding) mBinding).setAnime(anime);
             if (layout == R.layout.list_anime_genre)
                 ((ListAnimeGenreBinding) mBinding).setAnime(anime);
+            if (layout == R.layout.list_favorites)
+                ((ListFavoritesBinding) mBinding).setAnime(anime);
+            if (layout == R.layout.list_user_list)
+                ((ListUserListBinding) mBinding).setAnime(anime);
 
             mBinding.executePendingBindings();
         }
@@ -85,40 +95,69 @@ public class AnimeAdapter extends RecyclerView.Adapter<AnimeAdapter.ViewHolder>{
     }
 
     @Override
-    @NonNull
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        ViewDataBinding binding = DataBindingUtil.inflate(inflater, layout, parent, false);
-        return new ViewHolder(binding);
+    public int getItemViewType(int position) {
+        return animes.get(position) != null? TYPE_ITEM : TYPE_PROGRESS;
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.bind(animes.get(position));
-        holder.setItemClickListener(new ItemClickListener() {
-            @Override
-            public void onItemClick(Anime anime) {
-                AnimeFragment animeFragment = new AnimeFragment();
-                animeFragment.setAnimeId(anime.getId());
+    @NonNull
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        if (viewType == TYPE_ITEM) {
+            ViewDataBinding binding = DataBindingUtil.inflate(inflater, layout, parent, false);
+            return new ViewHolder(binding);
+        }
+        else{
+            View view = inflater.inflate(R.layout.list_progress, parent, false);
+            return new ProgressHolder(view);
+        }
+    }
 
-                ((MainActivity) context).loadFragment(animeFragment, AnimeFragment.TAG);
-            }
-        });
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        if (holder instanceof ViewHolder) {
+            ViewHolder viewHolder = (ViewHolder) holder;
+            viewHolder.bind(animes.get(position));
+            viewHolder.setItemClickListener(new ItemClickListener() {
+                @Override
+                public void onItemClick(Anime anime) {
+                    AnimeFragment animeFragment = new AnimeFragment();
+                    animeFragment.setAnimeId(anime.getId());
+
+                    ((MainActivity) context).loadFragment(animeFragment, AnimeFragment.TAG);
+                }
+            });
+        }
     }
 
     @Override
     public int getItemCount() {
-        return animes.size();
+        return animes == null? 0 : animes.size();
     }
 
-    public void setDataSet(List<Anime> animes) {
-        this.animes = animes;
+    public void setDataSet(List<Anime> anime) {
+        this.animes = anime;
+        notifyDataSetChanged();
+    }
+
+    public void addAnime(List<Anime> anime){
+        this.animes.addAll(anime);
         notifyDataSetChanged();
     }
 
     public void clear() {
         animes.clear();
         notifyDataSetChanged();
+    }
+
+    public void startLoad(){
+        this.animes.add(null);
+        notifyItemInserted(this.animes.size());
+    }
+
+    public void endLoad(){
+        this.animes.remove(this.animes.size() - 1);
+        notifyItemRemoved(this.animes.size());
     }
 
 }

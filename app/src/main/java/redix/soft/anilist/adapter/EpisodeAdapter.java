@@ -12,6 +12,7 @@ import java.util.List;
 
 import redix.soft.anilist.R;
 import redix.soft.anilist.databinding.ListEpisodeBinding;
+import redix.soft.anilist.listener.ItemClickListener;
 import redix.soft.anilist.model.Episode;
 
 public class EpisodeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {

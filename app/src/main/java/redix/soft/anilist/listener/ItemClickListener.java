@@ -1,4 +1,4 @@
-package redix.soft.anilist.adapter;
+package redix.soft.anilist.listener;
 
 import redix.soft.anilist.model.Anime;
 import redix.soft.anilist.model.Genre;

@@ -12,6 +12,7 @@ import java.util.List;
 
 import redix.soft.anilist.R;
 import redix.soft.anilist.databinding.ListPictureBinding;
+import redix.soft.anilist.listener.ItemClickListener;
 import redix.soft.anilist.model.Picture;
 
 public class PictureAdapter extends RecyclerView.Adapter<PictureAdapter.ViewHolder> {

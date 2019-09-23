@@ -70,4 +70,10 @@ public interface JikanAPI {
     @GET("user/{username}")
     Single<User> getUser(@Path("username") String username);
 
+    @GET("user/{username}/animelist/{filter}")
+    Single<Response> getUserAnimeList(@Path("username") String username,
+                                      @Path("filter") String filter,
+                                      @Query("page") int page,
+                                      @Query("order_by") String orderBy,
+                                      @Query("sort") String sort);
 }

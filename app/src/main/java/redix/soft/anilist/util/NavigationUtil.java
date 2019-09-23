@@ -1,11 +1,14 @@
 package redix.soft.anilist.util;
 
+import android.graphics.Color;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.ImageView;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
@@ -17,6 +20,8 @@ import redix.soft.anilist.fragment.HomeFragment;
 import redix.soft.anilist.fragment.ListFragment;
 import redix.soft.anilist.fragment.SearchFragment;
 import redix.soft.anilist.fragment.UserFragment;
+import redix.soft.anilist.fragment.UserListFragment;
+import redix.soft.anilist.model.User;
 
 public class NavigationUtil {
 
@@ -112,14 +117,53 @@ public class NavigationUtil {
 
         if(tag.equals(HomeFragment.TAG) && fragmentStacks.get(TAB.HOME).size() <= 1)
             backbutton.setImageResource(R.mipmap.ic_main);
-        else if (tag.equals(UserFragment.TAG))
-            backbutton.setImageResource(R.mipmap.ic_tab_search);
         else
             backbutton.setImageResource(R.drawable.ic_back);
 
-        if(tag.equals(SearchFragment.TAG) && fragmentStacks.get(TAB.SEARCH).size() <= 1)
+        if (fragment instanceof UserFragment){
+            activity.getFiltersClear().setVisibility(View.VISIBLE);
+            activity.resetFiltersLayout();
+            activity.getFiltersScoreLayout().setVisibility(View.GONE);
+            activity.getFiltersLayoutGenre().setVisibility(View.GONE);
+            activity.getToolbarTitleView().setVisibility(View.VISIBLE);
+            activity.getBackButton().setVisibility(View.VISIBLE);
+            activity.getToolbarSaveButton().setVisibility(View.GONE);
+            activity.getSearchBar().setVisibility(View.VISIBLE);
+            activity.getSearchBarLayout().setVisibility(View.INVISIBLE);
+            activity.getToolbarFilters().setVisibility(View.VISIBLE);
+        }
+
+        if (tag.equals(UserFragment.TAG) && fragmentStacks.get(TAB.ACCOUNT).size() <= 1){
             activity.showSearchBar();
+            activity.getEditSearchInput().setHint(R.string.search_username);
+            activity.getToolbarFilters().setVisibility(View.GONE);
+            activity.getToolbarSaveButton().setVisibility(View.VISIBLE);
+            activity.getToolbarTitleView().setTextColor(Color.WHITE);
+            activity.getToolbarTitleView().setVisibility(View.VISIBLE);
+            activity.getSearchBarLayout().setVisibility(DataUtil.getInstance(activity).getSavedUsername() == null? View.VISIBLE : View.INVISIBLE);
+            if (DataUtil.getInstance(activity).getSavedUsername() != null)
+                activity.getSearchBarLayout().setVisibility(View.INVISIBLE);
+
+            activity.getBackButton().setVisibility(View.GONE);
+            AnimationUtil.changeToolbarColor(activity, Color.WHITE, ContextCompat.getColor(activity, R.color.colorPrimary));
+        }
+        else {
+            if (lastSelectedTab != -1 && getCurrentPage() instanceof UserFragment) {
+                AnimationUtil.changeToolbarColor(activity, ContextCompat.getColor(activity, R.color.colorPrimary), Color.WHITE);
+                activity.getToolbarTitleView().setTextColor(Color.BLACK);
+            }
+        }
+
+        if(tag.equals(SearchFragment.TAG) && fragmentStacks.get(TAB.SEARCH).size() <= 1) {
+            activity.getEditSearchInput().setHint(R.string.search_bar);
+            activity.getToolbarFilters().setVisibility(View.VISIBLE);
+            activity.getToolbarSaveButton().setVisibility(View.GONE);
+            activity.getEditSearchInput().setText(DataUtil.getInstance(activity).getLastSearch());
+            activity.resetFiltersLayout();
+            activity.showSearchBar();
+        }
         else
+            if(!(fragment instanceof UserFragment))
             activity.hideSearchBar();
 
         activity.getTogglesView().setVisibility(View.GONE);
@@ -143,8 +187,13 @@ public class NavigationUtil {
             if (listFragment.getType().equals(ListFragment.TYPES.THEMES))
                 activity.getTogglesView().setVisibility(View.VISIBLE);
 
-            if (listFragment.getType().equals(ListFragment.TYPES.GENRE))
+            if (listFragment.getType().equals(ListFragment.TYPES.GENRE)) {
+                activity.getFiltersClear().setVisibility(View.GONE);
                 activity.getToolbarGenre().setVisibility(View.VISIBLE);
+                activity.getFiltersScoreLayout().setVisibility(View.GONE);
+                activity.getFiltersLayoutOrderParent().setVisibility(View.GONE);
+                activity.getFiltersLayoutSortParent().setVisibility(View.GONE);
+            }
 
             title = listFragment.getType().toString().substring(0, 1) +
                     listFragment.getType().toString().substring(1).toLowerCase();
@@ -154,16 +203,27 @@ public class NavigationUtil {
             activity.showSearchBar();
         if(fragment instanceof HomeFragment) {
             backbutton.setImageResource(R.mipmap.ic_main);
+            backbutton.setVisibility(View.VISIBLE);
             activity.getToolbarTitleView().setText("Anilist");
         }
-        if(fragment instanceof AnimeFragment)
+        if(fragment instanceof AnimeFragment) {
             activity.getToolbarTitleView().setText(AnimeFragment.TAG);
-        if(fragment instanceof UserFragment){
-            //activity.getToolbarTitleView().setText("User ");
+            activity.getBackButton().setVisibility(View.VISIBLE);
+        }
+        if(fragment instanceof UserListFragment) {
+            activity.getFiltersClear().setVisibility(View.VISIBLE);
+            activity.resetFiltersLayout();
+            activity.getFiltersScoreLayout().setVisibility(View.GONE);
+            activity.getFiltersLayoutGenre().setVisibility(View.GONE);
+            activity.getToolbarTitleView().setVisibility(View.VISIBLE);
+            activity.getBackButton().setVisibility(View.VISIBLE);
+            activity.getToolbarSaveButton().setVisibility(View.GONE);
+            activity.getSearchBar().setVisibility(View.VISIBLE);
+            activity.getSearchBarLayout().setVisibility(View.INVISIBLE);
+            activity.getToolbarFilters().setVisibility(View.VISIBLE);
         }
 
         activity.getToolbarTitleView().setText(title);
-
     }
 
     public Fragment getCurrentPage(){

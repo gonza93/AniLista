@@ -14,6 +14,7 @@ import redix.soft.anilist.R;
 import redix.soft.anilist.activity.MainActivity;
 import redix.soft.anilist.databinding.ListRankingBinding;
 import redix.soft.anilist.fragment.AnimeFragment;
+import redix.soft.anilist.listener.ItemClickListener;
 import redix.soft.anilist.model.Anime;
 
 public class RankingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {

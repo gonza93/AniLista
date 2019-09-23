@@ -20,7 +20,7 @@
             android:paddingTop="2dp"
             android:paddingBottom="2dp"
             android:background="@{genre.selected ? @drawable/drawable_genre_selected : @drawable/drawable_genre}"
-            android:textSize="15sp"
+            android:textSize="16sp"
             android:textColor="@{genre.selected ? @color/colorPrimary : @color/colorGrayText}"
             android:text="@{genre.name}"/>
 

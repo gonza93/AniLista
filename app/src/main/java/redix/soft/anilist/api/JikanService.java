@@ -98,4 +98,8 @@ public class JikanService {
     public Single<User> getUser(String username){
         return jikanAPI.getUser(username);
     }
+
+    public Single<Response> getUserAnimeList(String username, String filter, int page, String orderBy, String sort){
+        return jikanAPI.getUserAnimeList(username, filter, page, orderBy, sort);
+    }
 }

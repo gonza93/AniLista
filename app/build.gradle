@@ -42,6 +42,8 @@ dependencies {
     implementation 'com.elyeproj.libraries:loaderviewlibrary:1.5.0'
     implementation 'at.blogc:expandabletextview:1.0.5'
     implementation 'org.adw.library:discrete-seekbar:1.0.1'
+    implementation 'com.ogaclejapan.smarttablayout:library:1.7.0@aar'
+    implementation 'com.github.varunest:sparkbutton:1.0.6'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'

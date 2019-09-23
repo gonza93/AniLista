@@ -13,6 +13,7 @@ import java.util.List;
 
 import redix.soft.anilist.R;
 import redix.soft.anilist.databinding.ListThemeBinding;
+import redix.soft.anilist.listener.ItemClickListener;
 import redix.soft.anilist.model.Theme;
 
 public class ThemeAdapter extends RecyclerView.Adapter<ThemeAdapter.ViewHolder> {

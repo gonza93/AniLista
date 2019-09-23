@@ -132,7 +132,7 @@ public class AnimeFragment extends Fragment {
 
                             setRelatedList();
 
-                            AnimationUtil.collapse(progress);
+                            AnimationUtil.translate(progress, 200);
                             AnimationUtil.fadeIn(mainLayout);
                             },
                         throwable -> Log.d("ERROR", throwable.getMessage())
@@ -151,6 +151,7 @@ public class AnimeFragment extends Fragment {
                             characterAdapter.setAllCharacters(characters);
                             if(characters.size() > 9)
                                 characters = characters.subList(0, 9);
+                            characters.add(null);
                             characterAdapter.setDataSet(characters);
                             },
                         throwable -> Log.d("ERROR", throwable.getMessage())

@@ -50,9 +50,9 @@ public class HomeFragment extends Fragment {
         listHome.setAdapter(homeAdapter);
 
         getScheduleAnimes();
-        new Handler().postDelayed(this::getAiringAnimes, JikanService.apiDelay);
-        new Handler().postDelayed(this::getPopularPeople, JikanService.apiDelay * 2);
-        new Handler().postDelayed(this::getPopularAnimes, JikanService.apiDelay * 3);
+        new Handler().postDelayed(this::getAiringAnimes, 500);
+        new Handler().postDelayed(this::getPopularPeople, 1000);
+        new Handler().postDelayed(this::getPopularAnimes, 1500);
 
         return view;
     }

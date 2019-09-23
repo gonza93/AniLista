@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="7dp"
             android:fontFamily="@font/spinnaker"
-            android:text="Top people"
+            android:text="@string/top_people"
             android:textColor="@android:color/black"
             android:textSize="22sp"
             android:textStyle="bold" />

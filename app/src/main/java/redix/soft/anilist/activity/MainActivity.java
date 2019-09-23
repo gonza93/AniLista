@@ -8,26 +8,27 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.BottomSheetBehavior;
-import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
-import android.view.DragEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.varunest.sparkbutton.SparkButton;
+import com.varunest.sparkbutton.SparkEventListener;
 
 import org.adw.library.widgets.discreteseekbar.DiscreteSeekBar;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -37,14 +38,15 @@ import butterknife.OnClick;
 import butterknife.OnEditorAction;
 import redix.soft.anilist.R;
 import redix.soft.anilist.adapter.GenreAdapter;
-import redix.soft.anilist.api.JikanService;
-import redix.soft.anilist.fragment.AnimeFragment;
 import redix.soft.anilist.fragment.HomeFragment;
 import redix.soft.anilist.fragment.ListFragment;
 import redix.soft.anilist.fragment.SearchFragment;
 import redix.soft.anilist.fragment.UserFragment;
+import redix.soft.anilist.fragment.UserListFragment;
 import redix.soft.anilist.model.Genre;
+import redix.soft.anilist.util.AnimationUtil;
 import redix.soft.anilist.util.ChipsLayoutManagerHelper;
+import redix.soft.anilist.util.DataUtil;
 import redix.soft.anilist.util.NavigationUtil;
 
 public class MainActivity extends AppCompatActivity
@@ -52,17 +54,20 @@ public class MainActivity extends AppCompatActivity
 
     private boolean start = true;
     private boolean filtersSet;
+    public TextView lastSelectedOrderView;
     public NavigationUtil navigationUtil;
 
     @BindView(R.id.container) CoordinatorLayout coordinatorLayout;
-    @BindView(R.id.appbar) AppBarLayout toolbar;
+    @BindView(R.id.appbar) LinearLayout toolbar;
     @BindView(R.id.toolbar_title) TextView toolbarTitle;
     @BindView(R.id.search_bar) View searchBar;
     @BindView(R.id.search_bar_input) EditText editSearchInput;
+    @BindView(R.id.search_bar_layout) View searchBarLayout;
     @BindView(R.id.back_button) ImageView backbutton;
     @BindView(R.id.navigation) BottomNavigationView navigation;
     @BindView(R.id.toolbar_toggles) View toggles;
     @BindView(R.id.toolbar_filters) View filters;
+    @BindView(R.id.toolbar_save) ImageView saveButton;
     @BindView(R.id.toolbar_active_genre) TextView toolbarGenre;
 
     @BindView(R.id.filters) View filterDialog;
@@ -70,20 +75,36 @@ public class MainActivity extends AppCompatActivity
     @BindView(R.id.filters_score) TextView filterScore;
     @BindView(R.id.filters_score_bar) DiscreteSeekBar filterScoreBar;
     @BindView(R.id.filters_main_button) TextView filtersText;
+    @BindView(R.id.filters_sort_layout) LinearLayout filtersLayoutSort;
+    @BindView(R.id.filters_order_layout) LinearLayout filtersLayoutOrder;
+    @BindView(R.id.filters_score_layout) View filtersScoreLayout;
+    @BindView(R.id.filters_order_layout_parent) View filtersLayoutOrderParent;
+    @BindView(R.id.filters_sort_layout_parent) View filtersLayoutSortParent;
+    @BindView(R.id.filters_genre_layout) View filtersLayoutGenre;
+    @BindView(R.id.filters_clear) View filtersClear;
 
-    public AppBarLayout getToolbar() { return toolbar; }
-    public TextView getToolbarTitleView() {
-        return toolbarTitle;
-    }
-    public ImageView getBackbuttonView() {
-        return backbutton;
-    }
-    public View getTogglesView() {
-        return toggles;
-    }
+    public LinearLayout getToolbar() { return toolbar; }
+    public TextView getToolbarTitleView() { return toolbarTitle; }
+    public ImageView getBackbuttonView() { return backbutton; }
+    public View getTogglesView() { return toggles; }
     public TextView getToolbarGenre() { return toolbarGenre; }
-    public TextView getFilterScore() {
-        return filterScore;
+    public TextView getFilterScore() { return filterScore; }
+    public View getToolbarFilters() { return filters; }
+    public EditText getEditSearchInput() { return editSearchInput; }
+    public ImageView getToolbarSaveButton() { return saveButton; }
+    public View getFiltersScoreLayout() { return filtersScoreLayout; }
+    public View getFiltersLayoutOrderParent() { return filtersLayoutOrderParent; }
+    public View getFiltersLayoutSortParent() { return filtersLayoutSortParent; }
+    public View getSearchBarLayout() { return searchBarLayout; }
+    public View getSearchBar() { return searchBar; }
+    public View getBackButton() { return backbutton; }
+    public View getFiltersLayoutGenre() { return filtersLayoutGenre; }
+    public View getFiltersClear() { return filtersClear; }
+
+    public void resetFiltersLayout() {
+        filtersScoreLayout.setVisibility(View.VISIBLE);
+        filtersLayoutOrderParent.setVisibility(View.VISIBLE);
+        filtersLayoutSortParent.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -99,6 +120,7 @@ public class MainActivity extends AppCompatActivity
         navigation.setSelectedItemId(R.id.navigation_home);
 
         initFilters();
+        initSaveButton();
     }
 
     @Override
@@ -129,17 +151,17 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void hideSearchBar(){
-        backbutton.setVisibility(View.VISIBLE);
+        //backbutton.setVisibility(View.VISIBLE);
         toolbarTitle.setVisibility(View.VISIBLE);
         searchBar.setVisibility(View.GONE);
-        filters.setVisibility(View.GONE);
+        searchBarLayout.setVisibility(View.GONE);
     }
 
     public void showSearchBar(){
         backbutton.setVisibility(View.GONE);
         toolbarTitle.setVisibility(View.GONE);
         searchBar.setVisibility(View.VISIBLE);
-        filters.setVisibility(View.VISIBLE);
+        searchBarLayout.setVisibility(View.VISIBLE);
     }
 
     /*@OnTextChanged(value = R.id.search_bar_input,
@@ -153,13 +175,27 @@ public class MainActivity extends AppCompatActivity
     @OnEditorAction(value = R.id.search_bar_input)
     public boolean onEnterSearch(int actionId){
         if(actionId == EditorInfo.IME_ACTION_SEARCH) {
-            SearchFragment fragment = ((SearchFragment) navigationUtil.getCurrentPage());
+            if (navigationUtil.getCurrentPage() instanceof SearchFragment) {
+                String query = editSearchInput.getText().toString();
 
-            fragment.setQuery(editSearchInput.getText().toString());
-            fragment.searchAnime();
+                SearchFragment fragment = ((SearchFragment) navigationUtil.getCurrentPage());
 
-            hideKeyboard();
-            return true;
+                fragment.setQuery(query);
+                fragment.searchAnime();
+
+                DataUtil.getInstance(this).saveString(DataUtil.DATA.QUERY.toString(), query);
+
+                hideKeyboard();
+                return true;
+            }
+            else {
+                UserFragment fragment = ((UserFragment) navigationUtil.getCurrentPage());
+
+                fragment.fetchUser(editSearchInput.getText().toString());
+
+                hideKeyboard();
+                return true;
+            }
         }
         return false;
     }
@@ -201,6 +237,12 @@ public class MainActivity extends AppCompatActivity
         otherToggle.setBackgroundResource(R.drawable.bg_search);
     }
 
+    private void initSaveButton() {
+        String username = DataUtil.getInstance(this).getSavedUsername();
+        saveButton.setColorFilter(username == null? Color.WHITE : ContextCompat.getColor(this, R.color.colorTurquoise));
+    }
+
+
     @SuppressLint("SetTextI18n")
     private void initFilters() {
         BottomSheetBehavior.from(findViewById(R.id.filters)).setState(BottomSheetBehavior.STATE_HIDDEN);
@@ -211,6 +253,20 @@ public class MainActivity extends AppCompatActivity
                                     newState == BottomSheetBehavior.STATE_DRAGGING ||
                                     newState == BottomSheetBehavior.STATE_COLLAPSED ? 0 : 30;
                  navigation.setElevation(elevation);
+
+                 if (newState == BottomSheetBehavior.STATE_HIDDEN){
+                     Fragment fragment = navigationUtil.getCurrentPage();
+                     if (fragment instanceof SearchFragment){
+                         SearchFragment searchFragment = (SearchFragment) fragment;
+                         searchFragment.setListPaddingBottom(0);
+                     }
+                 } else if(newState == BottomSheetBehavior.STATE_COLLAPSED){
+                     Fragment fragment = navigationUtil.getCurrentPage();
+                     if (fragment instanceof SearchFragment){
+                         SearchFragment searchFragment = (SearchFragment) fragment;
+                         searchFragment.setListPaddingBottom(112);
+                     }
+                 }
             }
 
             @Override
@@ -239,6 +295,24 @@ public class MainActivity extends AppCompatActivity
                 filterScore.setText(getString(R.string.filters_score_near) + " " + filterScoreBar.getProgress());
             }
         });
+
+        findViewById(R.id.filters_desc).setSelected(true);
+    }
+
+    @OnClick(R.id.toolbar_save)
+    public void onClickToolbarSave(){
+        String username = DataUtil.getInstance(this).getSavedUsername();
+        if(username == null) {
+            DataUtil.getInstance(this).saveString(DataUtil.DATA.SAVED_USER.toString(), editSearchInput.getText().toString());
+            AnimationUtil.changeImageColor(this, saveButton, Color.WHITE, ContextCompat.getColor(this, R.color.colorTurquoise));
+            Toast.makeText(this, "User saved as default user", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            DataUtil.getInstance(this).saveString(DataUtil.DATA.SAVED_USER.toString(), null);
+            AnimationUtil.fadeIn(editSearchInput);
+            AnimationUtil.changeImageColor(this, saveButton, ContextCompat.getColor(this, R.color.colorTurquoise), Color.WHITE);
+            Toast.makeText(this, "User removed as default user", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @OnClick(R.id.toolbar_filters)
@@ -291,11 +365,12 @@ public class MainActivity extends AppCompatActivity
                 params.remove("score");
 
 
-
             if (    !selectedGenres.equals("") ||
                     !filterScore.getText().toString().equals(getString(R.string.filters_score)) ||
-                    params.get("order_by") != null){
+                    params.get("order_by") != null
+            ){
                 fragment.searchAnime();
+                fragment.setListPaddingBottom(112);
 
                 filtersSet = true;
                 filtersText.setText(getString(R.string.filters_result));
@@ -306,48 +381,91 @@ public class MainActivity extends AppCompatActivity
                 setFilterState(BottomSheetBehavior.STATE_HIDDEN);
             }
         }
+        else if (navigationUtil.getCurrentPage() instanceof UserListFragment){
+            //Order
+            String order = lastSelectedOrderView.getTag().toString();
+
+            //Sort
+            View viewAsc = filtersLayoutSort.getChildAt(0);
+            String sort = viewAsc.isSelected()? "asc" : "desc";
+
+            ((UserListFragment) navigationUtil.getCurrentPage()).fetchUserList(order, sort);
+            setFilterState(BottomSheetBehavior.STATE_COLLAPSED);
+        }
         else
             setFilterState(BottomSheetBehavior.STATE_COLLAPSED);
     }
 
     public void onClickFiltersOrderBy(View view){
-        SearchFragment fragment = (SearchFragment) navigationUtil.getCurrentPage();
-        Map<String, String> params = fragment.getSearchParams();
+
+        if (lastSelectedOrderView != null){
+            if (lastSelectedOrderView.getId() != view.getId()) {
+                lastSelectedOrderView.setSelected(false);
+                lastSelectedOrderView.setBackgroundResource(R.drawable.drawable_genre);
+                lastSelectedOrderView.setTextColor(ContextCompat.getColor(this, R.color.colorGrayText));
+            }
+        }
 
         view.setSelected(!view.isSelected());
         view.setBackgroundResource(view.isSelected() ? R.drawable.drawable_genre_selected : R.drawable.drawable_genre);
         ((TextView) view).setTextColor(view.isSelected() ?
                 ContextCompat.getColor(this, R.color.colorPrimary) :ContextCompat.getColor(this, R.color.colorGrayText));
 
-        switch (view.getTag().toString()){
-            case "title":
-                params.put("order_by", "title");
-                break;
-            case "startdate":
-                params.put("order_by", "start_date");
-                break;
-            case "enddate":
-                params.put("order_by", "end_date");
-                break;
-            case "score":
-                params.put("order_by", "score");
-                break;
-            case "type":
-                params.put("order_by", "type");
-                break;
-            case "episodes":
-                params.put("order_by", "episodes");
-                break;
+        lastSelectedOrderView = (TextView) view;
+
+        if (navigationUtil.getCurrentPage() instanceof SearchFragment) {
+
+            SearchFragment fragment = (SearchFragment) navigationUtil.getCurrentPage();
+            Map<String, String> params = fragment.getSearchParams();
+
+            params.put("order_by", view.getTag().toString());
+
+            if (!view.isSelected())
+                params.remove("order_by");
+        }
+    }
+
+    public void onClickFiltersSortBy(View view) {
+        view.setSelected(true);
+        view.setBackgroundResource(R.drawable.drawable_genre_selected);
+        ((TextView) view).setTextColor(ContextCompat.getColor(this, R.color.colorPrimary));
+
+        View viewAsc = filtersLayoutSort.getChildAt(0);
+        View viewDesc = filtersLayoutSort.getChildAt(1);
+
+        if (view.getId() == R.id.filters_desc) {
+            viewAsc.setSelected(false);
+            viewAsc.setBackgroundResource(R.drawable.drawable_genre);
+            ((TextView) viewAsc).setTextColor(ContextCompat.getColor(this, R.color.colorGrayText));
+        } else {
+            viewDesc.setSelected(false);
+            viewDesc.setBackgroundResource(R.drawable.drawable_genre);
+            ((TextView) viewDesc).setTextColor(ContextCompat.getColor(this, R.color.colorGrayText));
         }
 
-        if (!view.isSelected())
-            params.remove("order_by");
+        if (navigationUtil.getCurrentPage() instanceof SearchFragment) {
+            SearchFragment fragment = (SearchFragment) navigationUtil.getCurrentPage();
+            Map<String, String> params = fragment.getSearchParams();
+
+            switch (view.getTag().toString()) {
+                case "ascending":
+                    params.put("sort", "asc");
+                    break;
+                case "descending":
+                    params.put("sort", "desc");
+                    break;
+            }
+        }
     }
 
     @OnClick(R.id.filters_clear)
     public void onClickFiltersClear(){
         if (navigationUtil.getCurrentPage() instanceof SearchFragment){
             filterScore.setText(R.string.filters_score);
+            filterScoreBar.setProgress(0);
+            lastSelectedOrderView.setSelected(false);
+            lastSelectedOrderView.setBackgroundResource(R.drawable.drawable_genre);
+            lastSelectedOrderView.setTextColor(ContextCompat.getColor(this, R.color.colorGrayText));
             ((GenreAdapter) listFiltersGenre.getAdapter()).clear();
             ((SearchFragment) navigationUtil.getCurrentPage()).clearSearchParams();
             ((SearchFragment) navigationUtil.getCurrentPage()).searchAnime();

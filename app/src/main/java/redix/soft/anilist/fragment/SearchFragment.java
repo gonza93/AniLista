@@ -27,6 +27,7 @@ import redix.soft.anilist.adapter.AnimeAdapter;
 import redix.soft.anilist.api.JikanService;
 import redix.soft.anilist.model.Anime;
 import redix.soft.anilist.model.Response;
+import redix.soft.anilist.util.DataUtil;
 import redix.soft.anilist.util.ElevationRecyclerView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -53,6 +54,9 @@ public class SearchFragment extends Fragment {
         searchParams.clear();
         searchParams.put("q", q);
         searchAnime();
+    }
+    public void setListPaddingBottom(int padding){
+        this.listAnime.setPadding(0, 0, 0, padding);
     }
 
     public static SearchFragment getInstance(){

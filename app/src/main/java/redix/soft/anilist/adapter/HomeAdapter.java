@@ -32,6 +32,11 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
     private static final int TYPE_PEOPLE = 3;
     private static final int TYPE_POPULAR = 4;
 
+    private List<Anime> scheduleAnime;
+    private List<Anime> airingAnime;
+    private List<Seiyu> topPeople;
+    private List<Anime> popularAnime;
+
     public HomeAdapter(Context context){
         this.context = context;
     }
@@ -92,7 +97,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
             loaderSchedule = holder.findView(R.id.home_loader_anime_schedule);
             RecyclerView scheduleList = (RecyclerView) holder.findView(R.id.home_anime_schedule_list);
 
-            scheduleAdapter = new AnimeAdapter(new ArrayList<>(), context, R.layout.list_anime_day);
+            scheduleAdapter = new AnimeAdapter(scheduleAnime, context, R.layout.list_anime_day);
             scheduleList.setAdapter(scheduleAdapter);
 
             SnapHelper snapHelper = new PagerSnapHelper();
@@ -128,21 +133,21 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
             loaderAiring = holder.findView(R.id.home_loader_airing);
             RecyclerView airingList = (RecyclerView) holder.findView(R.id.home_airing_list);
 
-            airingAdapter = new AnimeAdapter(new ArrayList<>(), context, R.layout.list_airing);
+            airingAdapter = new AnimeAdapter(airingAnime, context, R.layout.list_airing);
             airingList.setAdapter(airingAdapter);
         }
         if (holder.getItemViewType() == TYPE_PEOPLE){
             loaderPeople = holder.findView(R.id.home_loader_seiyu);
             RecyclerView peopleList = (RecyclerView) holder.findView(R.id.home_top_seiyu_list);
 
-            peopleAdapter = new SeiyuAdapter(new ArrayList<>(), context, R.layout.list_seiyu);
+            peopleAdapter = new SeiyuAdapter(topPeople, context, R.layout.list_seiyu);
             peopleList.setAdapter(peopleAdapter);
         }
         if (holder.getItemViewType() == TYPE_POPULAR){
             loaderPopular = holder.findView(R.id.home_loader_popular);
             RecyclerView popularList = (RecyclerView) holder.findView(R.id.home_popular_list);
 
-            popularAdapter = new AnimeAdapter(new ArrayList<>(), context, R.layout.list_airing);
+            popularAdapter = new AnimeAdapter(popularAnime, context, R.layout.list_airing);
             popularList.setAdapter(popularAdapter);
         }
     }
@@ -153,22 +158,34 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
     }
 
     public void setScheduleItems(List<Anime> items){
-        scheduleAdapter.setDataSet(items);
-        loaderSchedule.setVisibility(View.GONE);
+        scheduleAnime = items;
+        if (scheduleAdapter != null) {
+            scheduleAdapter.setDataSet(items);
+            loaderSchedule.setVisibility(View.GONE);
+        }
     }
 
     public void setAiringItems(List<Anime> items){
-        airingAdapter.setDataSet(items);
-        loaderAiring.setVisibility(View.GONE);
+        airingAnime = items;
+        if (airingAdapter != null) {
+            airingAdapter.setDataSet(items);
+            loaderAiring.setVisibility(View.GONE);
+        }
     }
 
     public void setPeopleItems(List<Seiyu> items){
-        peopleAdapter.setDataSet(items);
-        loaderPeople.setVisibility(View.GONE);
+        topPeople = items;
+        if (peopleAdapter != null) {
+            peopleAdapter.setDataSet(items);
+            loaderPeople.setVisibility(View.GONE);
+        }
     }
 
     public void setPopularItems(List<Anime> items){
-        popularAdapter.setDataSet(items);
-        loaderPopular.setVisibility(View.GONE);
+        popularAnime = items;
+        if (popularAdapter != null) {
+            popularAdapter.setDataSet(items);
+            loaderPopular.setVisibility(View.GONE);
+        }
     }
 }

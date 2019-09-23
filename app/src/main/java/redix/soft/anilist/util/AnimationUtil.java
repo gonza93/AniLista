@@ -1,27 +1,33 @@
 package redix.soft.anilist.util;
 
+import android.animation.ArgbEvaluator;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
+import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.os.Build;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.RotateAnimation;
+import android.view.animation.Transformation;
 import android.view.animation.TranslateAnimation;
+import android.widget.ImageView;
+
+import redix.soft.anilist.BuildConfig;
+import redix.soft.anilist.R;
+import redix.soft.anilist.activity.MainActivity;
 
 public class AnimationUtil {
 
-    public static void expand(final View v) {
-        TranslateAnimation anim = new TranslateAnimation(0.0f, 0.0f, -v.getHeight(), 0.0f);
-        v.setVisibility(View.VISIBLE);
-
-        anim.setDuration(200);
-        anim.setInterpolator(new AccelerateInterpolator(0.5f));
-        v.startAnimation(anim);
-    }
-
-    public static void collapse(final View v){
+    public static void translate(final View v, int duration){
         TranslateAnimation anim = new TranslateAnimation(0.0f, 0.0f, 0.0f, -v.getHeight());
         Animation.AnimationListener collapselistener= new Animation.AnimationListener() {
             @Override
@@ -39,7 +45,7 @@ public class AnimationUtil {
         };
 
         anim.setAnimationListener(collapselistener);
-        anim.setDuration(200);
+        anim.setDuration(duration);
         anim.setInterpolator(new AccelerateInterpolator(0.5f));
         v.startAnimation(anim);
     }
@@ -118,18 +124,90 @@ public class AnimationUtil {
     }
 
     public static void rotate(View view, int degrees, int duration){
-        /*RotateAnimation rotate = new RotateAnimation(0, 180,
-                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF,
-                0.5f);
-
-        rotate.setDuration(duration);
-        rotate.setFillAfter(true);
-        view.setAnimation(rotate);*/
-
         view.animate()
                 .rotationBy(degrees)
                 .setDuration(duration)
                 .start();
+    }
+
+    public static void expand(final View v, int duration) {
+        int matchParentMeasureSpec = View.MeasureSpec.makeMeasureSpec(((View) v.getParent()).getWidth(), View.MeasureSpec.EXACTLY);
+        int wrapContentMeasureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+        v.measure(matchParentMeasureSpec, wrapContentMeasureSpec);
+        final int targetHeight = v.getMeasuredHeight();
+
+        // Older versions of android (pre API 21) cancel animations for views with a height of 0.
+        v.getLayoutParams().height = 1;
+        v.setVisibility(View.VISIBLE);
+        Animation a = new Animation()
+        {
+            @Override
+            protected void applyTransformation(float interpolatedTime, Transformation t) {
+                v.getLayoutParams().height = interpolatedTime == 1
+                        ? ViewGroup.LayoutParams.WRAP_CONTENT
+                        : (int)(targetHeight * interpolatedTime);
+                v.requestLayout();
+            }
+
+            @Override
+            public boolean willChangeBounds() {
+                return true;
+            }
+        };
+
+        // Expansion speed of 1dp/ms
+        a.setDuration(duration == 0? (int)(targetHeight / v.getContext().getResources().getDisplayMetrics().density) : duration);
+        v.startAnimation(a);
+    }
+
+    public static void collapse(final View v, int duration, int delay) {
+        final int initialHeight = v.getMeasuredHeight();
+
+        Animation a = new Animation()
+        {
+            @Override
+            protected void applyTransformation(float interpolatedTime, Transformation t) {
+                if(interpolatedTime == 1){
+                    v.setVisibility(View.GONE);
+                }else{
+                    v.getLayoutParams().height = initialHeight - (int)(initialHeight * interpolatedTime);
+                    v.requestLayout();
+                }
+            }
+
+            @Override
+            public boolean willChangeBounds() {
+                return true;
+            }
+        };
+
+        // Collapse speed of 1dp/ms
+        a.setDuration(duration == 0? (int)(initialHeight / v.getContext().getResources().getDisplayMetrics().density) : duration);
+        a.setFillAfter(false);
+        a.setStartOffset(delay);
+        v.startAnimation(a);
+    }
+
+    public static void changeToolbarColor(Activity activity, int colorFrom, int colorTo){
+        ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
+        ValueAnimator colorStatusAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
+
+        colorAnimation.addUpdateListener(animator -> ((MainActivity) activity).getToolbar().setBackgroundColor((Integer) animator.getAnimatedValue()));
+        colorStatusAnimation.addUpdateListener(animator -> activity.getWindow().setStatusBarColor((Integer) animator.getAnimatedValue()));
+
+        colorAnimation.setDuration(400);
+        colorAnimation.setStartDelay(0);
+        colorAnimation.start();
+        colorStatusAnimation.setDuration(400);
+        colorStatusAnimation.setStartDelay(0);
+        colorStatusAnimation.start();
+    }
+
+    public static void changeImageColor(Context context, final ImageView v, int colorFrom, int colorTo) {
+        ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
+        colorAnimation.setDuration(400); // milliseconds
+        colorAnimation.addUpdateListener(animator -> v.setColorFilter((int) animator.getAnimatedValue()));
+        colorAnimation.start();
     }
 
 }

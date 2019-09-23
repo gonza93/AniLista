@@ -7,9 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -17,8 +14,8 @@ import redix.soft.anilist.R;
 import redix.soft.anilist.activity.MainActivity;
 import redix.soft.anilist.databinding.ListCharacterBinding;
 import redix.soft.anilist.fragment.ListFragment;
+import redix.soft.anilist.listener.ItemClickListener;
 import redix.soft.anilist.model.Character;
-import redix.soft.anilist.model.Seiyu;
 
 public class CharacterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
@@ -64,6 +61,7 @@ public class CharacterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             itemView.setOnClickListener(v -> {
                 ListFragment fragment = new ListFragment();
                 fragment.setType(ListFragment.TYPES.CHARACTERS);
+                allCharacters.remove(null);
                 fragment.setCharacters(allCharacters);
 
                 ((MainActivity) context).loadFragment(fragment, ListFragment.TAG);
@@ -74,7 +72,7 @@ public class CharacterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     @Override
     public int getItemViewType(int position) {
-        return position == characters.size() - 1 ? TYPE_FOOTER : TYPE_ITEM;
+        return characters.get(position) == null ? TYPE_FOOTER : TYPE_ITEM;
 
     }
 
@@ -86,7 +84,7 @@ public class CharacterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             ListCharacterBinding binding = DataBindingUtil.inflate(inflater, R.layout.list_character, parent, false);
             return new ViewHolder(binding);
         }
-        else{ //Footer
+        else { //Footer
             View v = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.list_character_footer, parent, false);
             return new ViewFooterHolder(v);
@@ -104,9 +102,7 @@ public class CharacterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     @Override
     public int getItemCount() {
-        if(characters == null)
-            return 0;
-        return characters.size();
+        return characters == null? 0 : characters.size();
     }
 
     public void setDataSet(List<Character> characters) {

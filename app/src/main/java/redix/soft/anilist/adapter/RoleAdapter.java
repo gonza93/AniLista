@@ -2,7 +2,6 @@ package redix.soft.anilist.adapter;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,10 +11,9 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import redix.soft.anilist.R;
 import redix.soft.anilist.databinding.ListSeiyuHeaderBinding;
+import redix.soft.anilist.listener.ItemClickListener;
 import redix.soft.anilist.model.Role;
 import redix.soft.anilist.databinding.ListRoleBinding;
 import redix.soft.anilist.model.Seiyu;

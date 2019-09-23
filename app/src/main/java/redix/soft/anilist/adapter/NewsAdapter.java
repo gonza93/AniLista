@@ -12,6 +12,7 @@ import java.util.List;
 
 import redix.soft.anilist.R;
 import redix.soft.anilist.databinding.ListNewsBinding;
+import redix.soft.anilist.listener.ItemClickListener;
 import redix.soft.anilist.model.News;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder>{

@@ -54,17 +54,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="14dp"
                 android:layout_marginEnd="5dp"
                 android:orientation="horizontal"
                 android:visibility="gone">
 
                 <LinearLayout
+                    android:id="@+id/search_bar_layout"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:padding="4dp"
+                    android:layout_marginStart="14dp"
+                    android:layout_marginEnd="5dp"
                     android:background="@drawable/bg_search"
                     android:layout_weight="1">
 
@@ -72,17 +73,17 @@
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:src="@drawable/ic_search"
-                        android:layout_marginStart="5dp"
+                        android:layout_marginStart="10dp"
                         android:layout_gravity="center"
-                        android:layout_weight="12"/>
+                        android:layout_weight="9"/>
 
                     <EditText
                         android:id="@+id/search_bar_input"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginStart="8dp"
+                        android:layout_marginStart="7dp"
+                        android:padding="8dp"
                         android:layout_weight="1"
                         android:background="@android:color/transparent"
                         android:fontFamily="@font/spinnaker"
@@ -92,12 +93,26 @@
 
                 </LinearLayout>
 
-                <ImageView
-                    android:id="@+id/toolbar_filters"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:src="@mipmap/ic_filter"
-                    android:layout_weight="7"/>
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="7">
+
+                    <ImageView
+                        android:id="@+id/toolbar_filters"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:src="@mipmap/ic_filter"/>
+
+                    <ImageView
+                        android:id="@+id/toolbar_save"
+                        android:layout_width="match_parent"
+                        android:layout_height="38dp"
+                        android:src="@drawable/ic_save_white_24dp"
+                        android:visibility="gone"
+                        android:background="?android:selectableItemBackground"/>
+
+                </RelativeLayout>
 
             </LinearLayout>
 

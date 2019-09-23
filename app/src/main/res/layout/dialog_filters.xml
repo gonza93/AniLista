@@ -37,86 +37,103 @@
                 android:text="@string/filters_filters"/>
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:id="@+id/filters_genre_layout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
-                <View
-                    android:layout_width="5dp"
-                    android:layout_height="16dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginStart="7dp"
-                    android:background="@drawable/bg_activated"/>
-
-                <TextView
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="7dp"
-                    android:fontFamily="@font/spinnaker"
-                    android:text="@string/genres"
-                    android:textColor="@android:color/black"
-                    android:textSize="22sp"
-                    android:textStyle="bold" />
+                    android:layout_marginStart="10dp"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:layout_width="5dp"
+                        android:layout_height="16dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginStart="7dp"
+                        android:background="@drawable/bg_activated"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="7dp"
+                        android:fontFamily="@font/spinnaker"
+                        android:text="@string/genres"
+                        android:textColor="@android:color/black"
+                        android:textSize="22sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/filters_list_genre"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="5dp"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:clipToPadding="false"/>
 
             </LinearLayout>
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/filters_list_genre"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="5dp"
-                android:paddingStart="15dp"
-                android:clipToPadding="false"/>
-
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:id="@+id/filters_score_layout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="15dp"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
-                <View
-                    android:layout_width="5dp"
-                    android:layout_height="16dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginStart="7dp"
-                    android:background="@drawable/bg_activated"/>
-
-                <TextView
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="7dp"
-                    android:fontFamily="@font/spinnaker"
-                    android:text="@string/score"
-                    android:textColor="@android:color/black"
-                    android:textSize="22sp"
-                    android:textStyle="bold" />
+                    android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/filters_score"
-                    android:layout_width="wrap_content"
+                    <View
+                        android:layout_width="5dp"
+                        android:layout_height="16dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginStart="7dp"
+                        android:background="@drawable/bg_activated"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="7dp"
+                        android:fontFamily="@font/spinnaker"
+                        android:text="@string/score"
+                        android:textColor="@android:color/black"
+                        android:textSize="22sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/filters_score"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:fontFamily="@font/spinnaker"
+                        android:text="@string/filters_score"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="16sp"
+                        android:textStyle="bold"/>
+
+                </LinearLayout>
+
+                <org.adw.library.widgets.discreteseekbar.DiscreteSeekBar
+                    android:id="@+id/filters_score_bar"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:fontFamily="@font/spinnaker"
-                    android:text="@string/filters_score"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="16sp"
-                    android:textStyle="bold"/>
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginEnd="25dp"
+                    app:dsb_min="0"
+                    app:dsb_max="10"
+                    app:dsb_indicatorColor="@color/colorPrimary"
+                    app:dsb_progressColor="@color/colorPrimary"/>
 
             </LinearLayout>
-
-            <org.adw.library.widgets.discreteseekbar.DiscreteSeekBar
-                android:id="@+id/filters_score_bar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginStart="25dp"
-                android:layout_marginEnd="25dp"
-                app:dsb_min="0"
-                app:dsb_max="10"
-                app:dsb_indicatorColor="@color/colorPrimary"
-                app:dsb_progressColor="@color/colorPrimary"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -125,6 +142,7 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
+                    android:id="@+id/filters_order_layout_parent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -155,6 +173,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/filters_order_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
@@ -166,6 +185,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/filters_order_title"
                             android:textColor="@color/colorGrayText"
+                            android:textSize="16sp"
                             android:paddingStart="10dp"
                             android:paddingEnd="10dp"
                             android:paddingTop="4dp"
@@ -176,11 +196,12 @@
                             android:background="@drawable/drawable_genre"/>
 
                         <TextView
-                            android:tag="startdate"
+                            android:tag="start_date"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/filters_order_startdate"
                             android:textColor="@color/colorGrayText"
+                            android:textSize="16sp"
                             android:paddingStart="10dp"
                             android:paddingEnd="10dp"
                             android:paddingTop="4dp"
@@ -191,11 +212,12 @@
                             android:background="@drawable/drawable_genre"/>
 
                         <TextView
-                            android:tag="enddate"
+                            android:tag="end_date"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/filters_order_enddate"
                             android:textColor="@color/colorGrayText"
+                            android:textSize="16sp"
                             android:paddingStart="10dp"
                             android:paddingEnd="10dp"
                             android:paddingTop="4dp"
@@ -211,6 +233,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/filters_order_score"
                             android:textColor="@color/colorGrayText"
+                            android:textSize="16sp"
                             android:paddingStart="10dp"
                             android:paddingEnd="10dp"
                             android:paddingTop="4dp"
@@ -226,6 +249,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/filters_order_type"
                             android:textColor="@color/colorGrayText"
+                            android:textSize="16sp"
                             android:paddingStart="10dp"
                             android:paddingEnd="10dp"
                             android:paddingTop="4dp"
@@ -241,6 +265,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/filters_order_episodes"
                             android:textColor="@color/colorGrayText"
+                            android:textSize="16sp"
                             android:paddingStart="10dp"
                             android:paddingEnd="10dp"
                             android:paddingTop="4dp"
@@ -255,6 +280,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/filters_sort_layout_parent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -285,36 +311,45 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/filters_sort_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/filters_asc"
+                            android:tag="ascending"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/filters_sort_asc"
                             android:textColor="@color/colorGrayText"
+                            android:textSize="16sp"
                             android:paddingStart="10dp"
                             android:paddingEnd="10dp"
                             android:paddingTop="4dp"
                             android:paddingBottom="4dp"
                             android:layout_marginTop="10dp"
                             android:layout_marginStart="20dp"
+                            android:onClick="onClickFiltersSortBy"
                             android:background="@drawable/drawable_genre"/>
 
                         <TextView
+                            android:id="@+id/filters_desc"
+                            android:tag="descending"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/filters_sort_desc"
-                            android:textColor="@color/colorGrayText"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="16sp"
                             android:paddingStart="10dp"
                             android:paddingEnd="10dp"
                             android:paddingTop="4dp"
                             android:paddingBottom="4dp"
                             android:layout_marginTop="10dp"
                             android:layout_marginStart="20dp"
-                            android:background="@drawable/drawable_genre"/>
+                            android:onClick="onClickFiltersSortBy"
+                            android:background="@drawable/drawable_genre_selected"/>
 
                     </LinearLayout>
 
