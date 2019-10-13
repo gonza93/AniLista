@@ -59,6 +59,10 @@ public class JikanService {
         return jikanAPI.getAnimeRecommendations(id);
     }
 
+    public Single<Response> getAnimeReviews(int id, int page){
+        return jikanAPI.getAnimeReviews(id, page);
+    }
+
     public Single<Response> getAiringAnime(int page){
         return jikanAPI.getTopAnime( page, "airing");
     }

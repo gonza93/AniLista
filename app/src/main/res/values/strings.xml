@@ -60,11 +60,13 @@
     <string name="show_more">Show more</string>
     <string name="view_all">View all</string>
     <string name="not_available">N/A</string>
+    <string name="see_all_reviews">View all reviews</string>
 
     <!-- Filters -->
     <string name="filters_apply">APPLY</string>
     <string name="filters_filters">Filters</string>
     <string name="score">Score</string>
+    <string name="score2">Score:</string>
     <string name="filters_score">Not selected</string>
     <string name="filters_score_near">Near</string>
     <string name="filters_result">Filtered results</string>
@@ -79,6 +81,7 @@
     <string name="filters_order_episodes">Episodes</string>
     <string name="filters_sort_asc">Ascending</string>
     <string name="filters_sort_desc">Descending</string>
+    <string name="see_more">See more</string>
 
     <!-- User -->
     <string name="anime_stats">Anime stats</string>

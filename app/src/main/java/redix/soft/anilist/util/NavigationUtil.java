@@ -5,9 +5,11 @@ import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,6 +28,7 @@ import redix.soft.anilist.model.User;
 public class NavigationUtil {
 
     private MainActivity activity;
+    private FragmentStack stack;
     private Map<TAB, Stack<Fragment>> fragmentStacks;
     public enum TAB { HOME, SEARCH, ACCOUNT }
     private enum ACTION { OPEN, CLOSE, SWITCH }
@@ -38,6 +41,9 @@ public class NavigationUtil {
         fragmentStacks.put(TAB.HOME, new Stack<>());
         fragmentStacks.put(TAB.SEARCH, new Stack<>());
         fragmentStacks.put(TAB.ACCOUNT, new Stack<>());
+
+        stack = new FragmentStack();
+        stack.setFragmentStacks(fragmentStacks);
     }
 
     public void navigateTo(Fragment fragment, String tag, int tabId){
@@ -228,5 +234,13 @@ public class NavigationUtil {
 
     public Fragment getCurrentPage(){
         return fragmentStacks.get(getSelectedTab(lastSelectedTab)).peek();
+    }
+
+    public int getLastSelectedTab() {
+        return lastSelectedTab;
+    }
+
+    public FragmentStack getStack() {
+        return stack;
     }
 }

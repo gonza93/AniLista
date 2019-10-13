@@ -1,7 +1,6 @@
 package redix.soft.anilist.fragment;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -25,24 +24,24 @@ import redix.soft.anilist.activity.MainActivity;
 import redix.soft.anilist.adapter.AnimeAdapter;
 import redix.soft.anilist.adapter.CharacterAllAdapter;
 import redix.soft.anilist.adapter.EpisodeAdapter;
-import redix.soft.anilist.adapter.GenreAdapter;
 import redix.soft.anilist.adapter.NewsAdapter;
 import redix.soft.anilist.adapter.PictureAdapter;
 import redix.soft.anilist.adapter.RankingAdapter;
+import redix.soft.anilist.adapter.ReviewAdapter;
 import redix.soft.anilist.adapter.ThemeAdapter;
 import redix.soft.anilist.api.JikanService;
 import redix.soft.anilist.model.Anime;
 import redix.soft.anilist.model.Character;
 import redix.soft.anilist.model.Genre;
 import redix.soft.anilist.model.News;
+import redix.soft.anilist.model.Review;
 import redix.soft.anilist.model.Theme;
-import redix.soft.anilist.util.ChipsLayoutManagerHelper;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 public class ListFragment extends Fragment{
 
-    public enum TYPES { THEMES, EPISODES, PICTURES, NEWS, CHARACTERS, RANKING, UPCOMING, GENRE, USER_LIST }
+    public enum TYPES { THEMES, EPISODES, PICTURES, NEWS, CHARACTERS, RANKING, UPCOMING, GENRE, USER_LIST, REVIEWS }
     public static final String TAG = "ListFragment";
 
     private TYPES type;
@@ -123,6 +122,8 @@ public class ListFragment extends Fragment{
             populateGenre(genre);
         if (type.equals(TYPES.USER_LIST))
             populateUserList();
+        if (type.equals(TYPES.REVIEWS))
+            populateReviews();
 
         return view;
     }
@@ -133,7 +134,7 @@ public class ListFragment extends Fragment{
                 case "THEMES":
                     type = TYPES.THEMES;
                     break;
-                case "EPISDOES":
+                case "EPISODES":
                     type = TYPES.EPISODES;
                     break;
                 case "PICTURES":
@@ -172,10 +173,10 @@ public class ListFragment extends Fragment{
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
 
+        outState.putInt("anime_id", anime.getId());
         outState.putString("type", type.toString());
         outState.putStringArrayList("theme_op", (ArrayList<String>) anime.getOpeningThemes());
         outState.putStringArrayList("theme_ed", (ArrayList<String>) anime.getEndingThemes());
-        outState.putInt("anime_id", anime.getId());
     }
 
     private void populateEpisodes() {
@@ -458,6 +459,53 @@ public class ListFragment extends Fragment{
                             ((AnimeAdapter) list.getAdapter()).endLoad();
                             Log.d("ERROR UserList", throwable.getMessage());
                             Toast.makeText(getContext(), throwable.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                );
+    }
+
+    public void populateReviews(){
+        progress.setVisibility(View.GONE);
+        list.setAdapter(new ReviewAdapter(getContext(), new ArrayList<>(anime.getReviews())));
+        nextPage = 2;
+
+        list.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0 && nextPage != 0 && !loading)
+                {
+                    LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                    int visibleItemCount = manager.getChildCount();
+                    int totalItemCount = manager.getItemCount();
+                    int pastVisiblesItems = manager.findFirstVisibleItemPosition();
+
+                    if ((visibleItemCount + pastVisiblesItems) >= totalItemCount)
+                        fetchReviews();
+                }
+            }
+        });
+    }
+
+    public void fetchReviews(){
+        loading = true;
+        ((ReviewAdapter) list.getAdapter()).startLoad();
+
+        new JikanService()
+                .getAnimeReviews(anime.getId(), nextPage)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        response -> {
+                            ((ReviewAdapter) list.getAdapter()).endLoad();
+                            loading = false;
+
+                            ((ReviewAdapter) list.getAdapter()).addReviews(response.getReviews());
+
+                            nextPage = response.getReviews().size() > 0? ++nextPage : 0;
+                        },
+                        throwable -> {
+                            Log.d("ERROR", throwable.getMessage());
+                            loading = false;
+                            ((ReviewAdapter) list.getAdapter()).endLoad();
                         }
                 );
     }

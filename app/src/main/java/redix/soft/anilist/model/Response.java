@@ -17,6 +17,8 @@ public class Response {
 
     private List<Picture> pictures;
 
+    private List<Review> reviews;
+
     @SerializedName("last_page")
     private int searchLastPage;
 
@@ -41,6 +43,10 @@ public class Response {
 
     public List<Picture> getPictures() {
         return pictures;
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
     }
 
     public int getSearchLastPage() {

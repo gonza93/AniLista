@@ -12,11 +12,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import redix.soft.anilist.R;
+import redix.soft.anilist.activity.MainActivity;
 import redix.soft.anilist.adapter.HomeAdapter;
 import redix.soft.anilist.api.JikanService;
 import redix.soft.anilist.util.DateUtil;

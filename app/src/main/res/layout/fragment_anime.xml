@@ -38,6 +38,7 @@
         </LinearLayout>
 
         <android.support.v4.widget.NestedScrollView
+            android:id="@+id/anime_nested_scrollview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -588,6 +589,75 @@
                     </LinearLayout>
 
                 </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp">
+
+                    <ProgressBar
+                        android:id="@+id/reviews_progress"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:padding="30dp"
+                        android:layout_marginTop="30dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_centerHorizontal="true"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginBottom="10dp">
+
+                            <View
+                                android:layout_width="5dp"
+                                android:layout_height="16dp"
+                                android:layout_marginTop="4dp"
+                                android:background="@drawable/bg_activated"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/spinnaker"
+                                android:layout_marginStart="7dp"
+                                android:textSize="21sp"
+                                android:textStyle="bold"
+                                android:textColor="@android:color/black"
+                                android:text="@string/reviews"/>
+
+                        </LinearLayout>
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/anime_reviews_list"
+                            android:paddingStart="5dp"
+                            android:paddingEnd="5dp"
+                            android:clipToPadding="false"
+                            android:nestedScrollingEnabled="false"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/anime_reviews_view_all"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:padding="10dp"
+                    android:text="@string/see_all_reviews"
+                    android:textColor="@color/colorPrimary"
+                    android:textAlignment="center"
+                    android:background="@drawable/bg_primary"/>
 
             </LinearLayout>
 

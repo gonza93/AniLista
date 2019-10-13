@@ -50,6 +50,7 @@ public class Anime extends BaseObservable {
     @SerializedName("ending_themes")
     private List<String> endingThemes;
     private List<Character> characters;
+    private List<Review> reviews;
 
     //User anime list
     @SerializedName("watching_status")
@@ -166,6 +167,13 @@ public class Anime extends BaseObservable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
     }
 
     @BindingAdapter("loadThumbnail")

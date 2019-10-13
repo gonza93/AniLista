@@ -46,6 +46,10 @@ public interface JikanAPI {
     @GET("anime/{id}/recommendations")
     Single<Response> getAnimeRecommendations(@Path("id") int id);
 
+    @GET("anime/{id}/reviews/{page}")
+    Single<Response> getAnimeReviews(@Path("id") int id,
+                                     @Path("page") int page);
+
     @GET("top/anime/{page}/{subtype}")
     Single<Response> getTopAnime(@Path("page") int page,
                                  @Path("subtype") String subtype);

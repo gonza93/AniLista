@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import at.blogc.android.views.ExpandableTextView;
@@ -25,6 +27,7 @@ import redix.soft.anilist.activity.MainActivity;
 import redix.soft.anilist.adapter.AnimeAdapter;
 import redix.soft.anilist.adapter.CharacterAdapter;
 import redix.soft.anilist.adapter.GenreAdapter;
+import redix.soft.anilist.adapter.ReviewAdapter;
 import redix.soft.anilist.api.JikanService;
 import redix.soft.anilist.databinding.FragmentAnimeBinding;
 
@@ -32,6 +35,7 @@ import redix.soft.anilist.model.Anime;
 import redix.soft.anilist.model.Character;
 import redix.soft.anilist.model.Genre;
 import redix.soft.anilist.model.Related;
+import redix.soft.anilist.model.Review;
 import redix.soft.anilist.util.AnimationUtil;
 import redix.soft.anilist.util.ChipsLayoutManagerHelper;
 import rx.android.schedulers.AndroidSchedulers;
@@ -44,8 +48,10 @@ public class AnimeFragment extends Fragment {
     @BindView(R.id.anime_progress) View progress;
     @BindView(R.id.characters_progress) View progressCharacters;
     @BindView(R.id.recommendations_progress) View progressRecom;
+    @BindView(R.id.reviews_progress) View progressReview;
 
     @BindView(R.id.anime_main_layout) View mainLayout;
+    @BindView(R.id.anime_nested_scrollview) NestedScrollView scrollView;
     @BindView(R.id.anime_expand_arrow) View expandArrow;
     @BindView(R.id.anime_synopsis) ExpandableTextView synopsis;
 
@@ -61,6 +67,7 @@ public class AnimeFragment extends Fragment {
     @BindView(R.id.anime_character_list) RecyclerView relatedCharacterList;
     @BindView(R.id.anime_other_list) RecyclerView otherList;
     @BindView(R.id.anime_recommendations_list) RecyclerView recommendationsList;
+    @BindView(R.id.anime_reviews_list) RecyclerView reviewsList;
 
     @BindView(R.id.anime_adaptation_layout) View adapatationLayout;
     @BindView(R.id.anime_alternative_layout) View alternativeLayout;
@@ -76,8 +83,14 @@ public class AnimeFragment extends Fragment {
     private GenreAdapter genreAdapter;
     private CharacterAdapter characterAdapter;
     private AnimeAdapter recommendationsAdapter;
+    private ReviewAdapter reviewAdapter;
 
     private int animeId;
+    private int scrollY;
+
+    public int getScrollY() {
+        return scrollY;
+    }
 
     public void setAnimeId(int animeId) {
         this.animeId = animeId;
@@ -95,6 +108,15 @@ public class AnimeFragment extends Fragment {
 
         ButterKnife.bind(this, view);
 
+        scrollView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
+                    ((MainActivity) getContext()).getToolbar().setElevation(scrollY == 0? 0 : 20);
+                    this.scrollY = scrollY;
+            }
+        );
+
+        //Always set elevation 0 on create view
+        ((MainActivity) getContext()).getToolbar().setElevation(0);
+
         //Genres List
         genreAdapter = new GenreAdapter(new ArrayList<>(), getContext(), R.layout.list_genre);
         genreList.setLayoutManager(ChipsLayoutManagerHelper.build(getContext()));
@@ -110,11 +132,22 @@ public class AnimeFragment extends Fragment {
         recommendationsList.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         recommendationsList.setAdapter(recommendationsAdapter);
 
-        new Handler().postDelayed(() -> getAnimeInfo(animeId), JikanService.apiDelay);
-        new Handler().postDelayed(() -> getAnimeCharacters(animeId), JikanService.apiDelay * 2);
-        new Handler().postDelayed(() -> getAnimeRecommendations(animeId), JikanService.apiDelay * 3);
+        //Reviews List
+        reviewAdapter = new ReviewAdapter(getContext(), new ArrayList<>());
+        reviewsList.setLayoutManager(new LinearLayoutManager(getContext()));
+        reviewsList.setAdapter(reviewAdapter);
+
+        new Handler().postDelayed(() -> getAnimeInfo(animeId), 500);
+        new Handler().postDelayed(() -> getAnimeCharacters(animeId), 1000);
+        new Handler().postDelayed(() -> getAnimeRecommendations(animeId), 1500);
+        new Handler().postDelayed(() -> getAnimeReviews(animeId), 2000);
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     private void getAnimeInfo(int id){
@@ -148,7 +181,7 @@ public class AnimeFragment extends Fragment {
                         response -> {
                             progressCharacters.setVisibility(View.GONE);
                             List<Character> characters = response.getCharacters();
-                            characterAdapter.setAllCharacters(characters);
+                            characterAdapter.setAllCharacters(new ArrayList<>(characters));
                             if(characters.size() > 9)
                                 characters = characters.subList(0, 9);
                             characters.add(null);
@@ -171,6 +204,24 @@ public class AnimeFragment extends Fragment {
                             recommendationsAdapter.setDataSet(animes);
                             progressRecom.setVisibility(View.GONE);
                             },
+                        throwable -> Log.d("ERROR", throwable.getMessage())
+                );
+    }
+
+    private void getAnimeReviews(int animeId) {
+        new JikanService()
+                .getAnimeReviews(animeId, 1)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        response -> {
+                            List<Review> reviews = response.getReviews();
+                            this.animeBinding.getAnime().setReviews(reviews);
+                            if(reviews.size() > 5)
+                                reviews = reviews.subList(0, 5);
+                            reviewAdapter.setDataSet(reviews);
+                            progressReview.setVisibility(View.GONE);
+                        },
                         throwable -> Log.d("ERROR", throwable.getMessage())
                 );
     }
@@ -255,6 +306,11 @@ public class AnimeFragment extends Fragment {
     @OnClick(R.id.anime_news)
     public void onClickNews(){
         loadListFragment(ListFragment.TYPES.NEWS);
+    }
+
+    @OnClick(R.id.anime_reviews_view_all)
+    public void onClickViewAllReviews(){
+        loadListFragment(ListFragment.TYPES.REVIEWS);
     }
 
     private void loadListFragment(ListFragment.TYPES type){

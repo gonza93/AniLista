@@ -3,22 +3,16 @@ package redix.soft.anilist.adapter;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
-import android.support.design.widget.TextInputLayout;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-
-import com.varunest.sparkbutton.SparkButton;
 
 import redix.soft.anilist.R;
 import redix.soft.anilist.activity.MainActivity;
 import redix.soft.anilist.databinding.ListUserHeaderBinding;
 import redix.soft.anilist.fragment.UserListFragment;
 import redix.soft.anilist.model.User;
-import redix.soft.anilist.util.DataUtil;
 
 public class UserAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
@@ -51,15 +45,6 @@ public class UserAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
                 ((MainActivity) context).loadFragment(fragment, UserListFragment.TAG);
             });
-        }
-
-        public void saveButtonProps(TextView textSave, SparkButton saveButton, String username){
-            textSave.setTextColor(username != null? ContextCompat.getColor(context, R.color.colorRedTextUser) :
-                    ContextCompat.getColor(context, android.R.color.white));
-            textSave.setText(username != null? R.string.user_save_2 : R.string.user_save_1);
-
-            DataUtil.getInstance(context).saveString(DataUtil.DATA.SAVED_USER.toString(), username);
-            saveButton.setChecked(username != null);
         }
 
     }

@@ -64,7 +64,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder>{
         holder.setItemClickListener(new ItemClickListener() {
             @Override
             public void onItemClick(News news) {
-                super.onItemClick(news);
                 //TODO goto myanime list
             }
         });
