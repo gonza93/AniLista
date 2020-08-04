@@ -13,9 +13,12 @@
     android:focusable="true"
     android:background="@drawable/bg_rounded_4">
 
-    <android.support.v4.widget.NestedScrollView
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/filters_scroll"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:paddingBottom="120dp"
+        android:clipToPadding="false">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -31,7 +34,7 @@
                 android:padding="5dp"
                 android:textAlignment="center"
                 android:textSize="22sp"
-                android:textColor="@android:color/black"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault"
                 android:textStyle="bold"
                 android:layout_gravity="center"
                 android:text="@string/filters_filters"/>
@@ -61,13 +64,13 @@
                         android:layout_marginStart="7dp"
                         android:fontFamily="@font/spinnaker"
                         android:text="@string/genres"
-                        android:textColor="@android:color/black"
+                        android:textAppearance="@android:style/TextAppearance.DeviceDefault"
                         android:textSize="22sp"
                         android:textStyle="bold" />
 
                 </LinearLayout>
 
-                <android.support.v7.widget.RecyclerView
+                <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/filters_list_genre"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -83,7 +86,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="20dp"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -104,7 +107,7 @@
                         android:layout_marginStart="7dp"
                         android:fontFamily="@font/spinnaker"
                         android:text="@string/score"
-                        android:textColor="@android:color/black"
+                        android:textAppearance="@android:style/TextAppearance.DeviceDefault"
                         android:textSize="22sp"
                         android:textStyle="bold" />
 
@@ -138,7 +141,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="20dp"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -166,7 +169,7 @@
                             android:layout_marginStart="7dp"
                             android:fontFamily="@font/spinnaker"
                             android:text="@string/filters_order"
-                            android:textColor="@android:color/black"
+                            android:textAppearance="@android:style/TextAppearance.DeviceDefault"
                             android:textSize="22sp"
                             android:textStyle="bold" />
 
@@ -304,7 +307,7 @@
                             android:layout_marginStart="7dp"
                             android:fontFamily="@font/spinnaker"
                             android:text="@string/filters_sort"
-                            android:textColor="@android:color/black"
+                            android:textAppearance="@android:style/TextAppearance.DeviceDefault"
                             android:textSize="22sp"
                             android:textStyle="bold" />
 
@@ -359,7 +362,7 @@
 
         </LinearLayout>
 
-    </android.support.v4.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
 
     <LinearLayout
         android:layout_width="wrap_content"

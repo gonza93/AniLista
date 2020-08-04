@@ -1,13 +1,13 @@
 package redix.soft.anilist.fragment;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,7 +34,6 @@ import redix.soft.anilist.model.Anime;
 import redix.soft.anilist.model.Character;
 import redix.soft.anilist.model.Genre;
 import redix.soft.anilist.model.News;
-import redix.soft.anilist.model.Review;
 import redix.soft.anilist.model.Theme;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -275,7 +274,9 @@ public class ListFragment extends Fragment{
     private void populatePictures() {
         PictureAdapter pictureAdapter = new PictureAdapter(new ArrayList<>(), getContext());
 
-        list.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        StaggeredGridLayoutManager gridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        //gridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS);
+        list.setLayoutManager(gridLayoutManager);
         list.setAdapter(pictureAdapter);
 
         new JikanService()
@@ -334,7 +335,10 @@ public class ListFragment extends Fragment{
 
                             nextPage++;
                             },
-                        throwable -> Log.d("ERROR", throwable.getMessage())
+                        throwable -> {
+                            Log.d("ERROR " + subtype, throwable.getMessage());
+                            Toast.makeText(getContext(), throwable.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                        }
                 );
     }
 

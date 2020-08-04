@@ -33,7 +33,7 @@
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="5dp"
                 android:textSize="16sp"
-                android:textColor="@android:color/black"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault"
                 android:textStyle="bold"
                 android:text="@{character.name}"/>
 
@@ -45,7 +45,7 @@
                 android:textSize="14sp"
                 android:text="@{`Role: ` + character.role}"/>
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/character_seiyu_list"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

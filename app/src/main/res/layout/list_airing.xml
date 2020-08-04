@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:text="@{anime.title}"
             android:layout_marginStart="4dp"
-            android:textColor="@android:color/black"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault"
             android:textStyle="bold"
             android:maxLines="1"
             android:ellipsize="end"

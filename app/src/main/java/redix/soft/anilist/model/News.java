@@ -1,6 +1,6 @@
 package redix.soft.anilist.model;
 
-import android.databinding.BindingAdapter;
+import androidx.databinding.BindingAdapter;
 import android.widget.ImageView;
 
 import com.google.gson.annotations.SerializedName;

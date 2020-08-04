@@ -1,16 +1,14 @@
 package redix.soft.anilist.util;
 
 import android.graphics.Color;
-import android.support.design.widget.BottomSheetBehavior;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.RecyclerView;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.core.content.ContextCompat;
+
 import android.view.View;
 import android.widget.ImageView;
 
-import java.io.Serializable;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
@@ -23,7 +21,6 @@ import redix.soft.anilist.fragment.ListFragment;
 import redix.soft.anilist.fragment.SearchFragment;
 import redix.soft.anilist.fragment.UserFragment;
 import redix.soft.anilist.fragment.UserListFragment;
-import redix.soft.anilist.model.User;
 
 public class NavigationUtil {
 
@@ -78,7 +75,7 @@ public class NavigationUtil {
     private void switchTab(int tabId){
         View fragmentToShow = getSelectedFragmentView(tabId);
         View fragmentToHide = getSelectedFragmentView(lastSelectedTab);
-        AnimationUtil.switchFragments(fragmentToHide, fragmentToShow);
+        AnimationUtil.smoothSwitch(fragmentToHide, fragmentToShow, isRight(tabId));
     }
 
     private void fragmentTransaction(Fragment fragment, String tag, ACTION action, int tabId){
@@ -151,12 +148,17 @@ public class NavigationUtil {
                 activity.getSearchBarLayout().setVisibility(View.INVISIBLE);
 
             activity.getBackButton().setVisibility(View.GONE);
-            AnimationUtil.changeToolbarColor(activity, Color.WHITE, ContextCompat.getColor(activity, R.color.colorPrimary));
+
+            AnimationUtil.changeToolbarColor(activity,
+                    ContextCompat.getColor(activity, R.color.colorPrimaryDark),
+                    ContextCompat.getColor(activity, R.color.colorToolbarAccount));
         }
         else {
             if (lastSelectedTab != -1 && getCurrentPage() instanceof UserFragment) {
-                AnimationUtil.changeToolbarColor(activity, ContextCompat.getColor(activity, R.color.colorPrimary), Color.WHITE);
-                activity.getToolbarTitleView().setTextColor(Color.BLACK);
+                AnimationUtil.changeToolbarColor(activity,
+                        ContextCompat.getColor(activity, R.color.colorToolbarAccount),
+                        ContextCompat.getColor(activity, R.color.colorPrimaryDark));
+                activity.getToolbarTitleView().setTextColor(ContextCompat.getColor(activity, R.color.colorBlack));
             }
         }
 
@@ -178,7 +180,11 @@ public class NavigationUtil {
         if(tag.equals(HomeFragment.TAG) && fragmentStacks.get(TAB.HOME).size() > 0) {
             tag = fragmentStacks.get(TAB.HOME).peek().getTag();
             fragment = fragmentStacks.get(TAB.HOME).peek();
+            activity.getToolbarConfig().setVisibility(View.VISIBLE);
         }
+        else if (!tag.equals(HomeFragment.TAG))
+            activity.getToolbarConfig().setVisibility(View.GONE);
+
         if(tag.equals(SearchFragment.TAG) && fragmentStacks.get(TAB.SEARCH).size() > 0) {
             tag = fragmentStacks.get(TAB.SEARCH).peek().getTag();
             fragment = fragmentStacks.get(TAB.SEARCH).peek();
@@ -234,6 +240,17 @@ public class NavigationUtil {
 
     public Fragment getCurrentPage(){
         return fragmentStacks.get(getSelectedTab(lastSelectedTab)).peek();
+    }
+
+    public boolean isRight(int tabId){
+        if (lastSelectedTab == R.id.navigation_home)
+            return true;
+        if (lastSelectedTab == R.id.navigation_account)
+            return false;
+        if (lastSelectedTab == R.id.navigation_search)
+            return tabId == R.id.navigation_account;
+
+        return true;
     }
 
     public int getLastSelectedTab() {

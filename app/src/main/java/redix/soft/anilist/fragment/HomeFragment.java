@@ -2,21 +2,21 @@ package redix.soft.anilist.fragment;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import redix.soft.anilist.R;
-import redix.soft.anilist.activity.MainActivity;
 import redix.soft.anilist.adapter.HomeAdapter;
 import redix.soft.anilist.api.JikanService;
 import redix.soft.anilist.util.DateUtil;
@@ -28,13 +28,14 @@ public class HomeFragment extends Fragment {
     private static HomeFragment instance;
     public static final String TAG = "Anilist";
     public enum TYPES { SCHEDULE, AIRING, PEOPLE, POPULAR }
+    private int retry;
 
     @BindView(R.id.home_list) RecyclerView listHome;
 
     private HomeAdapter homeAdapter;
 
-    public static HomeFragment getInstance(){
-        if(instance == null)
+    public static HomeFragment getInstance() {
+        if (instance == null)
             instance = new HomeFragment();
         return instance;
     }
@@ -63,7 +64,7 @@ public class HomeFragment extends Fragment {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe( response    -> fillList(response.getAnimes(), 10, TYPES.SCHEDULE),
-                            throwable   -> Log.d("ERROR SCHEDULE", throwable.getMessage()));
+                            throwable   -> new Handler().postDelayed(() -> retry(TYPES.SCHEDULE), 700));
     }
 
     private void getAiringAnimes(){
@@ -72,7 +73,7 @@ public class HomeFragment extends Fragment {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe( response    -> fillList(response.getAnimes(), 15, TYPES.AIRING),
-                            throwable   -> Log.d("ERROR AIRING", throwable.getMessage()));
+                            throwable   -> new Handler().postDelayed(() -> retry(TYPES.AIRING), 700));
     }
 
     private void getPopularPeople(){
@@ -81,7 +82,7 @@ public class HomeFragment extends Fragment {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe( response    -> fillList(response.getSeiyus(), 20, TYPES.PEOPLE),
-                            throwable   -> Log.d("ERROR TOP PEOPLE", throwable.getMessage()));
+                            throwable   -> new Handler().postDelayed(() -> retry(TYPES.PEOPLE), 700));
     }
 
     private void getPopularAnimes(){
@@ -90,7 +91,7 @@ public class HomeFragment extends Fragment {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe( response    -> fillList(response.getAnimes(), 15, TYPES.POPULAR),
-                            throwable   -> Log.d("ERROR POPULAR ANIME", throwable.getMessage()));
+                            throwable   -> new Handler().postDelayed(() -> retry(TYPES.POPULAR), 700));
     }
 
     private void fillList(List dataset, int limit, TYPES type){
@@ -109,6 +110,23 @@ public class HomeFragment extends Fragment {
             homeAdapter.setPeopleItems(subList);
         if (type.equals(TYPES.POPULAR))
             homeAdapter.setPopularItems(subList);
+    }
+
+    private synchronized void retry(TYPES type) {
+        if (retry == 5) {
+            Toast.makeText(getContext(), R.string.fetch_error, Toast.LENGTH_SHORT).show();
+            return;
+        }
+        retry++;
+
+        if (type.equals(TYPES.SCHEDULE))
+            getScheduleAnimes();
+        if (type.equals(TYPES.AIRING))
+            getAiringAnimes();
+        if (type.equals(TYPES.PEOPLE))
+            getPopularPeople();
+        if (type.equals(TYPES.POPULAR))
+            getPopularAnimes();
     }
 
 }

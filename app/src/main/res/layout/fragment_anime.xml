@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@android:color/white">
+        android:background="@color/colorWhite">
 
         <LinearLayout
             android:id="@+id/anime_progress"
@@ -37,7 +37,7 @@
 
         </LinearLayout>
 
-        <android.support.v4.widget.NestedScrollView
+        <androidx.core.widget.NestedScrollView
             android:id="@+id/anime_nested_scrollview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -75,7 +75,7 @@
                             android:layout_height="wrap_content"
                             android:textSize="18sp"
                             android:textStyle="bold"
-                            android:textColor="@android:color/black"
+                            android:textAppearance="@android:style/TextAppearance.DeviceDefault"
                             android:text="@{anime.title}"/>
 
                         <LinearLayout
@@ -209,7 +209,7 @@
 
                         </LinearLayout>
 
-                        <android.support.v7.widget.RecyclerView
+                        <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/anime_genre_list"
                             android:layout_marginTop="5dp"
                             android:layout_width="match_parent"
@@ -255,7 +255,7 @@
                             android:layout_marginStart="7dp"
                             android:textSize="21sp"
                             android:textStyle="bold"
-                            android:textColor="@android:color/black"
+                            android:textAppearance="@android:style/TextAppearance.DeviceDefault"
                             android:text="@string/synopsis"/>
 
                     </LinearLayout>
@@ -483,12 +483,12 @@
                                 android:layout_marginStart="7dp"
                                 android:textSize="21sp"
                                 android:textStyle="bold"
-                                android:textColor="@android:color/black"
+                                android:textAppearance="@android:style/TextAppearance.DeviceDefault"
                                 android:text="@string/characters_staff"/>
 
                         </LinearLayout>
 
-                        <android.support.v7.widget.RecyclerView
+                        <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/anime_characters_list"
                             android:paddingStart="20dp"
                             android:paddingEnd="10dp"
@@ -525,7 +525,7 @@
                             android:textSize="21sp"
                             android:textStyle="bold"
                             android:layout_marginStart="7dp"
-                            android:textColor="@android:color/black"
+                            android:textAppearance="@android:style/TextAppearance.DeviceDefault"
                             android:text="@string/related"/>
 
                     </LinearLayout>
@@ -573,12 +573,12 @@
                                 android:layout_marginStart="7dp"
                                 android:textSize="21sp"
                                 android:textStyle="bold"
-                                android:textColor="@android:color/black"
+                                android:textAppearance="@android:style/TextAppearance.DeviceDefault"
                                 android:text="@string/recommendations"/>
 
                         </LinearLayout>
 
-                        <android.support.v7.widget.RecyclerView
+                        <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/anime_recommendations_list"
                             android:paddingStart="20dp"
                             android:paddingEnd="10dp"
@@ -628,12 +628,12 @@
                                 android:layout_marginStart="7dp"
                                 android:textSize="21sp"
                                 android:textStyle="bold"
-                                android:textColor="@android:color/black"
+                                android:textAppearance="@android:style/TextAppearance.DeviceDefault"
                                 android:text="@string/reviews"/>
 
                         </LinearLayout>
 
-                        <android.support.v7.widget.RecyclerView
+                        <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/anime_reviews_list"
                             android:paddingStart="5dp"
                             android:paddingEnd="5dp"
@@ -657,11 +657,12 @@
                     android:text="@string/see_all_reviews"
                     android:textColor="@color/colorPrimary"
                     android:textAlignment="center"
-                    android:background="@drawable/bg_primary"/>
+                    android:background="@drawable/bg_primary"
+                    android:visibility="gone"/>
 
             </LinearLayout>
 
-        </android.support.v4.widget.NestedScrollView>
+        </androidx.core.widget.NestedScrollView>
 
     </LinearLayout>
 

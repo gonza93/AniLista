@@ -1,10 +1,11 @@
 package redix.soft.anilist.model;
 
-import android.content.Context;
-import android.databinding.BindingAdapter;
-import android.support.v4.content.ContextCompat;
+import android.content.res.ColorStateList;
+import androidx.databinding.BindingAdapter;
+import androidx.core.content.ContextCompat;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.google.gson.annotations.SerializedName;
@@ -60,6 +61,20 @@ public class Reviewer {
     public static void setScoreColor(View view, int score) {
         int backgroud = score >= 6? R.drawable.bg_primary : R.drawable.bg_red;
         view.setBackgroundResource(backgroud);
+    }
+
+    @BindingAdapter("setBarColor")
+    public static void setBarColor(View seekBar, int score) {
+        ColorStateList colorRed = ColorStateList.valueOf(ContextCompat.getColor(seekBar.getContext(), R.color.colorRedText));
+        ColorStateList colorPrimary = ColorStateList.valueOf(ContextCompat.getColor(seekBar.getContext(), R.color.colorPrimary));
+        ((SeekBar) seekBar).setProgressTintList(score >= 6? colorPrimary : colorRed);
+    }
+
+    @BindingAdapter("setScoreTextColor")
+    public static void setScoreTextColor(TextView textView, int score) {
+        int color = ContextCompat.getColor(textView.getContext(), R.color.colorRedText);
+        if (score < 6)
+            textView.setTextColor(color);
     }
 
 }

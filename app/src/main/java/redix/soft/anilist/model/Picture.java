@@ -1,9 +1,8 @@
 package redix.soft.anilist.model;
 
-import android.databinding.BindingAdapter;
+import androidx.databinding.BindingAdapter;
 import android.widget.ImageView;
 
-import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 
 public class Picture {
@@ -19,11 +18,10 @@ public class Picture {
         return small;
     }
 
-    @BindingAdapter("loadPictureThumbnail")
+    @BindingAdapter("loadPicture")
     public static void loadImage(ImageView view, String imageUrl) {
         Picasso.get()
                 .load(imageUrl)
-                .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
                 .into(view);
     }
 

@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark">
+    android:background="@color/colorWhite">
 
     <com.ogaclejapan.smarttablayout.SmartTabLayout
         android:id="@+id/user_list_tabs"
@@ -21,7 +21,7 @@
         app:stl_indicatorInFront="true"
         app:stl_indicatorInterpolation="smart"
         app:stl_indicatorGravity="center"
-        app:stl_indicatorColor="@color/colorPrimary"
+        app:stl_indicatorColor="@color/colorPri"
         app:stl_indicatorThickness="32dp"
         app:stl_indicatorWidth="auto"
         app:stl_indicatorCornerRadius="18dp"
@@ -38,7 +38,7 @@
         app:stl_drawDecorationAfterTab="false"
         />
 
-    <android.support.v4.view.ViewPager
+    <androidx.viewpager.widget.ViewPager
         android:id="@+id/user_viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

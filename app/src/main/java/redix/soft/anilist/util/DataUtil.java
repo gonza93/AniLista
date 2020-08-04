@@ -3,11 +3,13 @@ package redix.soft.anilist.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import androidx.appcompat.app.AppCompatDelegate;
+
 import redix.soft.anilist.R;
 
 public class DataUtil {
 
-    public enum DATA { QUERY, USERNAME, SAVED_USER }
+    public enum DATA { QUERY, USERNAME, SAVED_USER, MODE }
     private Context context;
     private boolean firstInstance;
     private static DataUtil instance;
@@ -54,5 +56,9 @@ public class DataUtil {
 
     public String getSavedUsername(){
         return getSharedPreferences().getString(DATA.SAVED_USER.toString(), null);
+    }
+
+    public int getUIMode(){
+        return getSharedPreferences().getInt(DATA.MODE.toString(), AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
     }
 }

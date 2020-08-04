@@ -80,4 +80,5 @@ public interface JikanAPI {
                                       @Query("page") int page,
                                       @Query("order_by") String orderBy,
                                       @Query("sort") String sort);
+
 }

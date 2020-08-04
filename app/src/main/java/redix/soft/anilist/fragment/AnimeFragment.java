@@ -1,21 +1,20 @@
 package redix.soft.anilist.fragment;
 
-import android.databinding.DataBindingUtil;
+import androidx.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.widget.NestedScrollView;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.core.widget.NestedScrollView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import at.blogc.android.views.ExpandableTextView;
@@ -54,6 +53,7 @@ public class AnimeFragment extends Fragment {
     @BindView(R.id.anime_nested_scrollview) NestedScrollView scrollView;
     @BindView(R.id.anime_expand_arrow) View expandArrow;
     @BindView(R.id.anime_synopsis) ExpandableTextView synopsis;
+    @BindView(R.id.anime_reviews_view_all) View buttonAllReviews;
 
     @BindView(R.id.anime_genre_list) RecyclerView genreList;
     @BindView(R.id.anime_characters_list) RecyclerView characterList;
@@ -86,11 +86,6 @@ public class AnimeFragment extends Fragment {
     private ReviewAdapter reviewAdapter;
 
     private int animeId;
-    private int scrollY;
-
-    public int getScrollY() {
-        return scrollY;
-    }
 
     public void setAnimeId(int animeId) {
         this.animeId = animeId;
@@ -110,7 +105,6 @@ public class AnimeFragment extends Fragment {
 
         scrollView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
                     ((MainActivity) getContext()).getToolbar().setElevation(scrollY == 0? 0 : 20);
-                    this.scrollY = scrollY;
             }
         );
 
@@ -221,6 +215,7 @@ public class AnimeFragment extends Fragment {
                                 reviews = reviews.subList(0, 5);
                             reviewAdapter.setDataSet(reviews);
                             progressReview.setVisibility(View.GONE);
+                            buttonAllReviews.setVisibility(View.VISIBLE);
                         },
                         throwable -> Log.d("ERROR", throwable.getMessage())
                 );
@@ -285,7 +280,7 @@ public class AnimeFragment extends Fragment {
             synopsis.expand();
         }
 
-        AnimationUtil.rotate(expandArrow, 180, 500);
+        AnimationUtil.rotate(expandArrow, 180, 400);
     }
 
     @OnClick(R.id.anime_themes)

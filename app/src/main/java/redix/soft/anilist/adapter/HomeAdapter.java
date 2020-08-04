@@ -1,15 +1,14 @@
 package redix.soft.anilist.adapter;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.PagerSnapHelper;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SnapHelper;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.PagerSnapHelper;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SnapHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import redix.soft.anilist.R;
@@ -52,9 +51,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
                 return TYPE_AIRING;
             case 3:
                 return TYPE_PEOPLE;
-            case 4:
-                return TYPE_POPULAR;
-
             default:
                 return TYPE_POPULAR;
         }
@@ -146,6 +142,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         if (holder.getItemViewType() == TYPE_POPULAR){
             loaderPopular = holder.findView(R.id.home_loader_popular);
             RecyclerView popularList = (RecyclerView) holder.findView(R.id.home_popular_list);
+            loaderPopular.setVisibility(View.GONE);
 
             popularAdapter = new AnimeAdapter(popularAnime, context, R.layout.list_airing);
             popularList.setAdapter(popularAdapter);

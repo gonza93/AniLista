@@ -14,7 +14,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorBackSeiyu">
+        android:background="@color/colorPrimaryDark">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -50,7 +50,7 @@
                         android:maxLines="6"
                         android:ellipsize="end"
                         android:textSize="12sp"
-                        android:textColor="@android:color/black"
+                        android:textAppearance="@android:style/TextAppearance.DeviceDefault"
                         android:text="@{seiyu.about}"/>
 
                 </LinearLayout>
@@ -101,7 +101,7 @@
                     android:layout_marginStart="7dp"
                     android:fontFamily="@font/spinnaker"
                     android:text="@string/voice_acting_roles"
-                    android:textColor="@android:color/black"
+                    android:textAppearance="@android:style/TextAppearance.DeviceDefault"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -177,10 +177,9 @@
                         android:layout_marginTop="10dp"
                         android:orientation="horizontal">
 
-                        <ImageView
+                        <View
                             android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:src="@mipmap/ic_web"/>
+                            android:layout_height="20dp"/>
 
                         <com.elyeproj.loaderviewlibrary.LoaderImageView
                             android:layout_width="80dp"
@@ -202,7 +201,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/spinnaker"
                         android:text="@{seiyu.name}"
-                        android:textColor="@android:color/black"
+                        android:textAppearance="@android:style/TextAppearance.DeviceDefault"
                         android:textSize="22sp"
                         android:textStyle="bold"/>
 
@@ -215,7 +214,8 @@
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="20dp"
-                            android:src="@mipmap/ic_lang"/>
+                            android:src="@mipmap/ic_lang"
+                            android:tint="@color/colorBlack"/>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -224,7 +224,7 @@
                             android:layout_marginStart="5dp"
                             android:fontFamily="@font/spinnaker"
                             android:text="@{seiyu.familyName}"
-                            android:textColor="@android:color/black"
+                            android:textAppearance="@android:style/TextAppearance.DeviceDefault"
                             android:textSize="13sp"/>
 
                     </LinearLayout>
@@ -238,7 +238,8 @@
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="20dp"
-                            android:src="@mipmap/ic_birthday"/>
+                            android:src="@mipmap/ic_birthday"
+                            android:tint="@color/colorBlack"/>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -247,7 +248,7 @@
                             android:layout_marginStart="5dp"
                             android:fontFamily="@font/spinnaker"
                             android:text="@{seiyu.formattedBirthday}"
-                            android:textColor="@android:color/black"
+                            android:textAppearance="@android:style/TextAppearance.DeviceDefault"
                             android:textSize="13sp"/>
 
                     </LinearLayout>
@@ -262,7 +263,8 @@
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="20dp"
-                            android:src="@mipmap/ic_web"/>
+                            android:src="@mipmap/ic_web"
+                            android:tint="@color/colorBlack"/>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -271,7 +273,7 @@
                             android:layout_marginStart="5dp"
                             android:fontFamily="@font/spinnaker"
                             android:text="@{seiyu.websiteURL}"
-                            android:textColor="@android:color/black"
+                            android:textAppearance="@android:style/TextAppearance.DeviceDefault"
                             android:textSize="13sp"/>
 
                     </LinearLayout>
@@ -311,7 +313,8 @@
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_gravity="center"
-                        android:src="@mipmap/ic_score_2"/>
+                        android:src="@mipmap/ic_score_2"
+                        android:tint="@color/colorBlack"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -320,7 +323,7 @@
                         android:layout_marginStart="10dp"
                         android:text="@{String.valueOf(seiyu.memberFavorites)}"
                         android:textSize="18sp"
-                        android:textColor="@android:color/black"/>
+                        android:textAppearance="@android:style/TextAppearance.DeviceDefault"/>
 
                 </LinearLayout>
 

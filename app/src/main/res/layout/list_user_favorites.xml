@@ -26,7 +26,7 @@
             android:layout_marginStart="7dp"
             android:fontFamily="@font/spinnaker"
             android:text="@string/favorites"
-            android:textColor="@android:color/black"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault"
             android:textSize="22sp"
             android:textStyle="bold" />
 
@@ -39,10 +39,10 @@
         android:layout_marginTop="5dp"
         android:fontFamily="@font/spinnaker"
         android:text="@string/anime"
-        android:textColor="@android:color/black"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault"
         android:textSize="22sp"/>
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/user_list_favorite_anime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -51,7 +51,7 @@
         android:clipToPadding="false"
         android:orientation="horizontal"
         android:nestedScrollingEnabled="false"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -60,10 +60,10 @@
         android:layout_marginTop="10dp"
         android:fontFamily="@font/spinnaker"
         android:text="@string/manga"
-        android:textColor="@android:color/black"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault"
         android:textSize="22sp"/>
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/user_list_favorite_manga"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -72,7 +72,7 @@
         android:clipToPadding="false"
         android:orientation="horizontal"
         android:nestedScrollingEnabled="false"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -81,10 +81,10 @@
         android:layout_marginTop="10dp"
         android:fontFamily="@font/spinnaker"
         android:text="@string/characters"
-        android:textColor="@android:color/black"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault"
         android:textSize="22sp"/>
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/user_list_favorite_characters"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -93,7 +93,7 @@
         android:clipToPadding="false"
         android:orientation="horizontal"
         android:nestedScrollingEnabled="false"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -102,10 +102,10 @@
         android:layout_marginTop="10dp"
         android:fontFamily="@font/spinnaker"
         android:text="@string/people"
-        android:textColor="@android:color/black"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault"
         android:textSize="22sp"/>
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/user_list_favorite_people"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -114,6 +114,6 @@
         android:clipToPadding="false"
         android:orientation="horizontal"
         android:nestedScrollingEnabled="false"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
 </LinearLayout>

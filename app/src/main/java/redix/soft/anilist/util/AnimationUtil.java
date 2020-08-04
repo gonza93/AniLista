@@ -1,28 +1,21 @@
 package redix.soft.anilist.util;
 
 import android.animation.ArgbEvaluator;
-import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.os.Build;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
+
+import androidx.core.content.ContextCompat;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.view.animation.RotateAnimation;
+import android.view.animation.AnimationSet;
 import android.view.animation.Transformation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 
-import redix.soft.anilist.BuildConfig;
-import redix.soft.anilist.R;
 import redix.soft.anilist.activity.MainActivity;
 
 public class AnimationUtil {
@@ -121,6 +114,25 @@ public class AnimationUtil {
             }
         });
         fragmentToHide.startAnimation(anim);
+    }
+
+    public static void smoothSwitch(View fragmentToHide, View fragmentToShow, boolean isRight){
+        AnimationSet animationSet = new AnimationSet(true);
+        int fromXDelta = !isRight? 30 : -30;
+
+        Animation trAnimation = new TranslateAnimation(fromXDelta, 0, 0, 0);
+        trAnimation.setDuration(180);
+        trAnimation.setRepeatMode(Animation.REVERSE);
+        animationSet.addAnimation(trAnimation);
+
+        Animation anim = new AlphaAnimation(0.0f, 1.0f);
+        anim.setDuration(180);
+        anim.setFillAfter(true);
+        animationSet.addAnimation(anim);
+
+        fragmentToHide.setVisibility(View.GONE);
+        fragmentToShow.setVisibility(View.VISIBLE);
+        fragmentToShow.startAnimation(animationSet);
     }
 
     public static void rotate(View view, int degrees, int duration){

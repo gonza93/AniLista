@@ -38,11 +38,14 @@ public class Review {
     }
 
     public String getContent() {
-        return content;
+        return content.replace("\\n", "\n");
     }
 
     public String getFormattedDate(){
         return DateFormat.getDateInstance().format(date);
     }
 
+    public void setContent(String content) {
+        this.content = content;
+    }
 }

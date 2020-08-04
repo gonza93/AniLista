@@ -8,6 +8,6 @@
     android:gravity="center"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
-    android:textColor="@color/custom_tab"
+    android:textColor="@color/colorBlack"
     android:textSize="14sp"
     android:textStyle="bold"/>

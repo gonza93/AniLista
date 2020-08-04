@@ -1,32 +1,33 @@
 package redix.soft.anilist.activity;
 
 import android.annotation.SuppressLint;
+import android.app.UiModeManager;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.BottomSheetBehavior;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
+
+import androidx.annotation.NonNull;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.widget.NestedScrollView;
+import androidx.fragment.app.Fragment;
+import androidx.core.content.ContextCompat;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.varunest.sparkbutton.SparkButton;
-import com.varunest.sparkbutton.SparkEventListener;
 
 import org.adw.library.widgets.discreteseekbar.DiscreteSeekBar;
 
@@ -39,6 +40,7 @@ import butterknife.OnClick;
 import butterknife.OnEditorAction;
 import redix.soft.anilist.R;
 import redix.soft.anilist.adapter.GenreAdapter;
+import redix.soft.anilist.fragment.BottomDialogFragment;
 import redix.soft.anilist.fragment.HomeFragment;
 import redix.soft.anilist.fragment.ListFragment;
 import redix.soft.anilist.fragment.SearchFragment;
@@ -48,7 +50,6 @@ import redix.soft.anilist.model.Genre;
 import redix.soft.anilist.util.AnimationUtil;
 import redix.soft.anilist.util.ChipsLayoutManagerHelper;
 import redix.soft.anilist.util.DataUtil;
-import redix.soft.anilist.util.FragmentStack;
 import redix.soft.anilist.util.NavigationUtil;
 
 public class MainActivity extends AppCompatActivity
@@ -71,8 +72,10 @@ public class MainActivity extends AppCompatActivity
     @BindView(R.id.toolbar_filters) View filters;
     @BindView(R.id.toolbar_save) ImageView saveButton;
     @BindView(R.id.toolbar_active_genre) TextView toolbarGenre;
+    @BindView(R.id.toolbar_config) ImageView toolbarConfig;
 
     @BindView(R.id.filters) View filterDialog;
+    @BindView(R.id.filters_scroll) NestedScrollView filters_scroll;
     @BindView(R.id.filters_list_genre) RecyclerView listFiltersGenre;
     @BindView(R.id.filters_score) TextView filterScore;
     @BindView(R.id.filters_score_bar) DiscreteSeekBar filterScoreBar;
@@ -87,6 +90,7 @@ public class MainActivity extends AppCompatActivity
 
     public LinearLayout getToolbar() { return toolbar; }
     public TextView getToolbarTitleView() { return toolbarTitle; }
+    public ImageView getToolbarConfig() { return toolbarConfig; }
     public ImageView getBackbuttonView() { return backbutton; }
     public View getTogglesView() { return toggles; }
     public TextView getToolbarGenre() { return toolbarGenre; }
@@ -112,34 +116,45 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        AppCompatDelegate.setDefaultNightMode(DataUtil.getInstance(this).getUIMode());
         setContentView(R.layout.activity_main);
 
         ButterKnife.bind(this);
 
-        if (savedInstanceState == null)
-            navigationUtil = new NavigationUtil(this);
-        else
-            restoreState();
+        navigationUtil = new NavigationUtil(this);
 
-        navigation.setOnNavigationItemSelectedListener(this);
         navigation.setSelectedItemId(R.id.navigation_home);
+        navigation.setOnNavigationItemSelectedListener(this);
+
+        navigationUtil.navigateTo(HomeFragment.getInstance(), HomeFragment.TAG, R.id.navigation_home);
+        toolbarColor();
 
         initFilters();
         initSaveButton();
     }
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
+    private void toolbarColor(){
+        int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        switch (currentNightMode) {
+            case Configuration.UI_MODE_NIGHT_NO:
+                // Night mode is not active, we're using the light theme
+                break;
+            case Configuration.UI_MODE_NIGHT_YES:
+                // Night mode is active, we're using dark theme
+                break;
+        }
     }
 
-    public void restoreState(){
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //navigationUtil.navigateTo(HomeFragment.getInstance(), HomeFragment.TAG, R.id.navigation_home);
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-        if(item.getItemId() == navigation.getSelectedItemId() && !start)
+        if(item.getItemId() == navigation.getSelectedItemId())
             return true; //TODO GO TO TOP
 
         switch (item.getItemId()) {
@@ -153,8 +168,6 @@ public class MainActivity extends AppCompatActivity
                 navigationUtil.navigateTo(UserFragment.getInstance(), UserFragment.TAG, item.getItemId());
                 break;
         }
-
-        start = false;
 
         return true;
     }
@@ -277,7 +290,7 @@ public class MainActivity extends AppCompatActivity
                      Fragment fragment = navigationUtil.getCurrentPage();
                      if (fragment instanceof SearchFragment){
                          SearchFragment searchFragment = (SearchFragment) fragment;
-                         searchFragment.setListPaddingBottom(112);
+                         searchFragment.setListPaddingBottom(130);
                      }
                  }
             }
@@ -407,6 +420,8 @@ public class MainActivity extends AppCompatActivity
         }
         else
             setFilterState(BottomSheetBehavior.STATE_COLLAPSED);
+
+        filters_scroll.scrollTo(0, 0);
     }
 
     public void onClickFiltersOrderBy(View view){
@@ -475,9 +490,11 @@ public class MainActivity extends AppCompatActivity
     public void onClickFiltersClear(){
         filterScore.setText(R.string.filters_score);
         filterScoreBar.setProgress(0);
-        lastSelectedOrderView.setSelected(false);
-        lastSelectedOrderView.setBackgroundResource(R.drawable.drawable_genre);
-        lastSelectedOrderView.setTextColor(ContextCompat.getColor(this, R.color.colorGrayText));
+        if (lastSelectedOrderView != null) {
+            lastSelectedOrderView.setSelected(false);
+            lastSelectedOrderView.setBackgroundResource(R.drawable.drawable_genre);
+            lastSelectedOrderView.setTextColor(ContextCompat.getColor(this, R.color.colorGrayText));
+        }
         setFilterState(BottomSheetBehavior.STATE_HIDDEN);
         filtersSet = false;
 
@@ -498,6 +515,12 @@ public class MainActivity extends AppCompatActivity
         BottomSheetBehavior.from(filterDialog).setState(behaviour);
     }
 
+    @OnClick(R.id.toolbar_config)
+    public void onClickToolbarConfig(){
+        BottomDialogFragment bottomDialog = new BottomDialogFragment();
+        bottomDialog.show(getSupportFragmentManager(), "ConfigDialog");
+    }
+
     @OnClick(R.id.back_button)
     public void onClickBack(View view){
         onBackPressed();
@@ -516,6 +539,7 @@ public class MainActivity extends AppCompatActivity
             bst.setState(BottomSheetBehavior.STATE_HIDDEN);
             return;
         }
+        filters_scroll.scrollTo(0,0);
 
         Fragment fragment = navigationUtil.goBack(navigation.getSelectedItemId());
 

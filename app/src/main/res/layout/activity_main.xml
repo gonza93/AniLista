@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     android:id="@+id/container"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.MainActivity">
+    tools:context=".activity.MainActivity"
+    android:background="@color/colorWhite">
 
-    <android.support.design.widget.AppBarLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:elevation="0dp"
-        android:background="@android:color/white">
+        android:background="@color/colorWhite">
 
         <RelativeLayout
             android:id="@+id/toolbar"
@@ -30,7 +31,7 @@
                     android:id="@+id/back_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_main"
+                    android:src="@mipmap/ic_launcher_round"
                     android:layout_gravity="center"
                     android:layout_marginStart="10dp"
                     android:background="?selectableItemBackgroundBorderless"/>
@@ -45,9 +46,19 @@
                     android:text="Anilist"
                     android:textStyle="bold"
                     android:textSize="25sp"
-                    android:textColor="@android:color/black"/>
+                    android:textAppearance="@android:style/TextAppearance.DeviceDefault"/>
 
             </LinearLayout>
+
+            <ImageView
+                android:id="@+id/toolbar_config"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="15dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_config"
+                android:tint="@color/colorBlack"/>
 
             <LinearLayout
                 android:id="@+id/search_bar"
@@ -102,7 +113,8 @@
                         android:id="@+id/toolbar_filters"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
-                        android:src="@mipmap/ic_filter"/>
+                        android:src="@mipmap/ic_filter"
+                        android:tint="@color/colorBlack"/>
 
                     <ImageView
                         android:id="@+id/toolbar_save"
@@ -110,7 +122,8 @@
                         android:layout_height="38dp"
                         android:src="@drawable/ic_save_white_24dp"
                         android:visibility="gone"
-                        android:background="?android:selectableItemBackground"/>
+                        android:background="?android:selectableItemBackground"
+                        android:tint="@color/colorBlack"/>
 
                 </RelativeLayout>
 
@@ -171,9 +184,15 @@
                 android:textStyle="bold"
                 android:text="@string/active_genre"/>
 
+            <!--<View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/colorPrimaryDark"/>-->
+
         </RelativeLayout>
 
-    </android.support.design.widget.AppBarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
 
     <FrameLayout
         android:id="@+id/fragment_container_home"
@@ -201,7 +220,7 @@
     <include layout="@layout/dialog_filters"
         android:elevation="2dp"/>
 
-    <android.support.design.widget.BottomNavigationView
+    <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navigation"
         android:layout_width="match_parent"
         android:layout_height="48dp"
@@ -211,4 +230,4 @@
         app:itemBackground="@color/colorPrimaryDark"
         app:menu="@menu/navigation" />
 
-</android.support.design.widget.CoordinatorLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

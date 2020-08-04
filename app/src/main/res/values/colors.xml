@@ -25,9 +25,15 @@
     <color name="colorRedText">#DAE73C3C</color>
     <color name="colorRedTextUser">#DAF34669</color>
     <color name="colorTurquoise">#00FFF9</color>
+    <color name="colorPri">#4876FF</color>
 
     <color name="tab_selected">@android:color/white</color>
     <color name="tab_unselected">@android:color/black</color>
+
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorBlack">#000000</color>
+
+    <color name="colorToolbarAccount">#4876FF</color>
 
     <drawable name="drawable_genre">@drawable/bg_search</drawable>
     <drawable name="drawable_genre_selected">@drawable/bg_primary</drawable>

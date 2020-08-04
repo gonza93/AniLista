@@ -7,11 +7,11 @@
             type="redix.soft.anilist.model.Review" />
     </data>
 
-    <android.support.v4.widget.NestedScrollView
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/review_scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/white">
+        android:background="@color/colorWhite">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -132,6 +132,206 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginStart="28dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="viewEnd"
+                    android:textSize="14sp"
+                    android:textAppearance="?android:textAppearanceListItem"
+                    android:text="Story:"
+                    android:layout_weight="6"/>
+
+                <SeekBar
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="3"
+                    android:max="10"
+                    android:thumb="@android:color/transparent"
+                    android:progressDrawable="@drawable/custom_seek_bar"
+                    android:progress="@{review.reviewer.scores.story}"
+                    bind:setBarColor="@{review.reviewer.scores.story}"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="7"
+                    android:layout_marginStart="10dp"
+                    android:layout_gravity="center"
+                    android:textStyle="bold"
+                    android:textSize="15sp"
+                    android:textAppearance="?android:textAppearanceListItem"
+                    android:text="@{String.valueOf(review.reviewer.scores.story)}"
+                    bind:setScoreTextColor="@{review.reviewer.scores.story}"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginStart="28dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="viewEnd"
+                    android:textSize="14sp"
+                    android:textAppearance="?android:textAppearanceListItem"
+                    android:text="Animation:"
+                    android:layout_weight="6"/>
+
+                <SeekBar
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="3"
+                    android:max="10"
+                    android:thumb="@android:color/transparent"
+                    android:progressDrawable="@drawable/custom_seek_bar"
+                    android:progress="@{review.reviewer.scores.animation}"
+                    bind:setBarColor="@{review.reviewer.scores.animation}"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="7"
+                    android:textStyle="bold"
+                    android:textSize="15sp"
+                    android:textAppearance="?android:textAppearanceListItem"
+                    android:text="@{String.valueOf(review.reviewer.scores.animation)}"
+                    bind:setScoreTextColor="@{review.reviewer.scores.animation}"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginStart="28dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="viewEnd"
+                    android:textSize="14sp"
+                    android:textAppearance="?android:textAppearanceListItem"
+                    android:text="Sound:"
+                    android:layout_weight="6"/>
+
+                <SeekBar
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="3"
+                    android:max="10"
+                    android:thumb="@android:color/transparent"
+                    android:progressDrawable="@drawable/custom_seek_bar"
+                    android:progress="@{review.reviewer.scores.sound}"
+                    bind:setBarColor="@{review.reviewer.scores.sound}"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="7"
+                    android:textStyle="bold"
+                    android:textSize="15sp"
+                    android:textAppearance="?android:textAppearanceListItem"
+                    android:text="@{String.valueOf(review.reviewer.scores.sound)}"
+                    bind:setScoreTextColor="@{review.reviewer.scores.sound}"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginStart="28dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="viewEnd"
+                    android:textSize="14sp"
+                    android:textAppearance="?android:textAppearanceListItem"
+                    android:text="Character:"
+                    android:layout_weight="6"/>
+
+                <SeekBar
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="3"
+                    android:max="10"
+                    android:thumb="@android:color/transparent"
+                    android:progressDrawable="@drawable/custom_seek_bar"
+                    android:progress="@{review.reviewer.scores.character}"
+                    bind:setBarColor="@{review.reviewer.scores.character}"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="7"
+                    android:textStyle="bold"
+                    android:textSize="15sp"
+                    android:textAppearance="?android:textAppearanceListItem"
+                    android:text="@{String.valueOf(review.reviewer.scores.character)}"
+                    bind:setScoreTextColor="@{review.reviewer.scores.character}" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginStart="28dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="6"
+                    android:textAlignment="viewEnd"
+                    android:textSize="14sp"
+                    android:textAppearance="?android:textAppearanceListItem"
+                    android:text="Enjoyment:" />
+
+                <SeekBar
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="3"
+                    android:max="10"
+                    android:thumb="@android:color/transparent"
+                    android:progressDrawable="@drawable/custom_seek_bar"
+                    android:progress="@{review.reviewer.scores.enjoyment}"
+                    bind:setBarColor="@{review.reviewer.scores.enjoyment}"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="7"
+                    android:textStyle="bold"
+                    android:textSize="15sp"
+                    android:textAppearance="?android:textAppearanceListItem"
+                    android:text="@{String.valueOf(review.reviewer.scores.enjoyment)}"
+                    bind:setScoreTextColor="@{review.reviewer.scores.enjoyment}"/>
+
+            </LinearLayout>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -145,6 +345,6 @@
 
         </LinearLayout>
 
-    </android.support.v4.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 </layout>

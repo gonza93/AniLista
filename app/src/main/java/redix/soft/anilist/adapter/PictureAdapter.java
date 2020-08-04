@@ -1,9 +1,9 @@
 package redix.soft.anilist.adapter;
 
 import android.content.Context;
-import android.databinding.DataBindingUtil;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
+import androidx.databinding.DataBindingUtil;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,11 +11,13 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import redix.soft.anilist.R;
+import redix.soft.anilist.activity.MainActivity;
 import redix.soft.anilist.databinding.ListPictureBinding;
+import redix.soft.anilist.fragment.PictureFragment;
 import redix.soft.anilist.listener.ItemClickListener;
 import redix.soft.anilist.model.Picture;
 
-public class PictureAdapter extends RecyclerView.Adapter<PictureAdapter.ViewHolder> {
+public class PictureAdapter extends RecyclerView.Adapter<PictureAdapter.ViewHolder> implements ItemClickListener {
 
     private List<Picture> pictures;
     private Context context;
@@ -31,11 +33,14 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureAdapter.ViewHold
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private ListPictureBinding mBinding;
-        private ItemClickListener listener;
+        private ItemClickListener mListener;
 
-        public ViewHolder(ListPictureBinding binding) {
+        public ViewHolder(ListPictureBinding binding, ItemClickListener listener) {
             super(binding.getRoot());
             mBinding = binding;
+
+            mBinding.getRoot().setOnClickListener(this);
+            mListener = listener;
         }
 
         public void bind(Picture picture) {
@@ -43,13 +48,10 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureAdapter.ViewHold
             mBinding.executePendingBindings();
         }
 
-        public void setItemClickListener(ItemClickListener listener) {
-            mBinding.getRoot().setOnClickListener(this);
-            this.listener = listener;
-        }
-
         @Override
-        public void onClick(View view) { }
+        public void onClick(View view) {
+            mListener.onItemClick(mBinding.getPicture());
+        }
     }
 
     @Override
@@ -57,7 +59,7 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureAdapter.ViewHold
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         ListPictureBinding binding = DataBindingUtil.inflate(inflater, R.layout.list_picture, parent, false);
-        return new ViewHolder(binding);
+        return new ViewHolder(binding, this);
     }
 
     @Override
@@ -70,10 +72,16 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureAdapter.ViewHold
         return pictures.size();
     }
 
-    public List<Picture> addPictures(List<Picture> pictures){
+    public void addPictures(List<Picture> pictures){
         this.pictures.addAll(pictures);
         notifyDataSetChanged();
-        return pictures;
     }
 
+    @Override
+    public void onItemClick(Picture picture) {
+        PictureFragment fragment = new PictureFragment();
+        fragment.setPicture(picture);
+
+        ((MainActivity) context).loadFragment(fragment, PictureFragment.TAG);
+    }
 }

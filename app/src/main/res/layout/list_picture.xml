@@ -14,6 +14,6 @@
         android:layout_margin="4dp"
         android:scaleType="fitXY"
         android:adjustViewBounds="true"
-        bind:loadPictureThumbnail="@{picture.small}"/>
+        bind:loadPicture="@{picture.small}"/>
 
 </layout>

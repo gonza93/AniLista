@@ -27,7 +27,7 @@
 
             <com.elyeproj.loaderviewlibrary.LoaderImageView
                 android:layout_width="140dp"
-                android:layout_height="17dp"
+                android:layout_height="15dp"
                 app:corners="30"/>
 
             <LinearLayout

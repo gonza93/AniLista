@@ -24,10 +24,10 @@
             android:paddingBottom="4dp"
             android:textSize="13sp"
             android:textStyle="bold"
-            android:textColor="@android:color/black"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault"
             android:text="@string/adaptation"/>
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/anime_adaptation_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -35,7 +35,7 @@
             android:layout_weight="1"
             android:orientation="vertical"
             android:nestedScrollingEnabled="false"
-            bind:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
+            bind:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
     </LinearLayout>
 
@@ -57,10 +57,10 @@
             android:paddingBottom="4dp"
             android:textSize="12sp"
             android:textStyle="bold"
-            android:textColor="@android:color/black"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault"
             android:text="@string/side_story"/>
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/anime_sidestory_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -68,7 +68,7 @@
             android:layout_weight="1"
             android:orientation="vertical"
             android:nestedScrollingEnabled="false"
-            bind:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
+            bind:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
     </LinearLayout>
 
@@ -90,17 +90,17 @@
             android:paddingBottom="4dp"
             android:textSize="12sp"
             android:textStyle="bold"
-            android:textColor="@android:color/black"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault"
             android:text="@string/prequel"/>
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/anime_prequel_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical"
             android:nestedScrollingEnabled="false"
-            bind:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
+            bind:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
     </LinearLayout>
 
@@ -122,17 +122,17 @@
             android:paddingBottom="4dp"
             android:textSize="12sp"
             android:textStyle="bold"
-            android:textColor="@android:color/black"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault"
             android:text="@string/sequel"/>
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/anime_sequel_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical"
             android:nestedScrollingEnabled="false"
-            bind:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
+            bind:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
     </LinearLayout>
 
@@ -154,17 +154,17 @@
             android:paddingBottom="4dp"
             android:textSize="12sp"
             android:textStyle="bold"
-            android:textColor="@android:color/black"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault"
             android:text="@string/alternative_version"/>
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/anime_alternative_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical"
             android:nestedScrollingEnabled="false"
-            bind:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
+            bind:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
     </LinearLayout>
 
@@ -186,17 +186,17 @@
             android:paddingBottom="4dp"
             android:textSize="12sp"
             android:textStyle="bold"
-            android:textColor="@android:color/black"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault"
             android:text="@string/summary"/>
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/anime_summary_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical"
             android:nestedScrollingEnabled="false"
-            bind:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
+            bind:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
     </LinearLayout>
 
@@ -218,17 +218,17 @@
             android:paddingBottom="4dp"
             android:textSize="12sp"
             android:textStyle="bold"
-            android:textColor="@android:color/black"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault"
             android:text="@string/character"/>
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/anime_character_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical"
             android:nestedScrollingEnabled="false"
-            bind:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
+            bind:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
     </LinearLayout>
 
@@ -250,17 +250,17 @@
             android:paddingBottom="4dp"
             android:textSize="12sp"
             android:textStyle="bold"
-            android:textColor="@android:color/black"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault"
             android:text="@string/spin_off"/>
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/anime_spinoff_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical"
             android:nestedScrollingEnabled="false"
-            bind:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
+            bind:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
     </LinearLayout>
 
@@ -282,17 +282,17 @@
             android:paddingBottom="4dp"
             android:textSize="12sp"
             android:textStyle="bold"
-            android:textColor="@android:color/black"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault"
             android:text="@string/other"/>
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/anime_other_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical"
             android:nestedScrollingEnabled="false"
-            bind:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
+            bind:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
     </LinearLayout>
 

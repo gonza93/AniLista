@@ -1,10 +1,10 @@
 package redix.soft.anilist.model;
 
-import android.databinding.BaseObservable;
-import android.databinding.Bindable;
-import android.databinding.BindingAdapter;
-import android.support.v4.content.ContextCompat;
-import android.view.View;
+import androidx.databinding.BaseObservable;
+import androidx.databinding.Bindable;
+import androidx.databinding.BindingAdapter;
+import androidx.core.content.ContextCompat;
+
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -12,7 +12,6 @@ import com.google.gson.annotations.SerializedName;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 
-import java.io.Serializable;
 import java.util.List;
 
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
@@ -194,6 +193,17 @@ public class Anime extends BaseObservable {
                 .fit()
                 .centerCrop()
                 .transform(new RoundedCornersTransformation(25, 0))
+                .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
+                .into(view);
+    }
+
+    @BindingAdapter("loadThumbRanking")
+    public static void loadImageRanking(ImageView view, String imageUrl) {
+        Picasso.get()
+                .load(imageUrl)
+                .fit()
+                .centerCrop()
+                .transform(new RoundedCornersTransformation(35, 0, RoundedCornersTransformation.CornerType.LEFT))
                 .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
                 .into(view);
     }
