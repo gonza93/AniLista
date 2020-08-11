@@ -427,7 +427,7 @@ public class MainActivity extends AppCompatActivity
     public void onClickFiltersOrderBy(View view){
 
         if (lastSelectedOrderView != null){
-            if (lastSelectedOrderView.getId() != view.getId()) {
+            if (lastSelectedOrderView != view) {
                 lastSelectedOrderView.setSelected(false);
                 lastSelectedOrderView.setBackgroundResource(R.drawable.drawable_genre);
                 lastSelectedOrderView.setTextColor(ContextCompat.getColor(this, R.color.colorGrayText));
