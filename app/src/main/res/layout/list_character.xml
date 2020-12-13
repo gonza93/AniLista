@@ -4,7 +4,7 @@
 
     <data>
         <variable name="character"
-            type="redix.soft.anilist.model.Character" />
+            type="redix.soft.anilista.model.Character" />
     </data>
 
     <LinearLayout

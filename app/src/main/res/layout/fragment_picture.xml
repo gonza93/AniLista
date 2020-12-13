@@ -3,7 +3,7 @@
 
     <data>
         <variable name="picture"
-            type="redix.soft.anilist.model.Picture" />
+            type="redix.soft.anilista.model.Picture" />
     </data>
 
     <LinearLayout
@@ -12,7 +12,8 @@
         android:layout_height="match_parent"
         android:background="@color/colorWhite">
 
-        <ImageView
+        <redix.soft.anilista.util.TouchImageView
+            android:id="@+id/picture_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             bind:loadPicture="@{picture.large}"/>

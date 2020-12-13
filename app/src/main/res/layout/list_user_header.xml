@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
         <variable
             name="user"
-            type="redix.soft.anilist.model.User" />
+            type="redix.soft.anilista.model.User" />
     </data>
 
     <RelativeLayout
@@ -88,7 +88,7 @@
                                 android:layout_height="20dp"
                                 android:layout_marginStart="20dp"
                                 android:src="@mipmap/ic_birthday"
-                                android:tint="@android:color/white"/>
+                                app:tint="@android:color/white"/>
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -170,9 +170,9 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="20dp"
                                 android:src="@drawable/ic_back"
-                                android:tint="@android:color/white"
                                 android:rotation="180"
-                                tools:ignore="ContentDescription" />
+                                tools:ignore="ContentDescription"
+                                app:tint="@android:color/white" />
 
                         </LinearLayout>
 

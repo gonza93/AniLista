@@ -7,7 +7,7 @@
         <import type="android.view.View"/>
         <variable
             name="seiyu"
-            type="redix.soft.anilist.model.Seiyu"/>
+            type="redix.soft.anilista.model.Seiyu"/>
     </data>
 
     <RelativeLayout
@@ -215,7 +215,7 @@
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:src="@mipmap/ic_lang"
-                            android:tint="@color/colorBlack"/>
+                            app:tint="@color/colorBlack" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -239,7 +239,7 @@
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:src="@mipmap/ic_birthday"
-                            android:tint="@color/colorBlack"/>
+                            app:tint="@color/colorBlack" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -264,7 +264,7 @@
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:src="@mipmap/ic_web"
-                            android:tint="@color/colorBlack"/>
+                            app:tint="@color/colorBlack" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -314,14 +314,14 @@
                         android:layout_height="30dp"
                         android:layout_gravity="center"
                         android:src="@mipmap/ic_score_2"
-                        android:tint="@color/colorBlack"/>
+                        app:tint="@color/colorBlack" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginStart="10dp"
-                        android:text="@{String.valueOf(seiyu.memberFavorites)}"
+                        android:text="@{seiyu.memberFavorites}"
                         android:textSize="18sp"
                         android:textAppearance="@android:style/TextAppearance.DeviceDefault"/>
 

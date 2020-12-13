@@ -4,7 +4,7 @@
 
     <data>
         <variable name="seiyu"
-            type="redix.soft.anilist.model.Seiyu" />
+            type="redix.soft.anilista.model.Seiyu" />
     </data>
 
     <LinearLayout

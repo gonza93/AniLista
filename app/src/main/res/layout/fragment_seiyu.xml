@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorWhite">
 
-    <redix.soft.anilist.util.ElevationRecyclerView
+    <redix.soft.anilista.util.ElevationRecyclerView
         android:id="@+id/person_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

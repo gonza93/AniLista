@@ -1,6 +1,6 @@
 <resources>
     <!-- Main Activity -->
-    <string name="app_name">Anilist</string>
+    <string name="app_name">AniLista</string>
     <string name="tab_home">Home</string>
     <string name="tab_search">Search</string>
     <string name="tab_account">Account</string>
@@ -9,8 +9,14 @@
     <string name="openings">Openings</string>
     <string name="endings">Endings</string>
     <string name="active_genre">Action</string>
+
+    <!-- Search -->
     <string name="search_username">Enter username</string>
-    <string name="search_bar">Search for anime, manga, etc.</string>
+    <string name="search_bar_text">Search for anime, manga, etc.</string>
+    <string name="search_not_found">We couldn\'t find what you were looking for.</string>
+    <string name="search_not_found_sub">Our chakra is not enough yet...</string>
+    <string name="search_characters">Search characters...</string>
+    <string name="search_roles">Search roles...</string>
 
     <!-- Home -->
     <string name="today">Today</string>
@@ -24,7 +30,7 @@
 
     <!-- Anime Detail -->
     <string name="anime_detail_title">Anime Details</string>
-    <string name="loading_message_anime">Loading anime detail...</string>
+    <string name="loading_message_anime">Loading anime detail…</string>
     <string name="episodes">ep.</string>
     <string name="ranked">Ranked:</string>
     <string name="score_format">%.2f</string>
@@ -99,6 +105,7 @@
     <string name="user_save_1">Save as current user</string>
     <string name="user_save_2">Current user</string>
     <string name="user_not_found">We couldn\'t find the user.</string>
+    <string name="user_intro_label_sub">Here you can see your MAL user</string>
 
     <!-- List -->
     <string name="all">All</string>
@@ -108,6 +115,7 @@
 
     <!-- Misc -->
     <string name="preference_file_key">.PREFERENCE_FILE_KEY</string>
-    <string name="fetch_error">Couldn\'t fetch data. Close app and start again.</string>
+    <string name="fetch_error">Couldn\'t fetch data.</string>
+    <string name="fetch_error_label">Our power level is under 9000.</string>
 
 </resources>

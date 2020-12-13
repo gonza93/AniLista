@@ -5,7 +5,7 @@
 
     <data>
         <variable name="anime"
-            type="redix.soft.anilist.model.Anime" />
+            type="redix.soft.anilista.model.Anime" />
     </data>
 
     <LinearLayout
@@ -36,6 +36,10 @@
                 android:text="@string/loading_message_anime"/>
 
         </LinearLayout>
+
+        <include android:id="@+id/anime_error"
+            android:visibility="gone"
+            layout="@layout/include_error"/>
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/anime_nested_scrollview"
@@ -459,6 +463,11 @@
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"/>
 
+                    <include
+                        android:id="@+id/anime_reload_character"
+                        android:visibility="gone"
+                        layout="@layout/include_reload"/>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -540,6 +549,11 @@
                     android:layout_marginBottom="8dp"
                     android:layout_marginTop="18dp">
 
+                    <include
+                        android:id="@+id/anime_reload_recommendations"
+                        android:visibility="gone"
+                        layout="@layout/include_reload"/>
+
                     <ProgressBar
                         android:id="@+id/recommendations_progress"
                         android:layout_width="100dp"
@@ -594,6 +608,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp">
+
+                    <include
+                        android:id="@+id/anime_reload_reviews"
+                        android:visibility="gone"
+                        layout="@layout/include_reload"/>
 
                     <ProgressBar
                         android:id="@+id/reviews_progress"

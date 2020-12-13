@@ -9,6 +9,8 @@
     <color name="colorWhite">#000000</color>
     <color name="colorBlack">#FFFFFF</color>
 
+    <color name="colorTranslucentBar">#B3000000</color>
+
     <color name="colorToolbarAccount">#272727</color>
 
     <color name="colorGrayText">#BCBCBC</color>

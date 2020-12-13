@@ -22,7 +22,7 @@
             android:layout_height="48dp">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_centerVertical="true">
@@ -31,10 +31,13 @@
                     android:id="@+id/back_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_launcher_round"
+                    android:src="@mipmap/ic_launcher_image"
                     android:layout_gravity="center"
                     android:layout_marginStart="10dp"
-                    android:background="?selectableItemBackgroundBorderless"/>
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="2dp"
+                    android:background="?selectableItemBackgroundBorderless"
+                    android:visibility="visible"/>
 
                 <TextView
                     android:id="@+id/toolbar_title"
@@ -43,10 +46,91 @@
                     android:layout_gravity="center"
                     android:layout_marginStart="12dp"
                     android:fontFamily="@font/sniglet"
-                    android:text="Anilist"
+                    android:text="@string/app_name"
                     android:textStyle="bold"
                     android:textSize="25sp"
-                    android:textAppearance="@android:style/TextAppearance.DeviceDefault"/>
+                    android:textAppearance="@android:style/TextAppearance.DeviceDefault"
+                    android:visibility="visible"/>
+
+                <RelativeLayout
+                    android:id="@+id/search_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginTop="2dp"
+                    android:orientation="horizontal"
+                    android:visibility="visible">
+
+                    <LinearLayout
+                        android:id="@+id/search_bar_layout"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_toStartOf="@+id/search_bar_icon_layout"
+                        android:background="@drawable/bg_search"
+                        android:visibility="invisible">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:src="@drawable/ic_search"
+                            android:layout_marginStart="10dp"
+                            android:layout_gravity="center"
+                            android:layout_weight="9"/>
+
+                        <EditText
+                            android:id="@+id/search_bar_input"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:padding="8dp"
+                            android:layout_weight="1"
+                            android:background="@android:color/transparent"
+                            android:fontFamily="@font/spinnaker"
+                            android:hint="@string/search_bar_text"
+                            android:imeOptions="actionSearch"
+                            android:inputType="text" />
+
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/search_bar_icon_layout"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true">
+
+                        <ImageView
+                            android:id="@+id/toolbar_filters"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:src="@mipmap/ic_filter"
+                            app:tint="@color/colorBlack"
+                            android:visibility="gone"/>
+
+                        <ImageView
+                            android:id="@+id/toolbar_search"
+                            android:layout_width="match_parent"
+                            android:layout_height="35dp"
+                            android:src="@drawable/ic_search"
+                            android:layout_marginEnd="10dp"
+                            app:tint="@color/colorBlack"
+                            android:visibility="gone"/>
+
+                        <ImageView
+                            android:id="@+id/toolbar_save"
+                            android:layout_width="match_parent"
+                            android:layout_height="38dp"
+                            android:src="@drawable/ic_save_white_24dp"
+                            android:background="?android:selectableItemBackground"
+                            app:tint="@color/colorBlack"
+                            android:visibility="gone"/>
+
+                    </RelativeLayout>
+
+                </RelativeLayout>
 
             </LinearLayout>
 
@@ -58,76 +142,8 @@
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:src="@drawable/ic_config"
-                android:tint="@color/colorBlack"/>
-
-            <LinearLayout
-                android:id="@+id/search_bar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="5dp"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <LinearLayout
-                    android:id="@+id/search_bar_layout"
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="14dp"
-                    android:layout_marginEnd="5dp"
-                    android:background="@drawable/bg_search"
-                    android:layout_weight="1">
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:src="@drawable/ic_search"
-                        android:layout_marginStart="10dp"
-                        android:layout_gravity="center"
-                        android:layout_weight="9"/>
-
-                    <EditText
-                        android:id="@+id/search_bar_input"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="7dp"
-                        android:padding="8dp"
-                        android:layout_weight="1"
-                        android:background="@android:color/transparent"
-                        android:fontFamily="@font/spinnaker"
-                        android:hint="Search for anime, manga, etc."
-                        android:imeOptions="actionSearch"
-                        android:inputType="text" />
-
-                </LinearLayout>
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="7">
-
-                    <ImageView
-                        android:id="@+id/toolbar_filters"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:src="@mipmap/ic_filter"
-                        android:tint="@color/colorBlack"/>
-
-                    <ImageView
-                        android:id="@+id/toolbar_save"
-                        android:layout_width="match_parent"
-                        android:layout_height="38dp"
-                        android:src="@drawable/ic_save_white_24dp"
-                        android:visibility="gone"
-                        android:background="?android:selectableItemBackground"
-                        android:tint="@color/colorBlack"/>
-
-                </RelativeLayout>
-
-            </LinearLayout>
+                app:tint="@color/colorBlack"
+                android:visibility="visible"/>
 
             <LinearLayout
                 android:id="@+id/toolbar_toggles"
@@ -150,18 +166,6 @@
                     android:textColor="@android:color/white"
                     android:textSize="16sp"
                     android:text="@string/openings"/>
-
-                <TextView
-                    android:id="@+id/toolbar_toggle_ed"
-                    android:layout_width="80dp"
-                    android:layout_height="wrap_content"
-                    android:padding="4dp"
-                    android:layout_marginEnd="10dp"
-                    android:background="@drawable/bg_search"
-                    android:textAlignment="center"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="16sp"
-                    android:text="@string/endings"/>
 
             </LinearLayout>
 
@@ -223,7 +227,7 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navigation"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:elevation="2dp"
         android:background="@color/colorPrimaryDark"

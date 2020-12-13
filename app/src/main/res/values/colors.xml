@@ -27,6 +27,8 @@
     <color name="colorTurquoise">#00FFF9</color>
     <color name="colorPri">#4876FF</color>
 
+    <color name="colorTranslucentBar">#B3FFFFFF</color>
+
     <color name="tab_selected">@android:color/white</color>
     <color name="tab_unselected">@android:color/black</color>
 
@@ -37,4 +39,6 @@
 
     <drawable name="drawable_genre">@drawable/bg_search</drawable>
     <drawable name="drawable_genre_selected">@drawable/bg_primary</drawable>
+
+    <color name="black_overlay">#66000000</color>
 </resources>

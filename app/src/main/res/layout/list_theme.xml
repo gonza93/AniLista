@@ -3,7 +3,7 @@
 
     <data>
         <variable name="theme"
-            type="redix.soft.anilist.model.Theme" />
+            type="redix.soft.anilista.model.Theme" />
     </data>
 
     <LinearLayout

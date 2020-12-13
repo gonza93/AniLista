@@ -3,7 +3,7 @@
 
     <data>
         <variable name="genre"
-            type="redix.soft.anilist.model.Genre" />
+            type="redix.soft.anilista.model.Genre" />
     </data>
 
     <LinearLayout

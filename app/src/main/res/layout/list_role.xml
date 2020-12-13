@@ -6,7 +6,7 @@
     <data>
         <variable
             name="role"
-            type="redix.soft.anilist.model.Role"/>
+            type="redix.soft.anilista.model.Role"/>
     </data>
 
     <RelativeLayout

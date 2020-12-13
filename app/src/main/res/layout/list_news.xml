@@ -4,7 +4,7 @@
 
     <data>
         <variable name="news"
-            type="redix.soft.anilist.model.News" />
+            type="redix.soft.anilista.model.News" />
     </data>
 
     <LinearLayout
