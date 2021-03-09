@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -44,7 +45,7 @@ import butterknife.OnEditorAction;
 import butterknife.OnTextChanged;
 import redix.soft.anilista.R;
 import redix.soft.anilista.adapter.GenreAdapter;
-import redix.soft.anilista.fragment.BottomDialogFragment;
+import redix.soft.anilista.dialog.BottomDialogFragment;
 import redix.soft.anilista.fragment.HomeFragment;
 import redix.soft.anilista.fragment.ListFragment;
 import redix.soft.anilista.fragment.SearchFragment;
@@ -74,7 +75,7 @@ public class MainActivity extends AppCompatActivity
     @BindView(R.id.search_bar_layout) View searchBarLayout;
     @BindView(R.id.back_button) ImageView backbutton;
     @BindView(R.id.navigation) BottomNavigationView navigation;
-    @BindView(R.id.toolbar_toggles) View toggles;
+    @BindView(R.id.toolbar_toggles) TextView toggles;
     @BindView(R.id.toolbar_filters) View filters;
     @BindView(R.id.toolbar_save) ImageView saveButton;
     @BindView(R.id.toolbar_active_genre) TextView toolbarGenre;
@@ -154,12 +155,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        //navigationUtil.navigateTo(HomeFragment.getInstance(), HomeFragment.TAG, R.id.navigation_home);
-    }
-
-    @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
         if(item.getItemId() == navigation.getSelectedItemId())
@@ -209,6 +204,9 @@ public class MainActivity extends AppCompatActivity
     public void onTextChangedSearch(Editable editable) {
         Fragment fragment = navigationUtil.getCurrentPage();
         String query = editable.toString();
+
+        if (fragment instanceof SearchFragment)
+            return;
 
         if (query.length() == 0) {
             if (fragment instanceof ListFragment) {
@@ -535,7 +533,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @OnClick(R.id.toolbar_search)
-    public void onClickToolbarSearch(){
+    public void onClickToolbarSearch() {
         Fragment fragment = navigationUtil.getCurrentPage();
 
         if (fragment instanceof ListFragment || fragment instanceof SeiyuFragment){
@@ -543,9 +541,44 @@ public class MainActivity extends AppCompatActivity
             toolbarTitle.setVisibility(View.GONE);
             searchBarLayout.setVisibility(View.VISIBLE);
 
-            AnimationUtil.rippleShow(searchBar);
+            if (fragment instanceof SeiyuFragment) {
+                SeiyuFragment seiyuFragment = (SeiyuFragment) fragment;
+                seiyuFragment.listPerson.smoothScrollToPosition(1);
+            }
+
+            AnimationUtil.fadeIn(searchBar);
             showKeyboard();
         }
+    }
+
+    @OnClick(R.id.toolbar_toggles)
+    public void onClickToolbarEpFilter() {
+        Fragment fragment = navigationUtil.getCurrentPage();
+        String text = toggles.getText().toString();
+
+        if (text.equals(getString(R.string.toggle_episodes))) {
+            toggles.setBackgroundResource(R.drawable.bg_canon);
+            toggles.setTextColor(ContextCompat.getColor(this, R.color.colorCanon));
+            toggles.setText(getString(R.string.canon));
+            ((ListFragment) fragment).filterEpisodes("canon");
+        }
+        if (text.equals(getString(R.string.canon))) {
+            toggles.setBackgroundResource(R.drawable.bg_filler);
+            toggles.setTextColor(ContextCompat.getColor(this, R.color.colorFiller));
+            toggles.setText(getString(R.string.filler));
+            ((ListFragment) fragment).filterEpisodes("filler");
+        }
+        if (text.equals(getString(R.string.filler))) {
+            toggles.setBackgroundResource(R.drawable.bg_search);
+            toggles.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary));
+            toggles.setText(getString(R.string.toggle_episodes));
+            ((ListFragment) fragment).filterEpisodes("no");
+        }
+        /*
+
+        if (fragment instanceof ListFragment) {
+            ((ListFragment) fragment)
+        }*/
     }
 
     @OnClick(R.id.back_button)
@@ -554,18 +587,42 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onBackPressed() {
-        if (!editSearchInput.getText().toString().equals("")) {
-            editSearchInput.getText().clear();
-            return;
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+
+        Uri uri = intent.getData();
+        if (uri != null) {
+            Fragment fragment = navigationUtil.getCurrentPage();
+            UserFragment userFragment = (UserFragment) fragment;
+
+            String authCode = uri.getQueryParameter("code");
+            userFragment.authenticateUser(authCode);
         }
-        else if (editSearchInput.getText().toString().equals("") && searchBar.isShown()) {
-            toolbarTitle.setVisibility(View.VISIBLE);
-            AnimationUtil.rippleHide(searchBar);
-            return;
+    }
+
+    @Override
+    public void onBackPressed() {
+        Fragment fragment = navigationUtil.getCurrentPage();
+        boolean searchable = false;
+
+        if (fragment instanceof ListFragment) {
+            ListFragment listFragment = (ListFragment) fragment;
+            searchable = listFragment.getType().equals(ListFragment.TYPES.CHARACTERS);
+        }
+        if (fragment instanceof SeiyuFragment)
+            searchable = true;
+
+        if (searchable) {
+            if (!editSearchInput.getText().toString().equals("")) {
+                editSearchInput.getText().clear();
+                return;
+            } else if (editSearchInput.getText().toString().equals("") && !toolbarSearch.isShown()) {
+                toolbarSearch.setVisibility(View.VISIBLE);
+                AnimationUtil.fadeOut(searchBarLayout, toolbarTitle);
+                return;
+            }
         }
 
-        toggles.setVisibility(View.INVISIBLE);
         BottomSheetBehavior bst = BottomSheetBehavior.from(findViewById(R.id.filters));
 
         if (bst.getState() == BottomSheetBehavior.STATE_EXPANDED) {
@@ -578,9 +635,9 @@ public class MainActivity extends AppCompatActivity
         }
         filters_scroll.scrollTo(0,0);
 
-        Fragment fragment = navigationUtil.goBack(navigation.getSelectedItemId());
+        Fragment backFragment = navigationUtil.goBack(navigation.getSelectedItemId());
 
-        if(fragment == null)
+        if(backFragment == null)
             super.onBackPressed();
     }
 }

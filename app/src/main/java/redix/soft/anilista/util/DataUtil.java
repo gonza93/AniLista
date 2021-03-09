@@ -9,7 +9,7 @@ import redix.soft.anilista.R;
 
 public class DataUtil {
 
-    public enum DATA { QUERY, USERNAME, SAVED_USER, MODE }
+    public enum DATA { QUERY, USERNAME, SAVED_USER, MODE, AUTHCODE, VERIFIER, TOKEN, REFRESH, EXPIRE }
     private Context context;
     private boolean firstInstance;
     private static DataUtil instance;
@@ -50,12 +50,15 @@ public class DataUtil {
         return firstInstance? null : getSharedPreferences().getString(DATA.QUERY.toString(), null);
     }
 
-    public String getLastUsername(){
-        return firstInstance? null : getSharedPreferences().getString(DATA.QUERY.toString(), null);
-    }
-
     public String getSavedUsername(){
         return getSharedPreferences().getString(DATA.SAVED_USER.toString(), null);
+    }
+
+    public String getString(String key){
+        return getSharedPreferences().getString(key, null);
+    }
+    public int getInt(String key){
+        return getSharedPreferences().getInt(key, 0);
     }
 
     public int getUIMode(){

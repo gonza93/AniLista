@@ -64,7 +64,7 @@ public class HomeFragment extends Fragment {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe( response    -> fillList(response.getAnimes(), 10, TYPES.SCHEDULE),
-                            throwable   -> new Handler().postDelayed(() -> retry(TYPES.SCHEDULE), 700));
+                            throwable   -> new Handler().postDelayed(() -> retry(TYPES.SCHEDULE), 2000));
     }
 
     private void getAiringAnimes(){
@@ -73,7 +73,7 @@ public class HomeFragment extends Fragment {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe( response    -> fillList(response.getAnimes(), 15, TYPES.AIRING),
-                            throwable   -> new Handler().postDelayed(() -> retry(TYPES.AIRING), 700));
+                            throwable   -> new Handler().postDelayed(() -> retry(TYPES.AIRING), 4000));
     }
 
     private void getPopularPeople(){
@@ -82,7 +82,7 @@ public class HomeFragment extends Fragment {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe( response    -> fillList(response.getSeiyus(), 20, TYPES.PEOPLE),
-                            throwable   -> new Handler().postDelayed(() -> retry(TYPES.PEOPLE), 700));
+                            throwable   -> new Handler().postDelayed(() -> retry(TYPES.PEOPLE), 6000));
     }
 
     private void getPopularAnimes(){
@@ -91,7 +91,7 @@ public class HomeFragment extends Fragment {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe( response    -> fillList(response.getAnimes(), 15, TYPES.POPULAR),
-                            throwable   -> new Handler().postDelayed(() -> retry(TYPES.POPULAR), 700));
+                            throwable   -> new Handler().postDelayed(() -> retry(TYPES.POPULAR), 8000));
     }
 
     private void fillList(List dataset, int limit, TYPES type){
@@ -118,6 +118,8 @@ public class HomeFragment extends Fragment {
             return;
         }
         retry++;
+
+        Toast.makeText(getContext(), "Fail", Toast.LENGTH_SHORT).show();
 
         if (type.equals(TYPES.SCHEDULE))
             getScheduleAnimes();

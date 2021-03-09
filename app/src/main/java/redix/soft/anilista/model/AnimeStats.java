@@ -1,6 +1,14 @@
 package redix.soft.anilista.model;
 
+import android.widget.ImageView;
+
+import androidx.databinding.BindingAdapter;
+
 import com.google.gson.annotations.SerializedName;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.Picasso;
+
+import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 public class AnimeStats {
 
@@ -8,9 +16,11 @@ public class AnimeStats {
     private float datsWatched;
     @SerializedName("mean_score")
     private float meanScore;
+    @SerializedName(value = "watching", alternate = "num_items_watching")
     private int watching;
+    @SerializedName(value = "completed", alternate = "num_items_completed")
     private int completed;
-    @SerializedName("on_hold")
+    @SerializedName(value = "on_hold", alternate = "num_items_on_hold")
     private int onHold;
     private int dropped;
     @SerializedName("plan_to_watch")
@@ -60,4 +70,5 @@ public class AnimeStats {
     public int getEpisodesWatched() {
         return episodesWatched;
     }
+
 }

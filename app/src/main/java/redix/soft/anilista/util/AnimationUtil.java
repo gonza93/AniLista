@@ -67,10 +67,27 @@ public class AnimationUtil {
         view.startAnimation(anim);
     }
 
-    public static void fadeOut(View view){
+    public static void fadeOut(View view, View viewToHide){
         AlphaAnimation anim = new AlphaAnimation(1.0f, 0.0f);
         anim.setDuration(200);
         anim.setFillAfter(false);
+        anim.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                view.setVisibility(View.GONE);
+                viewToHide.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
         view.startAnimation(anim);
     }
 
@@ -214,7 +231,7 @@ public class AnimationUtil {
         circularReveal.start();
     }
 
-    public static void rippleHide(View view) {
+    public static void rippleHide(View view, View viewToShow) {
 
         int cx = view.getWidth() / 2;
         int cy = view.getHeight() / 2;
@@ -223,6 +240,29 @@ public class AnimationUtil {
 
         Animator circularReveal = ViewAnimationUtils.createCircularReveal(view, cx, cy, finalRadius, 0);
         circularReveal.setDuration(400);
+        circularReveal.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                view.setVisibility(View.GONE);
+                if (viewToShow != null)
+                    viewToShow.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
 
         view.setVisibility(View.VISIBLE);
         circularReveal.start();

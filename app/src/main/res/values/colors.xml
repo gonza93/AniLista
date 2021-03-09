@@ -41,4 +41,5 @@
     <drawable name="drawable_genre_selected">@drawable/bg_primary</drawable>
 
     <color name="black_overlay">#66000000</color>
+    <color name="color_dialog_status">#FFFFFF</color>
 </resources>

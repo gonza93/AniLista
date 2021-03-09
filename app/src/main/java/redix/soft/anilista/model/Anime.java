@@ -4,6 +4,7 @@ import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 import androidx.databinding.BindingAdapter;
 import androidx.core.content.ContextCompat;
+import androidx.databinding.library.baseAdapters.BR;
 
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,6 +15,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import butterknife.BindView;
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 import redix.soft.anilista.R;
 
@@ -60,6 +62,12 @@ public class Anime extends BaseObservable {
     private int watchedEpisodes;
     @SerializedName("total_episodes")
     private int totalEpisodes;
+    @SerializedName("my_list_status")
+    private AnimeStatus animeStatus;
+
+    public Anime() {
+        this.animeStatus = new AnimeStatus();
+    }
 
     public int getId() {
         return id;
@@ -172,6 +180,17 @@ public class Anime extends BaseObservable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Bindable
+    public AnimeStatus getAnimeStatus() {
+        return animeStatus;
+    }
+
+    public void setAnimeStatus(AnimeStatus animeStatus) {
+        this.animeStatus = animeStatus;
+        this.animeStatus.setEpisodes(episodes);
+        notifyPropertyChanged(BR.animeStatus);
     }
 
     public List<Review> getReviews() {

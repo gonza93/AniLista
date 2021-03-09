@@ -15,4 +15,6 @@
 
     <color name="colorGrayText">#BCBCBC</color>
     <color name="colorRedText">#DA8C1C1C</color>
+
+    <color name="color_dialog_status">#3C3C3C</color>
 </resources>

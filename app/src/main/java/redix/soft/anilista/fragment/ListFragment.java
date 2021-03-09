@@ -184,6 +184,10 @@ public class ListFragment extends Fragment{
                 );
     }
 
+    public void filterEpisodes(String filter) {
+        ((EpisodeAdapter) list.getAdapter()).filterEpisodes(filter);
+    }
+
     private void populateThemes(){
         List<Theme> themes = new ArrayList<>();
 

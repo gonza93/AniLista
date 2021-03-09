@@ -1,4 +1,4 @@
-package redix.soft.anilista.fragment;
+package redix.soft.anilista.dialog;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

@@ -143,67 +143,33 @@ public class NavigationUtil {
             }
         }
 
-        if (fragment instanceof UserFragment){
+        if (fragment instanceof UserFragment) {
             activity.getFiltersClear().setVisibility(View.VISIBLE);
             activity.resetFiltersLayout();
             activity.getFiltersScoreLayout().setVisibility(View.GONE);
             activity.getFiltersLayoutGenre().setVisibility(View.GONE);
             activity.getToolbarTitleView().setVisibility(View.VISIBLE);
             activity.getToolbarSaveButton().setVisibility(View.GONE);
-            activity.getSearchBar().setVisibility(View.VISIBLE);
+            activity.getSearchBar().setVisibility(View.GONE);
             activity.getSearchBarLayout().setVisibility(View.INVISIBLE);
+            backButton.setVisibility(View.GONE);
 
-            if (fragmentStacks.get(TAB.ACCOUNT).size() <= 1) {
-                activity.showSearchBar();
-                activity.getEditSearchInput().setHint(R.string.search_username);
-                activity.getToolbarFilters().setVisibility(View.GONE);
-                activity.getToolbarSaveButton().setVisibility(View.VISIBLE);
-                activity.getToolbarTitleView().setTextColor(Color.WHITE);
-                activity.getToolbarTitleView().setVisibility(View.VISIBLE);
-
-                if (DataUtil.getInstance(activity).getSavedUsername() == null) {
-                    activity.getSearchBarLayout().setVisibility(View.VISIBLE);
-                    activity.getToolbarTitleView().setVisibility(View.GONE);
-                }
-                else
-                    activity.getSearchBarLayout().setVisibility(View.INVISIBLE);
-
-                AnimationUtil.changeToolbarColor(activity,
-                        ContextCompat.getColor(activity, R.color.colorPrimaryDark),
-                        ContextCompat.getColor(activity, R.color.colorToolbarAccount));
-            }
-        }
-
-        if (lastSelectedTab != -1 && getCurrentPage() instanceof UserFragment) {
-            AnimationUtil.changeToolbarColor(activity,
-                    ContextCompat.getColor(activity, R.color.colorToolbarAccount),
-                    ContextCompat.getColor(activity, R.color.colorPrimaryDark));
-            activity.getToolbarTitleView().setTextColor(ContextCompat.getColor(activity, R.color.colorBlack));
-        }
-
-        /*if (tag.equals(UserFragment.TAG) && fragmentStacks.get(TAB.ACCOUNT).size() <= 1){
-            activity.showSearchBar();
-            activity.getEditSearchInput().setHint(R.string.search_username);
             activity.getToolbarFilters().setVisibility(View.GONE);
-            activity.getToolbarSaveButton().setVisibility(View.VISIBLE);
             activity.getToolbarTitleView().setTextColor(Color.WHITE);
             activity.getToolbarTitleView().setVisibility(View.VISIBLE);
-            activity.getSearchBarLayout().setVisibility(DataUtil.getInstance(activity).getSavedUsername() == null? View.VISIBLE : View.INVISIBLE);
-            if (DataUtil.getInstance(activity).getSavedUsername() != null)
-                activity.getSearchBarLayout().setVisibility(View.INVISIBLE);
+        }
 
+        if (fragment instanceof UserFragment) {
             AnimationUtil.changeToolbarColor(activity,
                     ContextCompat.getColor(activity, R.color.colorPrimaryDark),
                     ContextCompat.getColor(activity, R.color.colorToolbarAccount));
         }
-        else {
-            if (lastSelectedTab != -1 && getCurrentPage() instanceof UserFragment) {
+        else if (getSelectedTab(lastSelectedTab) == TAB.ACCOUNT) {
                 AnimationUtil.changeToolbarColor(activity,
                         ContextCompat.getColor(activity, R.color.colorToolbarAccount),
                         ContextCompat.getColor(activity, R.color.colorPrimaryDark));
                 activity.getToolbarTitleView().setTextColor(ContextCompat.getColor(activity, R.color.colorBlack));
-            }
-        }*/
+        }
 
         if(tag.equals(SearchFragment.TAG) && fragmentStacks.get(TAB.SEARCH).size() <= 1) {
             activity.getEditSearchInput().setHint(R.string.search_bar_text);
@@ -250,6 +216,10 @@ public class NavigationUtil {
                 activity.getFiltersLayoutSortParent().setVisibility(View.GONE);
             }
 
+            if (listFragment.getType().equals(ListFragment.TYPES.EPISODES)) {
+                activity.getTogglesView().setVisibility(View.VISIBLE);
+            }
+
             if (listFragment.getType().equals(ListFragment.TYPES.CHARACTERS)) {
                 activity.getEditSearchInput().setHint(R.string.search_characters);
                 activity.getToolbarSearch().setVisibility(View.VISIBLE);
@@ -288,9 +258,6 @@ public class NavigationUtil {
             activity.getSearchBar().setVisibility(View.VISIBLE);
             activity.getSearchBarLayout().setVisibility(View.INVISIBLE);
         }
-        /*else {
-
-        }*/
 
         activity.getToolbarTitleView().setText(title);
     }

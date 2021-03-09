@@ -38,6 +38,25 @@
             android:textAlignment="center"
             android:text="@string/user_intro_label"/>
 
+        <TextView
+            android:id="@+id/user_btn_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingStart="50dp"
+            android:paddingEnd="50dp"
+            android:background="@drawable/bg_button"
+            android:elevation="2dp"
+            android:fontFamily="@font/spinnaker"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:text="LOG IN"/>
+
     </LinearLayout>
 
     <LinearLayout

@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_centerHorizontal="true"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:background="@drawable/bg_rounded_6"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/dialog_status_status"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:textColor="@color/colorBlack"
+            android:textAppearance="?android:attr/textAppearance"
+            android:layout_weight="2"/>
+
+        <Spinner
+            android:id="@+id/dialog_status_status"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="10dp"
+            android:background="@drawable/bg_border_2"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+        android:padding="5dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/dialog_status_score"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:textColor="@color/colorBlack"
+                android:textAppearance="?android:attr/textAppearance"/>
+
+            <cn.carbswang.android.numberpickerview.library.NumberPickerView
+                android:id="@+id/dialog_status_score"
+                android:layout_width="wrap_content"
+                android:layout_height="150dp"
+                android:layout_marginTop="15dp"
+                android:layout_gravity="center"
+                app:npv_TextColorNormal="@color/colorGray"
+                app:npv_DividerColor="@color/colorPrimary"
+                app:npv_TextColorSelected="@color/colorPrimary"
+                app:npv_ItemPaddingHorizontal="10dp"
+                app:npv_ItemPaddingVertical="1dp"
+                app:npv_ShownCount="5"
+                app:npv_RespondChangeOnDetached="false"
+                app:npv_TextSizeNormal="16sp"
+                app:npv_TextSizeSelected="20sp"
+                app:npv_WrapSelectorWheel="true"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/dialog_status_episodes"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:textColor="@color/colorBlack"
+                android:textAppearance="?android:attr/textAppearance"/>
+
+            <ImageView
+                android:id="@+id/dialog_status_up"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/bg_search"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:layout_marginTop="15dp"
+                android:src="@drawable/ic_add"
+                app:tint="@color/colorPrimary"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/dialog_status_episodes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:textSize="16sp"
+                        android:padding="10dp"
+                        android:textColor="@color/colorBlack"
+                        android:nextFocusForward="@id/dialog_status_focus"
+                        android:importantForAutofill="no" />
+
+                    <TextView
+                        android:id="@+id/dialog_status_episodes_total"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:textColor="@color/colorBlack"/>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/dialog_status_down"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/bg_search"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:src="@drawable/ic_remove"
+                app:tint="@color/colorPrimary"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <ProgressBar
+            android:id="@+id/dialog_status_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:foregroundTint="@color/colorPrimary"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/dialog_status_delete"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="5dp"
+            android:padding="10dp"
+            android:background="@drawable/bg_button_3"
+            android:fontFamily="@font/spinnaker"
+            android:textColor="@color/colorRedTextUser"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:text="@string/dialog_status_delete"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/dialog_status_save"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="5dp"
+            android:padding="10dp"
+            android:background="@drawable/bg_button_2"
+            android:fontFamily="@font/spinnaker"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:text="@string/dialog_status_save"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/dialog_status_focus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:textSize="16sp"
+        android:padding="10dp"
+        android:visibility="gone"
+        android:textColor="@color/colorBlack"
+        android:importantForAutofill="no" />
+
+</LinearLayout>

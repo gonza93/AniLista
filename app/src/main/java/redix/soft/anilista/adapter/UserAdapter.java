@@ -89,7 +89,7 @@ public class UserAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         if(holder instanceof ViewHolder){
             ViewHolder viewHolder = (ViewHolder) holder;
 
-            if (user != null) {
+            if (user != null && user.getFavorites() != null) {
                 RecyclerView listAnime = viewHolder.findRecyclerView(R.id.user_list_favorite_anime);
                 listAnime.setAdapter(new AnimeAdapter(user.getFavorites().getAnime(), context, R.layout.list_favorites));
 

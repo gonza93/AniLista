@@ -21,7 +21,7 @@
             android:padding="8dp"
             android:background="@color/colorPrimaryLight"
             android:orientation="horizontal"
-            android:visibility="visible">
+            android:visibility="invisible">
 
             <ProgressBar
                 android:layout_width="25dp"
@@ -51,7 +51,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:visibility="invisible">
+                android:visibility="visible">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -223,12 +223,108 @@
 
                 </LinearLayout>
 
-                <View
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:background="@drawable/bg_line"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"/>
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:padding="12dp"
+                    android:layout_margin="10dp"
+                    android:orientation="horizontal"
+                    android:background="@drawable/bg_search">
+
+                    <ProgressBar
+                        android:id="@+id/anime_progress_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_centerHorizontal="true"
+                        android:visibility="visible"/>
+
+                    <LinearLayout
+                        android:id="@+id/anime_status_layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
+
+                        <LinearLayout
+                            android:id="@+id/anime_status"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingStart="12dp"
+                            android:paddingEnd="10dp"
+                            android:paddingTop="4dp"
+                            android:paddingBottom="4dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:background="@drawable/bg_button"
+                            bind:setStatusColor="@{anime.animeStatus.status}">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:textSize="17sp"
+                                android:textColor="@android:color/white"
+                                android:text="@{anime.animeStatus.status}"/>
+
+                            <ImageView
+                                android:layout_width="22dp"
+                                android:layout_height="22dp"
+                                android:layout_gravity="center"
+                                android:layout_marginStart="5dp"
+                                android:rotation="-90"
+                                bind:showAddIcon="@{anime.animeStatus.status}"
+                                bind:tint="@android:color/white" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingStart="7dp"
+                            android:paddingEnd="7dp"
+                            android:paddingTop="2dp"
+                            android:paddingBottom="2dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp">
+
+                            <ImageView
+                                android:layout_width="22dp"
+                                android:layout_height="22dp"
+                                android:layout_gravity="center"
+                                android:layout_marginEnd="5dp"
+                                android:src="@mipmap/ic_score"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:textStyle="bold"
+                                android:textSize="18sp"
+                                android:textColor="@color/colorPrimary"
+                                android:text="@{anime.animeStatus.score}" />
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingStart="7dp"
+                            android:paddingEnd="7dp"
+                            android:paddingTop="2dp"
+                            android:paddingBottom="2dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:textSize="17sp"
+                            android:textColor="@color/colorPrimary"
+                            android:text="@{anime.animeStatus.episodesWatched}"/>
+
+                    </LinearLayout>
+
+                </RelativeLayout>
 
                 <RelativeLayout
                     android:id="@+id/anime_synopsis_layout"
@@ -236,6 +332,7 @@
                     android:layout_height="wrap_content"
                     android:paddingStart="15dp"
                     android:paddingEnd="15dp"
+                    android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"
                     android:clickable="true"
                     android:focusable="true"
@@ -540,6 +637,51 @@
                     </LinearLayout>
 
                     <include layout="@layout/include_related"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginTop="10dp">
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:layout_weight="3"
+                            android:layout_gravity="center"
+                            android:background="@color/colorBlack"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingStart="9dp"
+                            android:paddingEnd="9dp"
+                            android:paddingTop="5dp"
+                            android:paddingBottom="5dp"
+                            android:textSize="13sp"
+                            android:background="@drawable/bg_primary"
+                            android:textColor="@color/colorPrimary">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginEnd="5dp"
+                                android:src="@drawable/ic_star"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:textColor="@color/colorPrimary"
+                                android:text="@string/viewing_order"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
 
                 </LinearLayout>
 

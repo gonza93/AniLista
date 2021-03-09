@@ -9,7 +9,7 @@
 
     <item android:id="@android:id/background">
         <shape android:shape="oval">
-            <solid android:color="@color/colorPrimaryLight"/>
+            <solid android:color="@color/colorSearchBar"/>
         </shape>
     </item>
 </ripple>

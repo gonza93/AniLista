@@ -22,7 +22,8 @@ public class SeiyuFragment extends Fragment {
 
     public static final String TAG = "Person Details";
 
-    @BindView(R.id.person_list) RecyclerView listPerson;
+    public @BindView(R.id.person_list) RecyclerView listPerson;
+    @BindView(R.id.person_error) View errorView;
 
     private int personId;
 
@@ -53,7 +54,7 @@ public class SeiyuFragment extends Fragment {
                         response -> ((RoleAdapter) listPerson.getAdapter()).setSeiyu(response),
                         throwable -> {
                             Log.d("ERROR", throwable.getMessage());
-                            getPerson();
+                            errorView.setVisibility(View.VISIBLE);
                         }
                 );
     }

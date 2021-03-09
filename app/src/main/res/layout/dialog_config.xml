@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -12,11 +13,11 @@
         android:layout_marginTop="8dp"
         android:padding="16dp"
         android:drawablePadding="24dp"
-        android:drawableStart="@drawable/ic_night"
-        android:drawableTint="@color/colorBlack"
-        android:text="Dark Mode On"
+        android:text="@string/config_dark_mode_on"
         android:textSize="16sp"
-        android:textColor="@color/colorBlack"/>
+        android:textColor="@color/colorBlack"
+        app:drawableStartCompat="@drawable/ic_night"
+        app:drawableTint="@color/colorBlack" />
 
     <TextView
         android:id="@+id/config_day"
@@ -24,22 +25,22 @@
         android:layout_width="match_parent"
         android:padding="16dp"
         android:drawablePadding="24dp"
-        android:drawableStart="@drawable/ic_day"
-        android:drawableTint="@color/colorBlack"
-        android:text="Dark Mode Off"
+        android:text="@string/config_dark_mode_off"
         android:textSize="16sp"
-        android:textColor="@color/colorBlack"/>
+        android:textColor="@color/colorBlack"
+        app:drawableStartCompat="@drawable/ic_day"
+        app:drawableTint="@color/colorBlack" />
 
     <TextView
         android:id="@+id/config_system"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:drawableStart="@drawable/ic_system"
-        android:drawableTint="@color/colorBlack"
         android:drawablePadding="24dp"
         android:padding="16dp"
-        android:text="Dark mode System"
+        android:text="@string/config_dark_mode_system"
         android:textSize="16sp"
-        android:textColor="@color/colorBlack"/>
+        android:textColor="@color/colorBlack"
+        app:drawableStartCompat="@drawable/ic_system"
+        app:drawableTint="@color/colorBlack" />
 
 </LinearLayout>

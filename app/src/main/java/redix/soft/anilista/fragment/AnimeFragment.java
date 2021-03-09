@@ -29,8 +29,11 @@ import redix.soft.anilista.adapter.CharacterAdapter;
 import redix.soft.anilista.adapter.GenreAdapter;
 import redix.soft.anilista.adapter.ReviewAdapter;
 import redix.soft.anilista.api.JikanService;
+import redix.soft.anilista.api.MyAnimeListService;
 import redix.soft.anilista.databinding.FragmentAnimeBinding;
 
+import redix.soft.anilista.dialog.BottomDialogFragment;
+import redix.soft.anilista.dialog.StatusDialogFragment;
 import redix.soft.anilista.model.Anime;
 import redix.soft.anilista.model.Character;
 import redix.soft.anilista.model.Genre;
@@ -47,6 +50,7 @@ public class AnimeFragment extends Fragment {
 
     @BindView(R.id.anime_progress) View progress;
     @BindView(R.id.characters_progress) View progressCharacters;
+    @BindView(R.id.anime_progress_status) View progressStatus;
     @BindView(R.id.recommendations_progress) View progressRecom;
     @BindView(R.id.reviews_progress) View progressReview;
     @BindView(R.id.anime_error) View labelError;
@@ -54,6 +58,7 @@ public class AnimeFragment extends Fragment {
     @BindView(R.id.anime_main_layout) View mainLayout;
     @BindView(R.id.anime_nested_scrollview) NestedScrollView scrollView;
     @BindView(R.id.anime_expand_arrow) View expandArrow;
+    @BindView(R.id.anime_status_layout) View statusLayout;
     @BindView(R.id.anime_synopsis) ExpandableTextView synopsis;
     @BindView(R.id.anime_reviews_view_all) View buttonAllReviews;
 
@@ -167,11 +172,31 @@ public class AnimeFragment extends Fragment {
 
                             AnimationUtil.translate(progress, 200);
                             AnimationUtil.fadeIn(mainLayout);
+
+                            getAnimeStatus();
                             },
                         throwable -> {
                             Log.d("ERROR", throwable.getMessage());
                             AnimationUtil.collapse(progress, 200, 0);
                             labelError.setVisibility(View.VISIBLE);
+                        }
+                );
+    }
+
+    private void getAnimeStatus() {
+        new MyAnimeListService(getContext())
+                .getAnimeStatus(animeId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        anime -> {
+                            progressStatus.setVisibility(View.GONE);
+                            statusLayout.setVisibility(View.VISIBLE);
+                            this.animeBinding.getAnime().setAnimeStatus(anime.getAnimeStatus());
+                        },
+                        throwable -> {
+                            progressStatus.setVisibility(View.GONE);
+                            Toast.makeText(getContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                 );
     }
@@ -301,6 +326,13 @@ public class AnimeFragment extends Fragment {
             otherList.setAdapter(new AnimeAdapter(relatedAnime.getOther(), getContext(), R.layout.list_related));
         else
             otherLayout.setVisibility(View.GONE);
+    }
+
+    @OnClick(R.id.anime_status)
+    public void onClickStatus() {
+        StatusDialogFragment statusDialog = new StatusDialogFragment();
+        statusDialog.setAnime(this.animeBinding.getAnime());
+        statusDialog.show(getChildFragmentManager(), "StatusDialog");
     }
 
     @OnClick(R.id.anime_synopsis_layout)

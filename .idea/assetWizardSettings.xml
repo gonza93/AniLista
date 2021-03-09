@@ -24,7 +24,7 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="imagePath" value="/private/var/folders/hv/nhkqpp616850ctt5dfj_n_qh0000gn/T/ic_brightness_4_black_24dp.xml" />
+                                                <entry key="imagePath" value="/private/var/folders/hv/nhkqpp616850ctt5dfj_n_qh0000gn/T/baseline_photo_filter_24.xml" />
                                                 <entry key="opacityPercent" value="80" />
                                               </map>
                                             </option>
@@ -36,7 +36,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="url" value="jar:file:/Applications/Android%20Studio.app/Contents/plugins/android/lib/android.jar!/images/material_design_icons/image/ic_brightness_4_black_24dp.xml" />
+                                                <entry key="url" value="jar:file:/Applications/Android%20Studio.app/Contents/plugins/android/lib/android.jar!/images/material/icons/materialicons/photo_filter/baseline_photo_filter_24.xml" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -82,9 +82,9 @@
                                   <option name="values">
                                     <map>
                                       <entry key="imageAsset" value="$USER_HOME$/Desktop/ic_main.png" />
-                                      <entry key="outputName" value="ic_system" />
+                                      <entry key="outputName" value="ic_star" />
                                       <entry key="theme" value="CUSTOM" />
-                                      <entry key="themeColor" value="000000" />
+                                      <entry key="themeColor" value="ffff00" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -112,8 +112,8 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="imagePath" value="$USER_HOME$/Desktop/ic_main.png" />
-                                                <entry key="scalingPercent" value="85" />
+                                                <entry key="imagePath" value="$USER_HOME$/Downloads/icons8-sparkling-96.png" />
+                                                <entry key="scalingPercent" value="52" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -158,6 +158,7 @@
                                               <map>
                                                 <entry key="color" value="000000" />
                                                 <entry key="imagePath" value="/private/var/folders/hv/nhkqpp616850ctt5dfj_n_qh0000gn/T/ic_settings_black_24dp.xml" />
+                                                <entry key="trimmed" value="true" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -180,8 +181,7 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="imagePath" value="$USER_HOME$/Downloads/pngguru.com.png" />
-                                                <entry key="paddingPercent" value="-10" />
+                                                <entry key="imagePath" value="$USER_HOME$/Downloads/icons8-sparkling-96.png" />
                                                 <entry key="trimmed" value="true" />
                                               </map>
                                             </option>
@@ -214,12 +214,10 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="assetType" value="IMAGE" />
-                                      <entry key="backgroundColor" value="000000" />
                                       <entry key="cropped" value="true" />
                                       <entry key="iconShape" value="NONE" />
-                                      <entry key="imageAsset" value="$USER_HOME$/Downloads/pngguru.com.png" />
-                                      <entry key="outputName" value="ic_user_not_found_white" />
+                                      <entry key="imageAsset" value="$USER_HOME$/Downloads/icons8-sparkling-96.png" />
+                                      <entry key="outputName" value="ic_stars" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -348,7 +346,7 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputIconType" value="LAUNCHER_LEGACY" />
+                            <entry key="outputIconType" value="ACTIONBAR" />
                           </map>
                         </option>
                       </PersistentState>

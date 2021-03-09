@@ -9,6 +9,7 @@
     <string name="openings">Openings</string>
     <string name="endings">Endings</string>
     <string name="active_genre">Action</string>
+    <string name="toggle_episodes">Filter</string>
 
     <!-- Search -->
     <string name="search_username">Enter username</string>
@@ -67,6 +68,7 @@
     <string name="view_all">View all</string>
     <string name="not_available">N/A</string>
     <string name="see_all_reviews">View all reviews</string>
+    <string name="viewing_order">Viewing Order</string>
 
     <!-- Filters -->
     <string name="filters_apply">APPLY</string>
@@ -117,5 +119,37 @@
     <string name="preference_file_key">.PREFERENCE_FILE_KEY</string>
     <string name="fetch_error">Couldn\'t fetch data.</string>
     <string name="fetch_error_label">Our power level is under 9000.</string>
+
+    <!-- Config -->
+    <string name="config_dark_mode_on">Dark Mode On</string>
+    <string name="config_dark_mode_off">Dark Mode Off</string>
+    <string name="config_dark_mode_system">Dark mode System</string>
+
+    <!-- Status -->
+    <string name="dialog_status_status">Status</string>
+    <string name="dialog_status_score">Score</string>
+    <string name="dialog_status_episodes">Episodes</string>
+    <string name="dialog_status_save">Save</string>
+    <string name="dialog_status_delete">Delete</string>
+    <string-array name="dialog_status_array">
+        <item>Watching</item>
+        <item>Completed</item>
+        <item>On Hold</item>
+        <item>Dropped</item>
+        <item>Plan to Watch</item>
+    </string-array>
+    <string-array name="dialog_status_score_array">
+        <item>(10) Masterpiece</item>
+        <item>(9) Great</item>
+        <item>(8) Very Good</item>
+        <item>(7) Good</item>
+        <item>(6) Fine</item>
+        <item>(5) Average</item>
+        <item>(4) Bad</item>
+        <item>(3) Very Bad</item>
+        <item>(2) Horrible</item>
+        <item>(1) Appalling</item>
+        <item>-- No Score --</item>
+    </string-array>
 
 </resources>

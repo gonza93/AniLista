@@ -18,6 +18,7 @@ import redix.soft.anilista.model.Episode;
 public class EpisodeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<Episode> episodes;
+    private List<Episode> episodesBuffer;
     private Context context;
 
     private static final int TYPE_ITEM = 0;
@@ -26,6 +27,7 @@ public class EpisodeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public EpisodeAdapter(List<Episode> episodes, Context context) {
         this.episodes = episodes;
         this.context = context;
+        this.episodesBuffer.addAll(episodes);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -86,6 +88,28 @@ public class EpisodeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     public void addEpisodes(List<Episode> episodes){
         this.episodes.addAll(episodes);
+        notifyDataSetChanged();
+    }
+
+    public void filterEpisodes(String filter) {
+        this.episodes.clear();
+
+        if (filter.equals("filler")) {
+            for (Episode episode : this.episodesBuffer) {
+                if (episode.isFiller())
+                    this.episodes.add(episode);
+            }
+        }
+        if (filter.equals("canon")) {
+            for (Episode episode : this.episodesBuffer) {
+                if (!episode.isFiller())
+                    this.episodes.add(episode);
+            }
+        }
+        if (filter.equals("no")) {
+            this.episodes.addAll(this.episodesBuffer);
+        }
+
         notifyDataSetChanged();
     }
 

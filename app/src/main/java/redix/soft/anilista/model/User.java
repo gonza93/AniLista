@@ -14,13 +14,14 @@ import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 
 public class User {
 
+    @SerializedName(value = "username", alternate = "name")
     private String username;
-    @SerializedName("image_url")
+    @SerializedName(value = "image_url", alternate = "picture")
     private String imageURL;
     private String gender;
     private Date birthday;
     private String location;
-    @SerializedName("anime_stats")
+    @SerializedName(value = "anime_stats", alternate = "anime_statistics")
     private AnimeStats animeStats;
     private Favorites favorites;
     private String about;

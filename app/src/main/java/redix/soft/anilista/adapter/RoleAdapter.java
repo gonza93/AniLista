@@ -28,15 +28,19 @@ public class RoleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     private Seiyu seiyu;
     private List<Role> roles;
+    private List<Role> rolesBuffer;
+    private int qVoiceRoles;
+    private int qVoiceRolesBuffer;
     private Context context;
 
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_VOICE = 1;
-    private static final int TYPE_STAFF = 1;
+    private static final int TYPE_STAFF = 2;
 
     public RoleAdapter(Context context){
         this.context = context;
         this.roles = new ArrayList<>();
+        this.rolesBuffer = new ArrayList<>();
         this.roles.add(null);
     }
 
@@ -92,7 +96,7 @@ public class RoleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     public int getItemViewType(int position) {
         if (position == 0)
             return TYPE_HEADER;
-        else if (position < roles.size())
+        else if (position <= qVoiceRoles)
             return TYPE_VOICE;
         else
             return TYPE_STAFF;
@@ -135,6 +139,12 @@ public class RoleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         this.roles.addAll(seiyu.getVoiceRoles());
         this.roles.addAll(seiyu.getStaffRoles());
 
+        this.rolesBuffer.addAll(seiyu.getVoiceRoles());
+        this.rolesBuffer.addAll(seiyu.getStaffRoles());
+
+        this.qVoiceRoles = seiyu.getVoiceRoles().size();
+        this.qVoiceRolesBuffer = seiyu.getVoiceRoles().size();
+
         notifyDataSetChanged();
     }
 
@@ -155,17 +165,21 @@ public class RoleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     }
 
     public void filterRoles(String query) {
-        List<Role> rolesBuffer = seiyu.getVoiceRoles();
-
         roles.clear();
+        qVoiceRoles = 0;
         query = query.toUpperCase();
 
-        if (query.equals(""))
+        if (query.equals("")) {
             roles.addAll(rolesBuffer);
+            qVoiceRoles = qVoiceRolesBuffer;
+        }
         else {
             for (Role role : rolesBuffer) {
-                if (role.getAnime().getTitle().toUpperCase().contains(query))
+                if (role.getAnime().getTitle().toUpperCase().contains(query)) {
                     roles.add(role);
+                    if (role.getPosition() == null)
+                        qVoiceRoles++;
+                }
             }
         }
 
