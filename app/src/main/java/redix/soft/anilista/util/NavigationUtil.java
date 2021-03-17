@@ -53,7 +53,7 @@ public class NavigationUtil {
         TAB tab = getSelectedTab(tabId);
         nextSelectTab = tabId;
 
-        changeToolbar(fragment, tag);
+        changeToolbar(fragment, tag, null);
 
         if(lastSelectedTab != tabId && lastSelectedTab != -1)
             switchTab(tabId);
@@ -74,7 +74,7 @@ public class NavigationUtil {
             Fragment fragmentToRemove = fragmentStacks.get(tab).pop();
             fragmentTransaction(fragmentToRemove, fragmentToRemove.getTag(), ACTION.CLOSE, tabId);
             Fragment fragment = fragmentStacks.get(tab).peek();
-            changeToolbar(fragment, fragment.getTag());
+            changeToolbar(fragment, fragment.getTag(), fragmentToRemove);
             return fragment;
         }
         else
@@ -128,12 +128,22 @@ public class NavigationUtil {
             activity.getBackbuttonView().setImageResource(R.drawable.ic_back);
     }
 
-    private void changeToolbar(Fragment fragment, String tag) {
+    private void changeToolbar(Fragment fragment, String tag, Fragment pastFragment) {
         activity.setFilterState(BottomSheetBehavior.STATE_HIDDEN);
         ImageView backButton = activity.getBackbuttonView();
 
         activity.getToolbarSearch().setVisibility(View.GONE);
         activity.getToolbarSaveButton().setVisibility(View.GONE);
+
+        if (pastFragment != null){
+            if (pastFragment instanceof ListFragment){
+                if (((ListFragment) pastFragment).getType().equals(ListFragment.TYPES.EPISODES)) {
+                    activity.getTogglesView().setBackgroundResource(R.drawable.bg_search);
+                    activity.getTogglesView().setTextColor(ContextCompat.getColor(activity, R.color.colorPrimary));
+                    activity.getTogglesView().setText(activity.getString(R.string.toggle_episodes));
+                }
+            }
+        }
 
         if(fragment instanceof HomeFragment) {
             if (fragmentStacks.get(TAB.HOME).size() == 1 ) {
@@ -205,6 +215,9 @@ public class NavigationUtil {
         if(fragment instanceof ListFragment){
             ListFragment listFragment = ((ListFragment) fragment);
 
+            activity.getToolbarFilters().setVisibility(View.VISIBLE);
+            activity.getToolbarSearch().setVisibility(View.GONE);
+
             if (listFragment.getType().equals(ListFragment.TYPES.THEMES))
                 activity.getTogglesView().setVisibility(View.VISIBLE);
 
@@ -216,9 +229,8 @@ public class NavigationUtil {
                 activity.getFiltersLayoutSortParent().setVisibility(View.GONE);
             }
 
-            if (listFragment.getType().equals(ListFragment.TYPES.EPISODES)) {
+            if (listFragment.getType().equals(ListFragment.TYPES.EPISODES))
                 activity.getTogglesView().setVisibility(View.VISIBLE);
-            }
 
             if (listFragment.getType().equals(ListFragment.TYPES.CHARACTERS)) {
                 activity.getEditSearchInput().setHint(R.string.search_characters);
@@ -227,13 +239,12 @@ public class NavigationUtil {
                 activity.getSearchBar().setVisibility(View.VISIBLE);
                 activity.getSearchBarLayout().setVisibility(View.INVISIBLE);
             }
-            else {
-                activity.getToolbarFilters().setVisibility(View.VISIBLE);
-                activity.getToolbarSearch().setVisibility(View.GONE);
-            }
 
             title = listFragment.getType().toString().substring(0, 1) +
                     listFragment.getType().toString().substring(1).toLowerCase();
+
+            if (listFragment.getType().equals(ListFragment.TYPES.RELATED))
+                title = activity.getString(R.string.viewing_order);
         }
 
         if(fragment instanceof SearchFragment)

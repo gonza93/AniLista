@@ -41,6 +41,7 @@ import redix.soft.anilista.model.Related;
 import redix.soft.anilista.model.Review;
 import redix.soft.anilista.util.AnimationUtil;
 import redix.soft.anilista.util.ChipsLayoutManagerHelper;
+import redix.soft.anilista.util.DataUtil;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -184,6 +185,13 @@ public class AnimeFragment extends Fragment {
     }
 
     private void getAnimeStatus() {
+        String token = DataUtil.getInstance(getContext()).getString(DataUtil.DATA.TOKEN.toString());
+        if (token == null){
+            progressStatus.setVisibility(View.GONE);
+            statusLayout.setVisibility(View.VISIBLE);
+            return;
+        }
+
         new MyAnimeListService(getContext())
                 .getAnimeStatus(animeId)
                 .subscribeOn(Schedulers.io())
@@ -196,6 +204,7 @@ public class AnimeFragment extends Fragment {
                         },
                         throwable -> {
                             progressStatus.setVisibility(View.GONE);
+                            statusLayout.setVisibility(View.VISIBLE);
                             Toast.makeText(getContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                 );
@@ -203,6 +212,7 @@ public class AnimeFragment extends Fragment {
 
     private void getAnimeCharacters(int id){
         progressCharacters.setVisibility(View.VISIBLE);
+        reloadCharacterLayout.setVisibility(View.GONE);
 
         new JikanService()
                 .getAnimeCharacters(id)
@@ -229,6 +239,7 @@ public class AnimeFragment extends Fragment {
 
     private void getAnimeRecommendations(int id){
         progressRecom.setVisibility(View.VISIBLE);
+        reloadRecommendationsLayout.setVisibility(View.GONE);
 
         new JikanService()
                 .getAnimeRecommendations(id)
@@ -253,6 +264,7 @@ public class AnimeFragment extends Fragment {
 
     private void getAnimeReviews(int animeId) {
         progressReview.setVisibility(View.VISIBLE);
+        reloadReviewsLayout.setVisibility(View.GONE);
 
         new JikanService()
                 .getAnimeReviews(animeId, 1)
@@ -369,6 +381,11 @@ public class AnimeFragment extends Fragment {
         loadListFragment(ListFragment.TYPES.NEWS);
     }
 
+    @OnClick(R.id.anime_viewing_order)
+    public void onClickViewingOrder() {
+        loadListFragment(ListFragment.TYPES.RELATED);
+    }
+
     @OnClick(R.id.anime_reviews_view_all)
     public void onClickViewAllReviews(){
         loadListFragment(ListFragment.TYPES.REVIEWS);
@@ -388,6 +405,7 @@ public class AnimeFragment extends Fragment {
     public void onClickReloadReviews(){
         getAnimeReviews(animeId);
     }
+
 
     private void loadListFragment(ListFragment.TYPES type){
         ListFragment fragment = new ListFragment();

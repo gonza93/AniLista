@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity
     public TextView getToolbarTitleView() { return toolbarTitle; }
     public ImageView getToolbarConfig() { return toolbarConfig; }
     public ImageView getBackbuttonView() { return backbutton; }
-    public View getTogglesView() { return toggles; }
+    public TextView getTogglesView() { return toggles; }
     public TextView getToolbarGenre() { return toolbarGenre; }
     public TextView getFilterScore() { return filterScore; }
     public View getToolbarFilters() { return filters; }
@@ -208,23 +208,10 @@ public class MainActivity extends AppCompatActivity
         if (fragment instanceof SearchFragment)
             return;
 
-        if (query.length() == 0) {
-            if (fragment instanceof ListFragment) {
-                ListFragment listFragment = ((ListFragment) fragment);
-                listFragment.filterCharacters("");
-            }
-            if (fragment instanceof SeiyuFragment){
-                SeiyuFragment seiyuFragment = ((SeiyuFragment) fragment);
-                seiyuFragment.filterRoles("");
-            }
-        }
-
-        if (query.length() < 3)
-            return;
-
         if (fragment instanceof ListFragment) {
             ListFragment listFragment = ((ListFragment) fragment);
-            listFragment.filterCharacters(query);
+            if (listFragment.getType().equals(ListFragment.TYPES.CHARACTERS))
+                listFragment.filterCharacters(query);
         }
         if (fragment instanceof SeiyuFragment){
             SeiyuFragment seiyuFragment = ((SeiyuFragment) fragment);
@@ -558,13 +545,13 @@ public class MainActivity extends AppCompatActivity
 
         if (text.equals(getString(R.string.toggle_episodes))) {
             toggles.setBackgroundResource(R.drawable.bg_canon);
-            toggles.setTextColor(ContextCompat.getColor(this, R.color.colorCanon));
+            toggles.setTextColor(ContextCompat.getColor(this, R.color.colorCanonText));
             toggles.setText(getString(R.string.canon));
             ((ListFragment) fragment).filterEpisodes("canon");
         }
         if (text.equals(getString(R.string.canon))) {
             toggles.setBackgroundResource(R.drawable.bg_filler);
-            toggles.setTextColor(ContextCompat.getColor(this, R.color.colorFiller));
+            toggles.setTextColor(ContextCompat.getColor(this, R.color.colorFillerText));
             toggles.setText(getString(R.string.filler));
             ((ListFragment) fragment).filterEpisodes("filler");
         }
@@ -574,11 +561,6 @@ public class MainActivity extends AppCompatActivity
             toggles.setText(getString(R.string.toggle_episodes));
             ((ListFragment) fragment).filterEpisodes("no");
         }
-        /*
-
-        if (fragment instanceof ListFragment) {
-            ((ListFragment) fragment)
-        }*/
     }
 
     @OnClick(R.id.back_button)

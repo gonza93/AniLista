@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable name="anime"
+            type="redix.soft.anilista.model.Anime" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="10dp"
+            android:layout_gravity="center"
+            android:visibility="@{anime.related.prequel != null ? View.VISIBLE : View.GONE}"
+            android:background="@color/colorBlack"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:paddingTop="7dp"
+            android:paddingBottom="7dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            android:textSize="15sp"
+            android:background="@{anime.selected ? @drawable/bg_red : @drawable/bg_primary}"
+            android:textColor="@{anime.selected ? @color/colorRedText : @color/colorPrimary}"
+            android:text="@{anime.title}"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="12dp"
+            android:layout_gravity="center"
+            android:visibility="@{anime.related.sequel != null ? View.VISIBLE : View.GONE}"
+            android:background="@color/colorBlack"/>
+
+    </LinearLayout>
+
+</layout>

@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import redix.soft.anilista.R;
@@ -20,6 +21,7 @@ public class EpisodeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private List<Episode> episodes;
     private List<Episode> episodesBuffer;
     private Context context;
+    private String filter;
 
     private static final int TYPE_ITEM = 0;
     private static final int TYPE_PROGRESS = 1;
@@ -27,7 +29,8 @@ public class EpisodeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public EpisodeAdapter(List<Episode> episodes, Context context) {
         this.episodes = episodes;
         this.context = context;
-        this.episodesBuffer.addAll(episodes);
+        this.episodesBuffer = new ArrayList<>();
+        this.filter = "no";
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -87,30 +90,32 @@ public class EpisodeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     public void addEpisodes(List<Episode> episodes){
-        this.episodes.addAll(episodes);
+        this.episodesBuffer.addAll((episodes));
+        filterDataSet(episodes);
         notifyDataSetChanged();
     }
 
     public void filterEpisodes(String filter) {
         this.episodes.clear();
+        this.filter = filter;
 
+        filterDataSet(this.episodesBuffer);
+        notifyDataSetChanged();
+    }
+
+    public void filterDataSet(List<Episode> episodes){
         if (filter.equals("filler")) {
-            for (Episode episode : this.episodesBuffer) {
+            for (Episode episode : episodes)
                 if (episode.isFiller())
                     this.episodes.add(episode);
-            }
         }
         if (filter.equals("canon")) {
-            for (Episode episode : this.episodesBuffer) {
+            for (Episode episode : episodes)
                 if (!episode.isFiller())
                     this.episodes.add(episode);
-            }
         }
-        if (filter.equals("no")) {
-            this.episodes.addAll(this.episodesBuffer);
-        }
-
-        notifyDataSetChanged();
+        if (filter.equals("no"))
+            this.episodes.addAll(episodes);
     }
 
     public void startLoad(){

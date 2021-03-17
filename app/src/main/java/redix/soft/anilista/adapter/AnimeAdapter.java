@@ -22,6 +22,7 @@ import redix.soft.anilista.databinding.ListAnimeDayBinding;
 import redix.soft.anilista.databinding.ListAnimeGenreBinding;
 import redix.soft.anilista.databinding.ListFavoritesBinding;
 import redix.soft.anilista.databinding.ListRelatedBinding;
+import redix.soft.anilista.databinding.ListRelatedOrderBinding;
 import redix.soft.anilista.databinding.ListUserListBinding;
 import redix.soft.anilista.fragment.AnimeFragment;
 import redix.soft.anilista.listener.ItemClickListener;
@@ -73,6 +74,8 @@ public class AnimeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             }
             if (layout == R.layout.list_related)
                 ((ListRelatedBinding) mBinding).setAnime(anime);
+            if (layout == R.layout.list_related_order)
+                ((ListRelatedOrderBinding) mBinding).setAnime(anime);
             if (layout == R.layout.list_anime_genre)
                 ((ListAnimeGenreBinding) mBinding).setAnime(anime);
             if (layout == R.layout.list_favorites)
@@ -140,8 +143,18 @@ public class AnimeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         notifyDataSetChanged();
     }
 
+    public void addAnime(Anime anime){
+        this.animes.add(anime);
+        notifyDataSetChanged();
+    }
+
     public void addAnime(List<Anime> anime){
         this.animes.addAll(anime);
+        notifyDataSetChanged();
+    }
+
+    public void putAnime(Anime anime){
+        this.animes.add(0, anime);
         notifyDataSetChanged();
     }
 
@@ -150,14 +163,24 @@ public class AnimeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         notifyDataSetChanged();
     }
 
-    public void startLoad(){
+    public void startLoad() {
         this.animes.add(null);
         notifyItemInserted(this.animes.size());
     }
 
-    public void endLoad(){
+    public void startLoadInverse() {
+        this.animes.add(0, null);
+        notifyItemInserted(0);
+    }
+
+    public void endLoad() {
         this.animes.remove(this.animes.size() - 1);
         notifyItemRemoved(this.animes.size());
+    }
+
+    public void endLoadInverse() {
+        this.animes.remove(0);
+        notifyItemRemoved(0);
     }
 
 }

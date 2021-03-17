@@ -65,6 +65,9 @@ public class Anime extends BaseObservable {
     @SerializedName("my_list_status")
     private AnimeStatus animeStatus;
 
+    //Additional
+    private boolean selected;
+
     public Anime() {
         this.animeStatus = new AnimeStatus();
     }
@@ -180,6 +183,14 @@ public class Anime extends BaseObservable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 
     @Bindable

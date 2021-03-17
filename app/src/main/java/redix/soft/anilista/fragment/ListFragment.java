@@ -40,7 +40,7 @@ import rx.schedulers.Schedulers;
 
 public class ListFragment extends Fragment{
 
-    public enum TYPES { THEMES, EPISODES, PICTURES, NEWS, CHARACTERS, RANKING, UPCOMING, GENRE, USER_LIST, REVIEWS }
+    public enum TYPES { THEMES, EPISODES, PICTURES, NEWS, CHARACTERS, RANKING, UPCOMING, GENRE, USER_LIST, REVIEWS, RELATED }
     public static final String TAG = "ListFragment";
 
     private TYPES type;
@@ -123,6 +123,8 @@ public class ListFragment extends Fragment{
             populateUserList();
         if (type.equals(TYPES.REVIEWS))
             populateReviews();
+        if (type.equals(TYPES.RELATED))
+            populateViewingOrder();
 
         return view;
     }
@@ -228,7 +230,10 @@ public class ListFragment extends Fragment{
         }
     }
 
-    public void filterCharacters(String query){
+    public void filterCharacters(String query) {
+        if (query.length() < 3)
+            return;
+
         characters.clear();
         query = query.toUpperCase();
 
@@ -483,4 +488,65 @@ public class ListFragment extends Fragment{
                 );
     }
 
+    private void populateViewingOrder() {
+        progress.setVisibility(View.GONE);
+        anime.setSelected(true);
+
+        List<Anime> relatedAnime = new ArrayList<>();
+        relatedAnime.add(anime);
+
+        AnimeAdapter adapter = new AnimeAdapter(relatedAnime, getContext(), R.layout.list_related_order);
+        list.setAdapter(adapter);
+
+        if (anime.getRelated().getSequel() != null)
+            getSequels(anime.getRelated().getSequel().get(0).getId());
+        else if (anime.getRelated().getPrequel() != null)
+            getPrequels(anime.getRelated().getPrequel().get(0).getId());
+    }
+
+    private void getSequels(int animeId) {
+        ((AnimeAdapter) list.getAdapter()).startLoad();
+
+        new JikanService()
+                .getAnimeInfo(animeId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        response -> {
+                            ((AnimeAdapter) list.getAdapter()).endLoad();
+                            ((AnimeAdapter) list.getAdapter()).addAnime(response);
+
+                            if (response.getRelated().getSequel() != null)
+                                getSequels(response.getRelated().getSequel().get(0).getId());
+                            else if (anime.getRelated().getPrequel() != null)
+                                getPrequels(anime.getRelated().getPrequel().get(0).getId());
+                        },
+                        throwable -> {
+                            Toast.makeText(getContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                            loading = false;
+                        }
+                );
+    }
+
+    private void getPrequels(int animeId) {
+        ((AnimeAdapter) list.getAdapter()).startLoadInverse();
+
+        new JikanService()
+                .getAnimeInfo(animeId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        response -> {
+                            ((AnimeAdapter) list.getAdapter()).endLoadInverse();
+                            ((AnimeAdapter) list.getAdapter()).putAnime(response);
+
+                            if (response.getRelated().getPrequel() != null)
+                                getPrequels(response.getRelated().getPrequel().get(0).getId());
+                        },
+                        throwable -> {
+                            Toast.makeText(getContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                            loading = false;
+                        }
+                );
+    }
 }
