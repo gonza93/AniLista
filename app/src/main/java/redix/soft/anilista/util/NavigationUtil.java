@@ -134,6 +134,7 @@ public class NavigationUtil {
 
         activity.getToolbarSearch().setVisibility(View.GONE);
         activity.getToolbarSaveButton().setVisibility(View.GONE);
+        activity.getToolbarFilters().setVisibility(View.GONE);
 
         if (pastFragment != null){
             if (pastFragment instanceof ListFragment){

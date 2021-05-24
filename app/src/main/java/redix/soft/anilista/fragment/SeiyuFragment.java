@@ -55,6 +55,7 @@ public class SeiyuFragment extends Fragment {
                         throwable -> {
                             Log.d("ERROR", throwable.getMessage());
                             errorView.setVisibility(View.VISIBLE);
+                            listPerson.setVisibility(View.GONE);
                         }
                 );
     }

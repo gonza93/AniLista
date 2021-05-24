@@ -1,12 +1,13 @@
 package redix.soft.anilista.adapter;
 
 import android.content.Context;
+
+import androidx.annotation.MainThread;
 import androidx.databinding.DataBindingUtil;
 import androidx.annotation.NonNull;
 import androidx.databinding.ViewDataBinding;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,13 +16,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import redix.soft.anilista.R;
+import redix.soft.anilista.activity.MainActivity;
 import redix.soft.anilista.databinding.ListRoleStaffBinding;
+import redix.soft.anilista.databinding.ListRoleStaffLabelBinding;
 import redix.soft.anilista.databinding.ListSeiyuHeaderBinding;
+import redix.soft.anilista.dialog.InfoDialog;
 import redix.soft.anilista.listener.ItemClickListener;
 import redix.soft.anilista.model.Role;
 import redix.soft.anilista.databinding.ListRoleBinding;
 import redix.soft.anilista.model.Seiyu;
-import redix.soft.anilista.util.DataUtil;
 
 
 public class RoleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
@@ -35,7 +38,8 @@ public class RoleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_VOICE = 1;
-    private static final int TYPE_STAFF = 2;
+    private static final int TYPE_STAFF_LABEL = 2;
+    private static final int TYPE_STAFF = 3;
 
     public RoleAdapter(Context context){
         this.context = context;
@@ -47,11 +51,11 @@ public class RoleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     public class ViewHeaderHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         private ListSeiyuHeaderBinding mBinding;
-        private ItemClickListener listener;
 
         public ViewHeaderHolder(ListSeiyuHeaderBinding binding) {
             super(binding.getRoot());
             mBinding = binding;
+            mBinding.getRoot().setOnClickListener(this);
         }
 
         public void bind(Seiyu seiyu){
@@ -61,7 +65,8 @@ public class RoleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
         @Override
         public void onClick(View v) {
-
+            InfoDialog infoDialog = new InfoDialog();
+            infoDialog.show(((MainActivity) context).getSupportFragmentManager(), InfoDialog.TAG);
         }
     }
 
@@ -82,6 +87,8 @@ public class RoleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                 ((ListRoleBinding) mBinding).setRole(role);
             if (mLayout == R.layout.list_role_staff)
                 ((ListRoleStaffBinding) mBinding).setRole(role);
+            if (mLayout == R.layout.list_role_staff_label)
+                ((ListRoleStaffLabelBinding) mBinding).setRole(role);
 
             mBinding.executePendingBindings();
         }
@@ -98,6 +105,8 @@ public class RoleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             return TYPE_HEADER;
         else if (position <= qVoiceRoles)
             return TYPE_VOICE;
+        else if (position == qVoiceRoles + 1)
+            return TYPE_STAFF_LABEL;
         else
             return TYPE_STAFF;
     }
@@ -113,6 +122,10 @@ public class RoleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         else if(viewType == TYPE_VOICE) {
             ListRoleBinding binding = DataBindingUtil.inflate(inflater, R.layout.list_role, parent, false);
             return new ViewHolder(binding, R.layout.list_role);
+        }
+        else if(viewType == TYPE_STAFF_LABEL) {
+            ListRoleStaffLabelBinding binding = DataBindingUtil.inflate(inflater, R.layout.list_role_staff_label, parent, false);
+            return new ViewHolder(binding, R.layout.list_role_staff_label);
         }
         else {
             ListRoleStaffBinding binding = DataBindingUtil.inflate(inflater, R.layout.list_role_staff, parent, false);

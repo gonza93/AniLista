@@ -63,12 +63,15 @@
     <string name="spring">Spring</string>
     <string name="summer">Summer</string>
     <string name="autumn">Fall</string>
-    <string name="voice_acting_roles">Voice acting roles</string>
     <string name="show_more">Show more</string>
     <string name="view_all">View all</string>
     <string name="not_available">N/A</string>
     <string name="see_all_reviews">View all reviews</string>
     <string name="viewing_order">Viewing Order</string>
+
+    <!-- Seiyu -->
+    <string name="voice_acting_roles">Voice acting roles</string>
+    <string name="staff_positions">Anime staff positions</string>
 
     <!-- Filters -->
     <string name="filters_apply">APPLY</string>
