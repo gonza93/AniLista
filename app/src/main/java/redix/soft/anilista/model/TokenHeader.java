@@ -8,6 +8,7 @@ public class TokenHeader {
     @SerializedName("grant_type") String grantType;
     @SerializedName("code") String authCode;
     @SerializedName("code_verifier") String codeVerifier;
+    @SerializedName("refresh_token") String refreshToken;
 
     public String getClientId() {
         return clientId;
@@ -39,5 +40,13 @@ public class TokenHeader {
 
     public void setCodeVerifier(String codeVerifier) {
         this.codeVerifier = codeVerifier;
+    }
+
+    public String getRefreshToken() {
+        return refreshToken;
+    }
+
+    public void setRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
     }
 }

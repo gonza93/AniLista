@@ -179,6 +179,28 @@ public class StatusDialogFragment extends BottomSheetDialogFragment implements V
                             }
                     );
         }
+
+        if (v == deleteButton) {
+            new MyAnimeListService(getContext())
+                    .deleteAnimeStatus(anime.getId())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                            deleted -> {
+                                anime.setAnimeStatus(new AnimeStatus());
+                                progress.setVisibility(View.GONE);
+                                Toast.makeText(getContext(), "Anime deleted succesfully", Toast.LENGTH_SHORT).show();
+
+                                hideLoader();
+                                dismiss();
+                            },
+                            throwable -> {
+                                Log.d("ERROR", throwable.getMessage());
+                                Toast.makeText(getContext(), "Error while updating anime status", Toast.LENGTH_SHORT).show();
+                                hideLoader();
+                            }
+                    );
+        }
     }
 
     private void showLoader() {

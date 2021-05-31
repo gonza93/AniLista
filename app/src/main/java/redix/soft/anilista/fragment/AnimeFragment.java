@@ -42,6 +42,7 @@ import redix.soft.anilista.model.Review;
 import redix.soft.anilista.util.AnimationUtil;
 import redix.soft.anilista.util.ChipsLayoutManagerHelper;
 import redix.soft.anilista.util.DataUtil;
+import retrofit2.HttpException;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -205,7 +206,11 @@ public class AnimeFragment extends Fragment {
                         throwable -> {
                             progressStatus.setVisibility(View.GONE);
                             statusLayout.setVisibility(View.VISIBLE);
-                            Toast.makeText(getContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+
+                            /*HttpException exception = (HttpException) throwable;
+                            if (exception.code() == 401){
+
+                            }*/
                         }
                 );
     }

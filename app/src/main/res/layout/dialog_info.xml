@@ -1,32 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout android:id="@+id/person_info_layout"
+<RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:transitionName="seiyuinfo"
-    android:background="@drawable/bg_rounded"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-        <LinearLayout
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="240dp"
+        android:orientation="vertical"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/bg_rounded">
+
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:fadeScrollbars="false"
+            android:scrollbarStyle="insideOverlay"
+            android:scrollbarThumbVertical="@drawable/track_custom"
+            android:scrollbarSize="11dp">
 
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_margin="10dp"
-                android:src="@mipmap/ic_info"/>
-
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:maxLines="6"
-                android:ellipsize="end"
-                android:textSize="12sp"
-                android:textAppearance="@android:style/TextAppearance.DeviceDefault"
-                android:text="Hola esto es una prueba"/>
+                android:orientation="horizontal">
 
-        </LinearLayout>
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="10dp"
+                    android:src="@mipmap/ic_info"/>
 
-    </RelativeLayout>
+                <TextView
+                    android:id="@+id/dialog_info_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:textSize="14sp"
+                    android:textAppearance="@android:style/TextAppearance.DeviceDefault"/>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </LinearLayout>
+
+</RelativeLayout>

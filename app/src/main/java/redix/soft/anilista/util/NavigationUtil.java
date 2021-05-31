@@ -278,6 +278,14 @@ public class NavigationUtil {
         return fragmentStacks.get(getSelectedTab(lastSelectedTab)).peek();
     }
 
+    public Fragment getTopFragmentFromTab(int tabId){
+        TAB tab = getSelectedTab(tabId);
+        if (fragmentStacks.get(tab).size() == 0)
+            return null;
+        else
+            return fragmentStacks.get(tab).peek();
+    }
+
     public boolean isRight(int tabId){
         if (lastSelectedTab == R.id.navigation_home)
             return true;

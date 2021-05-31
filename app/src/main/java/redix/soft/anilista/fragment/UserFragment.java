@@ -67,7 +67,6 @@ public class UserFragment extends Fragment {
     public void onClickLogin() {
         try {
             String codeVerifier = CodeChallenge.generateCodeVerifier();
-            //String codeChallenge = CodeChallenge.generateCodeChallange(codeVerifier);
 
             DataUtil.getInstance(getContext()).saveString(DataUtil.DATA.VERIFIER.toString(), codeVerifier);
 
@@ -115,7 +114,7 @@ public class UserFragment extends Fragment {
         String verifier = DataUtil.getInstance(getContext()).getString(DataUtil.DATA.VERIFIER.toString());
 
         new MyAnimeListAuthService()
-                .getToken(authorizationCode, verifier)
+                .getToken(authorizationCode, verifier, "authorization_code", null)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe( token -> {
@@ -139,7 +138,8 @@ public class UserFragment extends Fragment {
         String token = DataUtil.getInstance(getContext()).getString(DataUtil.DATA.TOKEN.toString());
         if (token == null) return;
 
-        showLoader();
+        if (!userLoader.isShown())
+            showLoader();
 
         new MyAnimeListService(getContext())
                 .getUser()

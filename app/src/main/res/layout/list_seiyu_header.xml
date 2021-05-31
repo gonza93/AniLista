@@ -24,20 +24,15 @@
             android:background="@drawable/bg_rounded_3"
             android:orientation="vertical">
 
-            <RelativeLayout
-                android:id="@+id/person_info_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:transitionName="seiyuinfo"
-                android:layout_marginTop="35dp"
-                android:layout_marginStart="18dp"
-                android:layout_marginEnd="18dp">
-
                 <LinearLayout
+                    android:id="@+id/person_info_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:background="@drawable/bg_rounded">
+                    android:background="@drawable/bg_rounded"
+                    android:layout_marginTop="35dp"
+                    android:layout_marginStart="18dp"
+                    android:layout_marginEnd="18dp">
 
                     <ImageView
                         android:layout_width="40dp"
@@ -45,43 +40,60 @@
                         android:layout_margin="10dp"
                         android:src="@mipmap/ic_info"/>
 
-                    <TextView
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
-                        android:maxLines="6"
-                        android:ellipsize="end"
-                        android:textSize="12sp"
-                        android:textAppearance="@android:style/TextAppearance.DeviceDefault"
-                        android:text="@{seiyu.about}"/>
+                        android:orientation="vertical"
+                        android:layout_margin="8dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:maxLines="6"
+                            android:ellipsize="end"
+                            android:visibility="@{seiyu.name != null ? View.VISIBLE : View.GONE}"
+                            android:textSize="12sp"
+                            android:textAppearance="@android:style/TextAppearance.DeviceDefault"
+                            android:text="@{seiyu.about}"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="@{seiyu.name != null ? View.VISIBLE : View.GONE}"
+                            android:textColor="@color/colorPrimary"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:fontFamily="@font/spinnaker"
+                            android:text="@string/show_more"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="@{seiyu.name == null ? View.VISIBLE : View.GONE}">
+
+                        <com.elyeproj.loaderviewlibrary.LoaderImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="10dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="30dp"
+                            app:corners="30"/>
+
+                        <com.elyeproj.loaderviewlibrary.LoaderImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="10dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="30dp"
+                            app:corners="30"/>
+
+                    </LinearLayout>
 
                 </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:visibility="@{seiyu.name == null ? View.VISIBLE : View.GONE}">
-
-                    <com.elyeproj.loaderviewlibrary.LoaderImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="10dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginStart="60dp"
-                        android:layout_marginEnd="60dp"
-                        app:corners="30"/>
-
-                    <com.elyeproj.loaderviewlibrary.LoaderImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="10dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginStart="60dp"
-                        android:layout_marginEnd="60dp"
-                        app:corners="30"/>
-
-                </LinearLayout>
-
-            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -129,73 +141,6 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:visibility="@{seiyu.name == null ? View.VISIBLE : View.GONE}">
-
-                    <com.elyeproj.loaderviewlibrary.LoaderImageView
-                        android:layout_width="170dp"
-                        android:layout_height="30dp"
-                        app:corners="30"/>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:orientation="horizontal">
-
-                        <View
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"/>
-
-                        <com.elyeproj.loaderviewlibrary.LoaderImageView
-                            android:layout_width="80dp"
-                            android:layout_height="15dp"
-                            android:layout_marginStart="5dp"
-                            app:corners="30"/>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:orientation="horizontal">
-
-                        <View
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"/>
-
-                        <com.elyeproj.loaderviewlibrary.LoaderImageView
-                            android:layout_width="80dp"
-                            android:layout_height="15dp"
-                            android:layout_marginStart="5dp"
-                            app:corners="30"/>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:orientation="horizontal">
-
-                        <View
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"/>
-
-                        <com.elyeproj.loaderviewlibrary.LoaderImageView
-                            android:layout_width="80dp"
-                            android:layout_height="15dp"
-                            android:layout_marginStart="5dp"
-                            app:corners="30"/>
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:orientation="vertical">
 
                     <TextView
@@ -229,6 +174,13 @@
                             android:textAppearance="@android:style/TextAppearance.DeviceDefault"
                             android:textSize="13sp"/>
 
+                        <com.elyeproj.loaderviewlibrary.LoaderImageView
+                            android:layout_width="80dp"
+                            android:layout_height="15dp"
+                            android:layout_marginStart="5dp"
+                            android:visibility="@{seiyu.familyName == null ? View.VISIBLE : View.GONE}"
+                            app:corners="30"/>
+
                     </LinearLayout>
 
                     <LinearLayout
@@ -252,6 +204,13 @@
                             android:text="@{seiyu.formattedBirthday}"
                             android:textAppearance="@android:style/TextAppearance.DeviceDefault"
                             android:textSize="13sp"/>
+
+                        <com.elyeproj.loaderviewlibrary.LoaderImageView
+                            android:layout_width="80dp"
+                            android:layout_height="15dp"
+                            android:layout_marginStart="5dp"
+                            android:visibility="@{seiyu.birthday == null ? View.VISIBLE : View.GONE}"
+                            app:corners="30"/>
 
                     </LinearLayout>
 
@@ -278,54 +237,46 @@
                             android:textAppearance="@android:style/TextAppearance.DeviceDefault"
                             android:textSize="13sp"/>
 
+                        <com.elyeproj.loaderviewlibrary.LoaderImageView
+                            android:layout_width="80dp"
+                            android:layout_height="15dp"
+                            android:layout_marginStart="5dp"
+                            android:visibility="@{seiyu.websiteURL == null ? View.VISIBLE : View.GONE}"
+                            app:corners="30"/>
+
                     </LinearLayout>
 
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginBottom="5dp"
-                    android:visibility="@{seiyu.name == null ? View.VISIBLE : View.GONE}">
-
-                    <View
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_gravity="center"/>
-
-                    <com.elyeproj.loaderviewlibrary.LoaderImageView
-                        android:layout_width="60dp"
-                        android:layout_height="20dp"
-                        android:layout_marginStart="5dp"
-                        android:layout_gravity="center"
-                        app:corners="30"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginBottom="5dp">
-
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_gravity="center"
-                        android:src="@mipmap/ic_score_2"
-                        app:tint="@color/colorBlack" />
-
-                    <TextView
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="10dp"
-                        android:text="@{seiyu.memberFavorites}"
-                        android:textSize="18sp"
-                        android:textAppearance="@android:style/TextAppearance.DeviceDefault"/>
+                        android:orientation="horizontal"
+                        android:layout_marginTop="10dp">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            android:src="@mipmap/ic_score_2"
+                            app:tint="@color/colorBlack" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="5dp"
+                            android:fontFamily="@font/spinnaker"
+                            android:text="@{seiyu.memberFavorites}"
+                            android:textAppearance="@android:style/TextAppearance.DeviceDefault"
+                            android:textSize="13sp"/>
+
+                        <com.elyeproj.loaderviewlibrary.LoaderImageView
+                            android:layout_width="80dp"
+                            android:layout_height="15dp"
+                            android:layout_marginStart="5dp"
+                            android:visibility="@{seiyu.memberFavorites == null ? View.VISIBLE : View.GONE}"
+                            app:corners="30"/>
+
+                    </LinearLayout>
 
                 </LinearLayout>
 

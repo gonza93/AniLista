@@ -79,7 +79,7 @@ public class Seiyu {
     }
 
     public String getAbout() {
-        return about;
+        return about.replace("\\n", "\n");
     }
     public void setAbout(String about) {
         this.about = about;

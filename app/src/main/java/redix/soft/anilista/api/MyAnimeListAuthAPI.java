@@ -18,6 +18,7 @@ public interface MyAnimeListAuthAPI {
     Single<Token> getToken(@Field("client_id") String clientId,
                            @Field("grant_type") String grantType,
                            @Field("code") String authCode,
-                           @Field("code_verifier") String codeVerifier);
+                           @Field("code_verifier") String codeVerifier,
+                           @Field("refresh_token") String refreshToken);
 
 }

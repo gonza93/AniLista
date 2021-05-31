@@ -160,15 +160,28 @@ public class MainActivity extends AppCompatActivity
         if(item.getItemId() == navigation.getSelectedItemId())
             return true; //TODO GO TO TOP
 
+        Fragment fragment = navigationUtil.getTopFragmentFromTab(item.getItemId());
+
+
+
         switch (item.getItemId()) {
             case R.id.navigation_home:
-                navigationUtil.navigateTo(HomeFragment.getInstance(), HomeFragment.TAG, item.getItemId());
+                if (fragment == null)
+                    fragment = HomeFragment.getInstance();
+
+                navigationUtil.navigateTo(fragment, HomeFragment.TAG, item.getItemId());
                 break;
             case R.id.navigation_search:
-                navigationUtil.navigateTo(SearchFragment.getInstance(), SearchFragment.TAG, item.getItemId());
+                if (fragment == null)
+                    fragment = SearchFragment.getInstance();
+
+                navigationUtil.navigateTo(fragment, SearchFragment.TAG, item.getItemId());
                 break;
             case R.id.navigation_account:
-                navigationUtil.navigateTo(UserFragment.getInstance(), UserFragment.TAG, item.getItemId());
+                if (fragment == null)
+                    fragment = UserFragment.getInstance();
+
+                navigationUtil.navigateTo(fragment, UserFragment.TAG, item.getItemId());
                 break;
         }
 

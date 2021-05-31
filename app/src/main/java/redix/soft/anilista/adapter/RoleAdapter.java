@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.databinding.ViewDataBinding;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,7 +56,7 @@ public class RoleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         public ViewHeaderHolder(ListSeiyuHeaderBinding binding) {
             super(binding.getRoot());
             mBinding = binding;
-            mBinding.getRoot().setOnClickListener(this);
+            mBinding.getRoot().findViewById(R.id.person_info_layout).setOnClickListener(this);
         }
 
         public void bind(Seiyu seiyu){
@@ -66,6 +67,11 @@ public class RoleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         @Override
         public void onClick(View v) {
             InfoDialog infoDialog = new InfoDialog();
+
+            Bundle args = new Bundle();
+            args.putString("text", seiyu.getAbout());
+            infoDialog.setArguments(args);
+
             infoDialog.show(((MainActivity) context).getSupportFragmentManager(), InfoDialog.TAG);
         }
     }
