@@ -4,6 +4,9 @@ import android.content.Context;
 import androidx.databinding.DataBindingUtil;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +25,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder>{
 
     public NewsAdapter(List<News> news, Context context){
         this.news = news;
+        this.context = context;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -64,7 +68,9 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder>{
         holder.setItemClickListener(new ItemClickListener() {
             @Override
             public void onItemClick(News news) {
-                //TODO goto myanime list
+                Uri uriNews = Uri.parse(news.getURL());
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, uriNews);
+                context.startActivity(browserIntent);
             }
         });
     }

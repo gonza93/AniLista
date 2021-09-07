@@ -24,6 +24,7 @@ import redix.soft.anilista.R;
 import redix.soft.anilista.api.MyAnimeListService;
 import redix.soft.anilista.model.Anime;
 import redix.soft.anilista.model.AnimeStatus;
+import redix.soft.anilista.util.DataUtil;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -149,6 +150,12 @@ public class StatusDialogFragment extends BottomSheetDialogFragment implements V
         showLoader();
 
         if (v == saveButton) {
+            if (DataUtil.getInstance(getContext()).getString(DataUtil.DATA.TOKEN.toString()) == null){
+                Toast.makeText(getContext(), "You're not logged in.", Toast.LENGTH_SHORT).show();
+                dismiss();
+                return;
+            }
+
             if (editTextEpisodes.getText().toString().equals(""))
                 editTextEpisodes.setText("0");
 

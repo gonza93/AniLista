@@ -9,7 +9,7 @@ import redix.soft.anilista.R;
 
 public class DataUtil {
 
-    public enum DATA { QUERY, USERNAME, SAVED_USER, MODE, AUTHCODE, VERIFIER, TOKEN, REFRESH, EXPIRE }
+    public enum DATA { QUERY, USERNAME, SAVED_USER, MODE, AUTHCODE, VERIFIER, TOKEN, REFRESH, EXPIRE, SUPPORT, DONTSHOW }
     private Context context;
     private boolean firstInstance;
     private static DataUtil instance;
@@ -46,6 +46,15 @@ public class DataUtil {
                 .apply();
     }
 
+    public void saveBoolean(String key, boolean data){
+        firstInstance = false;
+
+        getSharedPreferences()
+                .edit()
+                .putBoolean(key, data)
+                .apply();
+    }
+
     public String getLastSearch(){
         return firstInstance? null : getSharedPreferences().getString(DATA.QUERY.toString(), null);
     }
@@ -63,5 +72,21 @@ public class DataUtil {
 
     public int getUIMode(){
         return getSharedPreferences().getInt(DATA.MODE.toString(), AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+    }
+
+    public boolean showSupport(){
+        boolean dontShow = getSharedPreferences().getBoolean(DATA.DONTSHOW.toString(), false);
+        int timesOpened = getSharedPreferences().getInt(DATA.SUPPORT.toString(), 0);
+        timesOpened++;
+
+        if (dontShow)
+            return false;
+
+        if (timesOpened == 3)
+            return true;
+        else {
+            saveInt(DATA.SUPPORT.toString(), timesOpened);
+            return false;
+        }
     }
 }

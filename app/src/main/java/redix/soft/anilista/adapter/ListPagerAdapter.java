@@ -26,9 +26,9 @@ public class ListPagerAdapter extends FragmentPagerAdapter {
         fragments.add(new ListFragment().withType(ListFragment.TYPES.USER_LIST).withUser(username).withFilter("all"));
         fragments.add(new ListFragment().withType(ListFragment.TYPES.USER_LIST).withUser(username).withFilter("watching"));
         fragments.add(new ListFragment().withType(ListFragment.TYPES.USER_LIST).withUser(username).withFilter("completed"));
-        fragments.add(new ListFragment().withType(ListFragment.TYPES.USER_LIST).withUser(username).withFilter("onhold"));
+        fragments.add(new ListFragment().withType(ListFragment.TYPES.USER_LIST).withUser(username).withFilter("on_hold"));
         fragments.add(new ListFragment().withType(ListFragment.TYPES.USER_LIST).withUser(username).withFilter("dropped"));
-        fragments.add(new ListFragment().withType(ListFragment.TYPES.USER_LIST).withUser(username).withFilter("plantowatch"));
+        fragments.add(new ListFragment().withType(ListFragment.TYPES.USER_LIST).withUser(username).withFilter("plan_to_watch"));
     }
 
     @Override
@@ -38,7 +38,7 @@ public class ListPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 6;
+        return fragments.size();
     }
 
     @Override

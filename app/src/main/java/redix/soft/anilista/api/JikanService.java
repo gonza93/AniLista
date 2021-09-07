@@ -3,7 +3,7 @@ package redix.soft.anilista.api;
 import java.util.Map;
 
 import redix.soft.anilista.model.Anime;
-import redix.soft.anilista.model.Response;
+import redix.soft.anilista.model.ResponseModel;
 import redix.soft.anilista.model.ResponseSeiyu;
 import redix.soft.anilista.model.Seiyu;
 import redix.soft.anilista.model.User;
@@ -27,7 +27,7 @@ public class JikanService {
         jikanAPI = retrofit.create(JikanAPI.class);
     }
 
-    public Single<Response> search(String type, Map<String, String> params){
+    public Single<ResponseModel> search(String type, Map<String, String> params){
         return jikanAPI.search(type, params);
     }
 
@@ -35,51 +35,47 @@ public class JikanService {
         return jikanAPI.getAnimeInfo(id);
     }
 
-    public Single<Response> getAnimeCharacters(int id){
+    public Single<ResponseModel> getAnimeCharacters(int id){
         return jikanAPI.getAnimeCharacters(id);
     }
 
-    public Single<Response> getAnimeNews(int id){
+    public Single<ResponseModel> getAnimeNews(int id){
         return jikanAPI.getAnimeNews(id);
     }
 
-    public Single<Response> getAnimeEpisodes(int id, int page){
+    public Single<ResponseModel> getAnimeEpisodes(int id, int page){
         return jikanAPI.getAnimeEpisodes(id, page);
     }
 
-    public Single<Response> getAnimePictures(int id){
+    public Single<ResponseModel> getAnimePictures(int id){
         return jikanAPI.getAnimePictures(id);
     }
 
-    public Single<Response> getAnimeRecommendations(int id) {
+    public Single<ResponseModel> getAnimeRecommendations(int id) {
         return jikanAPI.getAnimeRecommendations(id);
     }
 
-    public Single<Response> getAnimeReviews(int id, int page){
+    public Single<ResponseModel> getAnimeReviews(int id, int page){
         return jikanAPI.getAnimeReviews(id, page);
     }
 
-    public Single<Response> getAiringAnime(int page){
-        return jikanAPI.getTopAnime( page, "airing");
+    public Single<ResponseModel> getTopAnime(int page){
+        return jikanAPI.getTopAnime(page);
     }
 
-    public Single<Response> getTopAnime(String subtype, int page){
-        return jikanAPI.getTopAnime( page, subtype);
-    }
-
-    public Single<Response> getPopularAnime(int page){
-        return jikanAPI.getTopAnime( page, "bypopularity");
+    public Single<ResponseModel> getTopAnime(String subtype, int page){
+        return jikanAPI.getTopAnime(page, subtype);
     }
 
     public Single<ResponseSeiyu> getPopularPeople(int page){
         return jikanAPI.getTopPeople(page);
     }
 
-    public Single<Response> getSchedule(String day){
+    public Single<ResponseModel> getSchedule(String day){
         return jikanAPI.getSchedule(day);
     }
 
-    public Single<Response> getSeasonAnime(int year, String season){
+    public Single<ResponseModel> getSeasonAnime(int year, String season){
         return jikanAPI.getSeasonAnime(year, season);
     }
 
@@ -87,7 +83,7 @@ public class JikanService {
         return jikanAPI.getPerson(id);
     }
 
-    public Single<Response> getGenreAnime(int idGenre, int page){
+    public Single<ResponseModel> getGenreAnime(int idGenre, int page){
         return jikanAPI.getGenreAnime(idGenre, page);
     }
 
@@ -95,7 +91,7 @@ public class JikanService {
         return jikanAPI.getUser(username);
     }
 
-    public Single<Response> getUserAnimeList(String username, String filter, int page, String orderBy, String sort){
+    public Single<ResponseModel> getUserAnimeList(String username, String filter, int page, String orderBy, String sort){
         return jikanAPI.getUserAnimeList(username, filter, page, orderBy, sort);
     }
 }

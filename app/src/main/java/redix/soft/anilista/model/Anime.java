@@ -21,7 +21,7 @@ import redix.soft.anilista.R;
 
 public class Anime extends BaseObservable {
 
-    @SerializedName("mal_id")
+    @SerializedName(value = "mal_id", alternate = "id")
     private int id;
     @SerializedName("url")
     private String URL;
@@ -64,6 +64,8 @@ public class Anime extends BaseObservable {
     private int totalEpisodes;
     @SerializedName("my_list_status")
     private AnimeStatus animeStatus;
+    @SerializedName("main_picture")
+    private Picture picture;
 
     //Additional
     private boolean selected;
@@ -82,6 +84,9 @@ public class Anime extends BaseObservable {
 
     public String getImageURL() {
         return imageURL;
+    }
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 
     @Bindable
@@ -204,6 +209,10 @@ public class Anime extends BaseObservable {
         notifyPropertyChanged(BR.animeStatus);
     }
 
+    public Picture getPicture() {
+        return picture;
+    }
+
     public List<Review> getReviews() {
         return reviews;
     }
@@ -244,7 +253,7 @@ public class Anime extends BaseObservable {
                 .into(view);
     }
 
-    @BindingAdapter("setAnimeStatus")
+    /*@BindingAdapter("setAnimeStatus")
     public static void setAnimeStatus(TextView view, int status) {
         switch (status){
             case 1: //Watching
@@ -273,5 +282,5 @@ public class Anime extends BaseObservable {
                 view.setText(R.string.plan_to_watch);
                 break;
         }
-    }
+    }*/
 }

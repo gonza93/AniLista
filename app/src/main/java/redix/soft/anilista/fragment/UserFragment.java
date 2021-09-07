@@ -77,8 +77,6 @@ public class UserFragment extends Fragment {
                     "&code_challenge=" + codeVerifier +
                     "&code_challenge_method=plain";
 
-            showLoader();
-
             Uri uriAuthURL = Uri.parse(authURL);
             Intent browserIntent = new Intent(Intent.ACTION_VIEW, uriAuthURL);
             startActivity(browserIntent);
@@ -111,6 +109,7 @@ public class UserFragment extends Fragment {
     }
 
     public void authenticateUser(String authorizationCode) {
+        showLoader();
         String verifier = DataUtil.getInstance(getContext()).getString(DataUtil.DATA.VERIFIER.toString());
 
         new MyAnimeListAuthService()

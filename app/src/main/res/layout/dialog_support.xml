@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:id="@+id/dialog_info_main_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:padding="10dp"
+        android:background="@drawable/bg_rounded"
+        android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="10dp"
+                    android:src="@mipmap/ic_info"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/dialog_info_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:textAppearance="@android:style/TextAppearance.DeviceDefault"
+                        android:textSize="14sp" />
+
+                    <CheckBox
+                        android:id="@+id/dialog_info_check"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/support_dont_show"/>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_gravity="end"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/dialog_info_close"
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/support_close"
+                            android:textColor="@color/colorAccent"
+                            android:textAlignment="center"
+                            android:paddingTop="7dp"
+                            android:paddingBottom="7dp"
+                            android:layout_marginEnd="18dp"
+                            android:background="@drawable/bg_primary"/>
+
+                        <TextView
+                            android:id="@+id/dialog_info_yes"
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/support_yes"
+                            android:textColor="@color/colorAccent"
+                            android:textAlignment="center"
+                            android:paddingEnd="18dp"
+                            android:paddingStart="18dp"
+                            android:paddingTop="7dp"
+                            android:paddingBottom="7dp"
+                            android:background="@drawable/bg_primary"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

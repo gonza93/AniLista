@@ -69,7 +69,7 @@ public class HomeFragment extends Fragment {
 
     private void getAiringAnimes(){
         new JikanService()
-                .getAiringAnime(1)
+                .getTopAnime("airing",1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe( response    -> fillList(response.getAnimes(), 15, TYPES.AIRING),
@@ -87,7 +87,7 @@ public class HomeFragment extends Fragment {
 
     private void getPopularAnimes(){
         new JikanService()
-                .getPopularAnime(1)
+                .getTopAnime("bypopularity", 1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe( response    -> fillList(response.getAnimes(), 15, TYPES.POPULAR),
@@ -118,8 +118,6 @@ public class HomeFragment extends Fragment {
             return;
         }
         retry++;
-
-        Toast.makeText(getContext(), "Fail", Toast.LENGTH_SHORT).show();
 
         if (type.equals(TYPES.SCHEDULE))
             getScheduleAnimes();

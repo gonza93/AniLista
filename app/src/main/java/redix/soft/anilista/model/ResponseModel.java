@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class Response {
+public class ResponseModel {
 
     @SerializedName(value = "results", alternate = {"top", "recommendations", "anime", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"})
     private List<Anime> animes;
@@ -18,6 +18,8 @@ public class Response {
     private List<Picture> pictures;
 
     private List<Review> reviews;
+
+    private List<DataAnime> data;
 
     @SerializedName("last_page")
     private int searchLastPage;
@@ -47,6 +49,10 @@ public class Response {
 
     public List<Review> getReviews() {
         return reviews;
+    }
+
+    public List<DataAnime> getData() {
+        return data;
     }
 
     public int getSearchLastPage() {

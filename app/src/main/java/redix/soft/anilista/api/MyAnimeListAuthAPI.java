@@ -1,14 +1,9 @@
 package redix.soft.anilista.api;
 
-import redix.soft.anilista.model.Response;
 import redix.soft.anilista.model.Token;
-import redix.soft.anilista.model.TokenHeader;
-import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
-import retrofit2.http.GET;
 import retrofit2.http.POST;
-import retrofit2.http.Query;
 import rx.Single;
 
 public interface MyAnimeListAuthAPI {

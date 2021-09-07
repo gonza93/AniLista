@@ -14,8 +14,6 @@
     <color name="colorFillerText">#e17f5b</color>
     <color name="colorBorder">#9ec6c6c6</color>
     <color name="colorBackground">#bedcdcdc</color>
-    <color name="colorBackSeiyu">#ededed</color>
-    <color name="colorDim">#80505050</color>
     <color name="colorGray">#A0A0A0</color>
     <color name="colorGray2">#AFAFAF</color>
     <color name="colorGrayText">#8A8A8A</color>
@@ -28,9 +26,6 @@
     <color name="colorPri">#4876FF</color>
 
     <color name="colorTranslucentBar">#B3FFFFFF</color>
-
-    <color name="tab_selected">@android:color/white</color>
-    <color name="tab_unselected">@android:color/black</color>
 
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorBlack">#000000</color>

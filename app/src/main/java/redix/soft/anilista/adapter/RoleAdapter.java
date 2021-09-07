@@ -22,6 +22,7 @@ import redix.soft.anilista.databinding.ListRoleStaffBinding;
 import redix.soft.anilista.databinding.ListRoleStaffLabelBinding;
 import redix.soft.anilista.databinding.ListSeiyuHeaderBinding;
 import redix.soft.anilista.dialog.InfoDialog;
+import redix.soft.anilista.fragment.AnimeFragment;
 import redix.soft.anilista.listener.ItemClickListener;
 import redix.soft.anilista.model.Role;
 import redix.soft.anilista.databinding.ListRoleBinding;
@@ -70,6 +71,7 @@ public class RoleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
             Bundle args = new Bundle();
             args.putString("text", seiyu.getAbout());
+            args.putBoolean("seiyu", true);
             infoDialog.setArguments(args);
 
             infoDialog.show(((MainActivity) context).getSupportFragmentManager(), InfoDialog.TAG);
@@ -99,9 +101,14 @@ public class RoleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             mBinding.executePendingBindings();
         }
 
+        public void setItemClickListener(ItemClickListener listener){
+            mBinding.getRoot().setOnClickListener(this);
+            this.listener = listener;
+        }
+
         @Override
         public void onClick(View v) {
-
+            listener.onItemClick(roles.get(getAdapterPosition() - 1));
         }
     }
 
@@ -141,8 +148,20 @@ public class RoleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull  RecyclerView.ViewHolder holder, int position) {
-        if(holder instanceof ViewHolder)
-            ((ViewHolder) holder).bind(roles.get(position - 1));
+        if(holder instanceof ViewHolder) {
+            ViewHolder viewHolder = (ViewHolder) holder;
+            viewHolder.bind(roles.get(position - 1));
+            viewHolder.setItemClickListener(new ItemClickListener() {
+                @Override
+                public void onItemClick(Role role) {
+                    AnimeFragment animeFragment = new AnimeFragment();
+                    animeFragment.setAnimeId(role.getAnime().getId());
+
+                    ((MainActivity) context).loadFragment(animeFragment, AnimeFragment.TAG);
+                }
+            });
+        }
+
         else if(holder instanceof ViewHeaderHolder)
             ((ViewHeaderHolder) holder).bind(seiyu);
     }

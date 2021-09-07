@@ -136,8 +136,8 @@ public class NavigationUtil {
         activity.getToolbarSaveButton().setVisibility(View.GONE);
         activity.getToolbarFilters().setVisibility(View.GONE);
 
-        if (pastFragment != null){
-            if (pastFragment instanceof ListFragment){
+        if (pastFragment != null) {
+            if (pastFragment instanceof ListFragment) {
                 if (((ListFragment) pastFragment).getType().equals(ListFragment.TYPES.EPISODES)) {
                     activity.getTogglesView().setBackgroundResource(R.drawable.bg_search);
                     activity.getTogglesView().setTextColor(ContextCompat.getColor(activity, R.color.colorPrimary));
@@ -146,17 +146,9 @@ public class NavigationUtil {
             }
         }
 
-        if(fragment instanceof HomeFragment) {
-            if (fragmentStacks.get(TAB.HOME).size() == 1 ) {
-                backButton.setImageResource(R.mipmap.ic_launcher_image);
-                backButton.setVisibility(View.VISIBLE);
-                activity.getToolbarTitleView().setText(R.string.app_name);
-            }
-        }
+        activity.resetFiltersLayout();
 
         if (fragment instanceof UserFragment) {
-            activity.getFiltersClear().setVisibility(View.VISIBLE);
-            activity.resetFiltersLayout();
             activity.getFiltersScoreLayout().setVisibility(View.GONE);
             activity.getFiltersLayoutGenre().setVisibility(View.GONE);
             activity.getToolbarTitleView().setVisibility(View.VISIBLE);
@@ -201,10 +193,10 @@ public class NavigationUtil {
             tag = fragmentStacks.get(TAB.HOME).peek().getTag();
             fragment = fragmentStacks.get(TAB.HOME).peek();
             if (fragment instanceof HomeFragment)
-                activity.getToolbarConfig().setVisibility(View.VISIBLE);
+                activity.getToolbarConfigLayout().setVisibility(View.VISIBLE);
         }
         else if (!tag.equals(HomeFragment.TAG))
-            activity.getToolbarConfig().setVisibility(View.GONE);
+            activity.getToolbarConfigLayout().setVisibility(View.GONE);
 
         if(tag.equals(SearchFragment.TAG) && fragmentStacks.get(TAB.SEARCH).size() > 0) {
             tag = fragmentStacks.get(TAB.SEARCH).peek().getTag();
@@ -223,8 +215,8 @@ public class NavigationUtil {
                 activity.getTogglesView().setVisibility(View.VISIBLE);
 
             if (listFragment.getType().equals(ListFragment.TYPES.GENRE)) {
-                activity.getFiltersClear().setVisibility(View.GONE);
                 activity.getToolbarGenre().setVisibility(View.VISIBLE);
+                activity.getFiltersClear().setVisibility(View.GONE);
                 activity.getFiltersScoreLayout().setVisibility(View.GONE);
                 activity.getFiltersLayoutOrderParent().setVisibility(View.GONE);
                 activity.getFiltersLayoutSortParent().setVisibility(View.GONE);
@@ -248,19 +240,20 @@ public class NavigationUtil {
                 title = activity.getString(R.string.viewing_order);
         }
 
-        if(fragment instanceof SearchFragment)
-            activity.showSearchBar();
         if(fragment instanceof AnimeFragment)
             activity.getToolbarTitleView().setText(AnimeFragment.TAG);
         if(fragment instanceof UserListFragment) {
-            activity.getFiltersClear().setVisibility(View.VISIBLE);
-            activity.resetFiltersLayout();
             activity.getFiltersScoreLayout().setVisibility(View.GONE);
             activity.getFiltersLayoutGenre().setVisibility(View.GONE);
+            activity.getFiltersLayoutOrder().findViewWithTag("end_date").setVisibility(View.GONE);
+            activity.getFiltersLayoutOrder().findViewWithTag("type").setVisibility(View.GONE);
+            activity.getFiltersLayoutOrder().findViewWithTag("episodes").setVisibility(View.GONE);
+            activity.getFiltersLayoutOrder().findViewWithTag("update_date").setVisibility(View.VISIBLE);
+            activity.getFiltersLayoutSort().setEnabled(false);
             activity.getToolbarTitleView().setVisibility(View.VISIBLE);
             activity.getToolbarSaveButton().setVisibility(View.GONE);
             activity.getSearchBar().setVisibility(View.VISIBLE);
-            activity.getSearchBarLayout().setVisibility(View.INVISIBLE);
+            activity.getSearchBarLayout().setVisibility(View.GONE);
             activity.getToolbarFilters().setVisibility(View.VISIBLE);
         }
         if(fragment instanceof SeiyuFragment){
@@ -272,6 +265,14 @@ public class NavigationUtil {
         }
 
         activity.getToolbarTitleView().setText(title);
+
+        if(fragment instanceof HomeFragment) {
+            activity.getToolbarTitleView().setVisibility(View.GONE);
+            activity.getHomeLogo().setVisibility(View.VISIBLE);
+            activity.getBackButton().setVisibility(View.GONE);
+        }
+        else
+            activity.getHomeLogo().setVisibility(View.GONE);
     }
 
     public Fragment getCurrentPage(){

@@ -11,6 +11,9 @@ import android.view.ViewGroup;
 
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import redix.soft.anilista.R;
@@ -23,7 +26,14 @@ public class UserListFragment extends Fragment {
     @BindView(R.id.user_viewpager) ViewPager viewPager;
     @BindView(R.id.user_list_tabs) SmartTabLayout tabLayout;
     private String username;
+    private HashMap<String, String> userListParams;
+
     public void setUsername(String username) { this.username = username; }
+
+    public void clearParams(){
+        userListParams.clear();
+    }
+    public Map<String, String> getParams() { return userListParams; }
 
     @Nullable
     @Override
@@ -34,7 +44,7 @@ public class UserListFragment extends Fragment {
 
         ListPagerAdapter pagerAdapter = new ListPagerAdapter(getContext(), getChildFragmentManager(), username);
 
-        viewPager.setOffscreenPageLimit(1);
+        viewPager.setOffscreenPageLimit(3);
         viewPager.setAdapter(pagerAdapter);
         tabLayout.setViewPager(viewPager);
 
@@ -49,6 +59,16 @@ public class UserListFragment extends Fragment {
         listFragment.setOrderBy(order);
         listFragment.setSort(sort);
 
+        listFragment.fetchUserList();
+    }
+
+    public void fetchUserList(String sort) {
+        ListPagerAdapter adapter = (ListPagerAdapter) viewPager.getAdapter();
+        ListFragment listFragment = (ListFragment) adapter.getItem(viewPager.getCurrentItem());
+
+        listFragment.getParams().put("offset", "0");
+        listFragment.getParams().put("sort", sort);
+        listFragment.clearUserList();
         listFragment.fetchUserList();
     }
 }

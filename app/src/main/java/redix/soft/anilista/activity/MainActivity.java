@@ -46,6 +46,7 @@ import butterknife.OnTextChanged;
 import redix.soft.anilista.R;
 import redix.soft.anilista.adapter.GenreAdapter;
 import redix.soft.anilista.dialog.BottomDialogFragment;
+import redix.soft.anilista.dialog.InfoDialog;
 import redix.soft.anilista.fragment.HomeFragment;
 import redix.soft.anilista.fragment.ListFragment;
 import redix.soft.anilista.fragment.SearchFragment;
@@ -70,6 +71,7 @@ public class MainActivity extends AppCompatActivity
     @BindView(R.id.container) CoordinatorLayout coordinatorLayout;
     @BindView(R.id.appbar) LinearLayout toolbar;
     @BindView(R.id.toolbar_title) TextView toolbarTitle;
+    @BindView(R.id.home_logo) View homeLogo;
     @BindView(R.id.search_bar) View searchBar;
     @BindView(R.id.search_bar_input) EditText editSearchInput;
     @BindView(R.id.search_bar_layout) View searchBarLayout;
@@ -79,8 +81,8 @@ public class MainActivity extends AppCompatActivity
     @BindView(R.id.toolbar_filters) View filters;
     @BindView(R.id.toolbar_save) ImageView saveButton;
     @BindView(R.id.toolbar_active_genre) TextView toolbarGenre;
-    @BindView(R.id.toolbar_config) ImageView toolbarConfig;
     @BindView(R.id.toolbar_search) ImageView toolbarSearch;
+    @BindView(R.id.toolbar_config_layout) View toolbarConfigLayout;
 
     @BindView(R.id.filters) View filterDialog;
     @BindView(R.id.filters_scroll) NestedScrollView filters_scroll;
@@ -98,7 +100,8 @@ public class MainActivity extends AppCompatActivity
 
     public LinearLayout getToolbar() { return toolbar; }
     public TextView getToolbarTitleView() { return toolbarTitle; }
-    public ImageView getToolbarConfig() { return toolbarConfig; }
+    public View getToolbarConfigLayout() { return toolbarConfigLayout; }
+    public View getHomeLogo() { return homeLogo; }
     public ImageView getBackbuttonView() { return backbutton; }
     public TextView getTogglesView() { return toggles; }
     public TextView getToolbarGenre() { return toolbarGenre; }
@@ -109,7 +112,13 @@ public class MainActivity extends AppCompatActivity
     public ImageView getToolbarSaveButton() { return saveButton; }
     public View getFiltersScoreLayout() { return filtersScoreLayout; }
     public View getFiltersLayoutOrderParent() { return filtersLayoutOrderParent; }
+    public LinearLayout getFiltersLayoutOrder() {
+        return filtersLayoutOrder;
+    }
     public View getFiltersLayoutSortParent() { return filtersLayoutSortParent; }
+    public LinearLayout getFiltersLayoutSort() {
+        return filtersLayoutSort;
+    }
     public View getSearchBarLayout() { return searchBarLayout; }
     public View getSearchBar() { return searchBar; }
     public View getBackButton() { return backbutton; }
@@ -120,6 +129,13 @@ public class MainActivity extends AppCompatActivity
         filtersScoreLayout.setVisibility(View.VISIBLE);
         filtersLayoutOrderParent.setVisibility(View.VISIBLE);
         filtersLayoutSortParent.setVisibility(View.VISIBLE);
+        filtersClear.setVisibility(View.VISIBLE);
+        filtersLayoutGenre.setVisibility(View.VISIBLE);
+        filtersLayoutOrder.findViewWithTag("end_date").setVisibility(View.VISIBLE);
+        filtersLayoutOrder.findViewWithTag("type").setVisibility(View.VISIBLE);
+        filtersLayoutOrder.findViewWithTag("episodes").setVisibility(View.VISIBLE);
+        filtersLayoutOrder.findViewWithTag("update_date").setVisibility(View.GONE);
+        getFiltersLayoutSort().setEnabled(true);
     }
 
     @Override
@@ -140,6 +156,18 @@ public class MainActivity extends AppCompatActivity
         toolbarColor();
         initFilters();
         initSaveButton();
+
+        if (DataUtil.getInstance(this).showSupport()) {
+            InfoDialog infoDialog = new InfoDialog();
+            infoDialog.setLayout(R.layout.dialog_support);
+
+            Bundle args = new Bundle();
+            args.putString("text", getString(R.string.support_text));
+            args.putBoolean("seiyu", false);
+            infoDialog.setArguments(args);
+
+            infoDialog.show(getSupportFragmentManager(), InfoDialog.TAG);
+        }
     }
 
     private void toolbarColor(){
@@ -156,13 +184,10 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
         if(item.getItemId() == navigation.getSelectedItemId())
             return true; //TODO GO TO TOP
 
         Fragment fragment = navigationUtil.getTopFragmentFromTab(item.getItemId());
-
-
 
         switch (item.getItemId()) {
             case R.id.navigation_home:
@@ -216,10 +241,10 @@ public class MainActivity extends AppCompatActivity
     @OnTextChanged(value = R.id.search_bar_input, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void onTextChangedSearch(Editable editable) {
         Fragment fragment = navigationUtil.getCurrentPage();
-        String query = editable.toString();
-
         if (fragment instanceof SearchFragment)
             return;
+
+        String query = editable.toString();
 
         if (fragment instanceof ListFragment) {
             ListFragment listFragment = ((ListFragment) fragment);
@@ -350,10 +375,7 @@ public class MainActivity extends AppCompatActivity
 
     @OnClick(R.id.toolbar_filters)
     public void onClickToolbarFilters(){
-        Fragment fragment = navigationUtil.getCurrentPage();
-
-        if (fragment instanceof SearchFragment || fragment instanceof UserFragment)
-            BottomSheetBehavior.from(filterDialog).setState(BottomSheetBehavior.STATE_EXPANDED);
+        BottomSheetBehavior.from(filterDialog).setState(BottomSheetBehavior.STATE_EXPANDED);
     }
 
     @OnClick(R.id.filters_main_button)
@@ -378,7 +400,9 @@ public class MainActivity extends AppCompatActivity
         }
         else if (navigationUtil.getCurrentPage() instanceof SearchFragment){
             SearchFragment fragment = ((SearchFragment) navigationUtil.getCurrentPage());
+            Map<String, String> params = fragment.getSearchParams();
 
+            //Genre
             String selectedGenres = "";
             for(Genre genre : filterGenres)
                 if (genre.isSelected())
@@ -386,13 +410,19 @@ public class MainActivity extends AppCompatActivity
 
             selectedGenres = !selectedGenres.equals("") ? selectedGenres.substring(0, selectedGenres.length() - 1) : "";
 
-            //Genre
-            Map<String, String> params = fragment.getSearchParams();
-            params.put("q", editSearchInput.getText().toString());
-            if(!selectedGenres.equals(""))
+            if(!selectedGenres.equals("")) {
                 params.put("genre", selectedGenres);
+                params.put("genre_exclude", "0");
+            }
+            else {
+                params.put("genre", "12");
+                params.put("genre_exclude", "1");
+            }
+
+            if (!editSearchInput.getText().toString().isEmpty())
+                params.put("q", editSearchInput.getText().toString());
             else
-                params.remove("genre");
+                params.remove("q");
 
             //Scores
             if(!filterScore.getText().toString().equals(getString(R.string.filters_score)))
@@ -417,15 +447,30 @@ public class MainActivity extends AppCompatActivity
                 setFilterState(BottomSheetBehavior.STATE_HIDDEN);
             }
         }
-        else if (navigationUtil.getCurrentPage() instanceof UserListFragment){
+        else if (navigationUtil.getCurrentPage() instanceof UserListFragment) {
             //Order
-            String order = lastSelectedOrderView.getTag().toString();
+            String sort = lastSelectedOrderView.getTag().toString();
+
+            switch (sort.toLowerCase()) {
+                case "score":
+                    sort = "list_score";
+                    break;
+                case "update_date":
+                    sort = "list_updated_at";
+                    break;
+                case "title":
+                    sort = "anime_title";
+                    break;
+                case "start_date":
+                    sort = "anime_start_date";
+                    break;
+            }
 
             //Sort
-            View viewAsc = filtersLayoutSort.getChildAt(0);
-            String sort = viewAsc.isSelected()? "asc" : "desc";
+            //View viewAsc = filtersLayoutSort.getChildAt(0);
+            //String sort = viewAsc.isSelected()? "asc" : "desc";
 
-            ((UserListFragment) navigationUtil.getCurrentPage()).fetchUserList(order, sort);
+            ((UserListFragment) navigationUtil.getCurrentPage()).fetchUserList(sort);
             setFilterState(BottomSheetBehavior.STATE_COLLAPSED);
         }
         else
@@ -529,6 +574,16 @@ public class MainActivity extends AppCompatActivity
         if (navigationUtil.getCurrentPage() instanceof HomeFragment) {
             BottomDialogFragment bottomDialog = new BottomDialogFragment();
             bottomDialog.show(getSupportFragmentManager(), "ConfigDialog");
+        }
+    }
+
+    @OnClick(R.id.toolbar_support)
+    public void onClickToolbarSupport() {
+        if (navigationUtil.getCurrentPage() instanceof HomeFragment) {
+            String presentationUrl = getString(R.string.support_link);
+            Uri uriAuthURL = Uri.parse(presentationUrl);
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, uriAuthURL);
+            startActivity(browserIntent);
         }
     }
 

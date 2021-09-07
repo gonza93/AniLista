@@ -1,5 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="app/src/main/res/drawable/bg_rounded.xml" value="0.2851851851851852" />
+        <entry key="app/src/main/res/drawable/bg_search.xml" value="0.2851851851851852" />
+        <entry key="app/src/main/res/drawable/track_custom.xml" value="0.2851851851851852" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/dialog_filters.xml" value="0.15070921985815602" />
+        <entry key="app/src/main/res/layout/dialog_info.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/dialog_support.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/fragment_anime.xml" value="0.15070921985815602" />
+        <entry key="app/src/main/res/layout/fragment_user.xml" value="0.15070921985815602" />
+        <entry key="app/src/main/res/layout/include_related.xml" value="0.15070921985815602" />
+        <entry key="app/src/main/res/layout/include_reload.xml" value="0.15070921985815602" />
+        <entry key="app/src/main/res/layout/list_anime.xml" value="0.15070921985815602" />
+        <entry key="app/src/main/res/layout/list_related.xml" value="0.15070921985815602" />
+        <entry key="app/src/main/res/layout/list_user_header.xml" value="0.15070921985815602" />
+        <entry key="app/src/main/res/layout/list_user_list.xml" value="0.15070921985815602" />
+        <entry key="app/src/main/res/menu/navigation.xml" value="0.3098958333333333" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_banner.xml" value="0.1" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1609375" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1609375" />
+      </map>
+    </option>
+  </component>
   <component name="NullableNotNullManager">
     <option name="myDefaultNullable" value="android.support.annotation.Nullable" />
     <option name="myDefaultNotNull" value="android.support.annotation.NonNull" />
@@ -25,7 +50,7 @@
     </option>
     <option name="myNotNulls">
       <value>
-        <list size="13">
+        <list size="14">
           <item index="0" class="java.lang.String" itemvalue="org.jetbrains.annotations.NotNull" />
           <item index="1" class="java.lang.String" itemvalue="javax.annotation.Nonnull" />
           <item index="2" class="java.lang.String" itemvalue="edu.umd.cs.findbugs.annotations.NonNull" />
@@ -39,11 +64,12 @@
           <item index="10" class="java.lang.String" itemvalue="org.eclipse.jdt.annotation.NonNull" />
           <item index="11" class="java.lang.String" itemvalue="io.reactivex.annotations.NonNull" />
           <item index="12" class="java.lang.String" itemvalue="io.reactivex.rxjava3.annotations.NonNull" />
+          <item index="13" class="java.lang.String" itemvalue="lombok.NonNull" />
         </list>
       </value>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="false" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
 </project>

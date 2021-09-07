@@ -52,7 +52,7 @@ public class Genre {
         genres.add(new Genre(9, "Ecchi"));
         genres.add(new Genre(10, "Fantasy"));
         genres.add(new Genre(11, "Game"));
-        genres.add(new Genre(12, "Hentai"));
+        //genres.add(new Genre(12, "Hentai"));
         genres.add(new Genre(13, "Historical"));
         genres.add(new Genre(14, "Horror"));
         genres.add(new Genre(15, "Kids"));

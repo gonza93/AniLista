@@ -36,17 +36,21 @@ public class SearchFragment extends Fragment {
     private HashMap<String, String> searchParams;
 
     public void setQuery(String query) {
-        searchParams.put("q", query);
+        if (!query.isEmpty())
+            searchParams.put("q", query);
+        else
+            searchParams.remove("q");
     }
+
     public HashMap<String, String> getSearchParams() {
         return searchParams;
     }
     public void clearSearchParams(){
-        String q = searchParams.get("q");
         searchParams.clear();
-        searchParams.put("q", q);
         searchParams.put("page", "1");
         searchParams.put("limit", "30");
+        searchParams.put("genre", "12");
+        searchParams.put("genre_exclude", "1");
     }
     public void setListPaddingBottom(int padding){
         this.listAnime.setPadding(0, 0, 0, padding);
@@ -74,6 +78,8 @@ public class SearchFragment extends Fragment {
         searchParams.put("q", "Air");
         searchParams.put("page", "1");
         searchParams.put("limit", "30");
+        searchParams.put("genre", "12");
+        searchParams.put("genre_exclude", "1");
 
         searchAnime();
 

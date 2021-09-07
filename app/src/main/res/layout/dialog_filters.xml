@@ -231,6 +231,22 @@
                             android:background="@drawable/drawable_genre"/>
 
                         <TextView
+                            android:tag="update_date"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/filters_order_updatedate"
+                            android:textColor="@color/colorGrayText"
+                            android:textSize="16sp"
+                            android:paddingStart="10dp"
+                            android:paddingEnd="10dp"
+                            android:paddingTop="4dp"
+                            android:paddingBottom="4dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginStart="20dp"
+                            android:onClick="onClickFiltersOrderBy"
+                            android:background="@drawable/drawable_genre"/>
+
+                        <TextView
                             android:tag="score"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -321,7 +337,6 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/filters_asc"
                             android:tag="ascending"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"

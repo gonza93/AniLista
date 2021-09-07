@@ -4,6 +4,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
 import androidx.databinding.BindingAdapter;
 
 import com.google.gson.annotations.SerializedName;
@@ -44,8 +45,14 @@ public class AnimeStatus {
         this.score = score;
     }
 
-    public String getEpisodesWatched() {
-        return "Ep: " + episodesWatched + "/" + episodes;
+    public int getEpisodesWatched() {
+        return episodesWatched;
+    }
+    public String getEpisodesWatchedByTotal() {
+        if (episodes >= 100)
+            return episodesWatched + "/" + episodes;
+        else
+            return "Ep: " + episodesWatched + "/" + episodes;
     }
     public int getEpisodesWatchedInt() { return episodesWatched; }
 
@@ -108,6 +115,40 @@ public class AnimeStatus {
                 break;
             default:
                 view.setBackgroundResource(R.drawable.bg_button_green);
+                break;
+        }
+    }
+
+    @BindingAdapter("setAnimeStatus")
+    public static void setAnimeStatus(TextView view, String status) {
+        if (status == null)
+            return;
+
+        switch (status){
+            case "Watching":
+                view.setBackgroundResource(R.drawable.bg_canon);
+                view.setTextColor(ContextCompat.getColor(view.getContext(), R.color.colorCanonText));
+                view.setText(R.string.watching);
+                break;
+            case "Completed":
+                view.setBackgroundResource(R.drawable.bg_primary);
+                view.setTextColor(ContextCompat.getColor(view.getContext(), R.color.colorPrimary));
+                view.setText(R.string.completed);
+                break;
+            case "On hold":
+                view.setBackgroundResource(R.drawable.bg_yellow);
+                view.setTextColor(ContextCompat.getColor(view.getContext(), R.color.colorYellowText));
+                view.setText(R.string.on_hold);
+                break;
+            case "Dropped":
+                view.setBackgroundResource(R.drawable.bg_red);
+                view.setTextColor(ContextCompat.getColor(view.getContext(), R.color.colorRedText));
+                view.setText(R.string.dropped);
+                break;
+            case "Plan to watch":
+                view.setBackgroundResource(R.drawable.bg_gray);
+                view.setTextColor(ContextCompat.getColor(view.getContext(), R.color.colorGrayText));
+                view.setText(R.string.plan_to_watch);
                 break;
         }
     }

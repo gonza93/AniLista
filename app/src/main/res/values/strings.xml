@@ -12,10 +12,9 @@
     <string name="toggle_episodes">Filter</string>
 
     <!-- Search -->
-    <string name="search_username">Enter username</string>
     <string name="search_bar_text">Search for anime, manga, etc.</string>
-    <string name="search_not_found">We couldn\'t find what you were looking for.</string>
-    <string name="search_not_found_sub">Our chakra is not enough yet...</string>
+    <string name="search_not_found">I couldn\'t find what you were looking for.</string>
+    <string name="search_not_found_sub">My chakra is not enough yet...</string>
     <string name="search_characters">Search characters...</string>
     <string name="search_roles">Search roles...</string>
 
@@ -30,7 +29,6 @@
     <string name="genres">Genres</string>
 
     <!-- Anime Detail -->
-    <string name="anime_detail_title">Anime Details</string>
     <string name="loading_message_anime">Loading anime detail…</string>
     <string name="episodes">ep.</string>
     <string name="ranked">Ranked:</string>
@@ -46,7 +44,6 @@
     <string name="canon">Canon</string>
     <string name="filler">Filler</string>
     <string name="recap">Recap</string>
-    <string name="news">Recent News</string>
     <string name="related">Related</string>
     <string name="recommendations">Recommendations</string>
     <string name="reviews">Reviews</string>
@@ -87,6 +84,7 @@
     <string name="filters_order_title">Title</string>
     <string name="filters_order_startdate">Start Date</string>
     <string name="filters_order_enddate">End Date</string>
+    <string name="filters_order_updatedate">Update Date</string>
     <string name="filters_order_score">Score</string>
     <string name="filters_order_type">Type</string>
     <string name="filters_order_episodes">Episodes</string>
@@ -107,9 +105,7 @@
     <string name="people">People</string>
     <string name="user_score_format">%.0f</string>
     <string name="user_intro_label">Enter your MAL user above to see all your info.</string>
-    <string name="user_save_1">Save as current user</string>
-    <string name="user_save_2">Current user</string>
-    <string name="user_not_found">We couldn\'t find the user.</string>
+    <string name="user_not_found">I couldn\'t find the user.</string>
     <string name="user_intro_label_sub">Here you can see your MAL user</string>
 
     <!-- List -->
@@ -121,7 +117,9 @@
     <!-- Misc -->
     <string name="preference_file_key">.PREFERENCE_FILE_KEY</string>
     <string name="fetch_error">Couldn\'t fetch data.</string>
-    <string name="fetch_error_label">Our power level is under 9000.</string>
+    <string name="fetch_error_label">My power level is under 9000.</string>
+    <string name="manga_module">Manga List is still in development.</string>
+    <string name="stats_module">Anime statistics is still in development.</string>
 
     <!-- Config -->
     <string name="config_dark_mode_on">Dark Mode On</string>
@@ -154,5 +152,12 @@
         <item>(1) Appalling</item>
         <item>-- No Score --</item>
     </string-array>
+
+    <!-- Support Dialog -->
+    <string name="support_text">If you liked the app please click the \'Yes!\' button to support the project!\n I will really appreciate it!</string>
+    <string name="support_link">https://redixsoft.wixsite.com/anilista</string>
+    <string name="support_dont_show">Don\'t show this anymore</string>
+    <string name="support_yes">Yes!</string>
+    <string name="support_close">Close</string>
 
 </resources>

@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import redix.soft.anilista.R;
 import redix.soft.anilista.activity.MainActivity;
@@ -44,6 +45,14 @@ public class UserAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                 fragment.setUsername(user.getUsername());
 
                 ((MainActivity) context).loadFragment(fragment, UserListFragment.TAG);
+            });
+
+            mBinding.getRoot().findViewById(R.id.user_btn_manga_list).setOnClickListener(view -> {
+                Toast.makeText(context, R.string.manga_module, Toast.LENGTH_SHORT).show();
+            });
+
+            mBinding.getRoot().findViewById(R.id.user_btn_anime_stats).setOnClickListener(view -> {
+                Toast.makeText(context, R.string.stats_module, Toast.LENGTH_SHORT).show();
             });
         }
 

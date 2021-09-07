@@ -1,38 +1,27 @@
-
 package redix.soft.anilista.adapter;
 
 import android.content.Context;
-import androidx.databinding.DataBindingUtil;
-import androidx.databinding.ViewDataBinding;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
+import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ViewDataBinding;
+import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.List;
 
 import redix.soft.anilista.R;
 import redix.soft.anilista.activity.MainActivity;
-import redix.soft.anilista.databinding.ListAiringBinding;
-import redix.soft.anilista.databinding.ListAnimeBinding;
-import redix.soft.anilista.databinding.ListAnimeDayBinding;
-import redix.soft.anilista.databinding.ListAnimeGenreBinding;
-import redix.soft.anilista.databinding.ListFavoritesBinding;
-import redix.soft.anilista.databinding.ListRelatedBinding;
-import redix.soft.anilista.databinding.ListRelatedOrderBinding;
 import redix.soft.anilista.databinding.ListUserListBinding;
 import redix.soft.anilista.fragment.AnimeFragment;
 import redix.soft.anilista.listener.ItemClickListener;
-import redix.soft.anilista.model.Anime;
 import redix.soft.anilista.model.DataAnime;
-import redix.soft.anilista.model.Genre;
 
-public class AnimeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+public class UserAnimeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
-    private List<Anime> animes;
+    private List<DataAnime> animes;
     private Context context;
 
     private int layout;
@@ -40,7 +29,7 @@ public class AnimeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private static final int TYPE_ITEM = 0;
     private static final int TYPE_PROGRESS = 1;
 
-    public AnimeAdapter(List<Anime> animes, Context context, int layout){
+    public UserAnimeListAdapter(List<DataAnime> animes, Context context, int layout){
         this.animes = animes;
         this.context = context;
         this.layout = layout;
@@ -56,31 +45,9 @@ public class AnimeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             mBinding = binding;
         }
 
-        public void bind(Anime anime) {
-            if (layout == R.layout.list_anime)
-                ((ListAnimeBinding) mBinding).setAnime(anime);
-            if (layout == R.layout.list_airing)
-                ((ListAiringBinding) mBinding).setAnime(anime);
-            if (layout == R.layout.list_anime_day){
-                ((ListAnimeDayBinding) mBinding).setAnime(anime);
-
-                List<Genre> genres = new ArrayList<>();
-                if(anime.getGenres().size() >= 3)
-                    genres = anime.getGenres().subList(0, 3);
-
-                RecyclerView listGenre = mBinding.getRoot().findViewById(R.id.anime_genre_list);
-                GenreAdapter adapter = new GenreAdapter(genres, context, R.layout.list_genre_2);
-                listGenre.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
-                listGenre.setAdapter(adapter);
-            }
-            if (layout == R.layout.list_related)
-                ((ListRelatedBinding) mBinding).setAnime(anime);
-            if (layout == R.layout.list_related_order)
-                ((ListRelatedOrderBinding) mBinding).setAnime(anime);
-            if (layout == R.layout.list_anime_genre)
-                ((ListAnimeGenreBinding) mBinding).setAnime(anime);
-            if (layout == R.layout.list_favorites)
-                ((ListFavoritesBinding) mBinding).setAnime(anime);
+        public void bind(DataAnime anime){
+            if (layout == R.layout.list_user_list)
+                ((ListUserListBinding) mBinding).setAnime(anime);
 
             mBinding.executePendingBindings();
         }
@@ -122,9 +89,9 @@ public class AnimeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             viewHolder.bind(animes.get(position));
             viewHolder.setItemClickListener(new ItemClickListener() {
                 @Override
-                public void onItemClick(Anime anime) {
+                public void onItemClick(DataAnime anime) {
                     AnimeFragment animeFragment = new AnimeFragment();
-                    animeFragment.setAnimeId(anime.getId());
+                    animeFragment.setAnimeId(anime.getNode().getId());
 
                     ((MainActivity) context).loadFragment(animeFragment, AnimeFragment.TAG);
                 }
@@ -137,23 +104,13 @@ public class AnimeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         return animes == null? 0 : animes.size();
     }
 
-    public void setDataSet(List<Anime> anime) {
+    public void setDataSet(List<DataAnime> anime) {
         this.animes = anime;
         notifyDataSetChanged();
     }
 
-    public void addAnime(Anime anime){
-        this.animes.add(anime);
-        notifyDataSetChanged();
-    }
-
-    public void addAnime(List<Anime> anime){
+    public void addAnime(List<DataAnime> anime){
         this.animes.addAll(anime);
-        notifyDataSetChanged();
-    }
-
-    public void putAnime(Anime anime){
-        this.animes.add(0, anime);
         notifyDataSetChanged();
     }
 

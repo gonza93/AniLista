@@ -24,7 +24,7 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="imagePath" value="/private/var/folders/hv/nhkqpp616850ctt5dfj_n_qh0000gn/T/baseline_photo_filter_24.xml" />
+                                                <entry key="imagePath" value="/private/var/folders/hv/nhkqpp616850ctt5dfj_n_qh0000gn/T/baseline_contact_support_24.xml" />
                                                 <entry key="opacityPercent" value="80" />
                                               </map>
                                             </option>
@@ -36,7 +36,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="url" value="jar:file:/Applications/Android%20Studio.app/Contents/plugins/android/lib/android.jar!/images/material/icons/materialicons/photo_filter/baseline_photo_filter_24.xml" />
+                                                <entry key="url" value="jar:file:/Applications/Android%20Studio.app/Contents/plugins/android/lib/android.jar!/images/material/icons/materialicons/contact_support/baseline_contact_support_24.xml" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -48,7 +48,7 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="imagePath" value="$USER_HOME$/Desktop/ic_main.png" />
+                                                <entry key="imagePath" value="$USER_HOME$/Downloads/Standard Logo Files/Original on Transparent.png" />
                                                 <entry key="opacityPercent" value="80" />
                                               </map>
                                             </option>
@@ -81,10 +81,10 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="imageAsset" value="$USER_HOME$/Desktop/ic_main.png" />
-                                      <entry key="outputName" value="ic_star" />
+                                      <entry key="imageAsset" value="$USER_HOME$/Downloads/Standard Logo Files/Original on Transparent.png" />
+                                      <entry key="outputName" value="ic_support" />
                                       <entry key="theme" value="CUSTOM" />
-                                      <entry key="themeColor" value="ffff00" />
+                                      <entry key="themeColor" value="000000" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -100,6 +100,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
+                                                <entry key="color" value="000000" />
                                                 <entry key="imagePath" value="/private/var/folders/hv/nhkqpp616850ctt5dfj_n_qh0000gn/T/ic_android_black_24dp.xml" />
                                               </map>
                                             </option>
@@ -112,8 +113,8 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="imagePath" value="$USER_HOME$/Downloads/icons8-sparkling-96.png" />
-                                                <entry key="scalingPercent" value="52" />
+                                                <entry key="imagePath" value="$USER_HOME$/Pictures/AniLista/Standard Logo Files v2/Original v3.png" />
+                                                <entry key="scalingPercent" value="77" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -181,7 +182,7 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="imagePath" value="$USER_HOME$/Downloads/icons8-sparkling-96.png" />
+                                                <entry key="imagePath" value="$USER_HOME$/Downloads/Standard Logo Files/Original on Transparent.png" />
                                                 <entry key="trimmed" value="true" />
                                               </map>
                                             </option>
@@ -214,10 +215,11 @@
                                   </option>
                                   <option name="values">
                                     <map>
+                                      <entry key="assetType" value="IMAGE" />
                                       <entry key="cropped" value="true" />
                                       <entry key="iconShape" value="NONE" />
-                                      <entry key="imageAsset" value="$USER_HOME$/Downloads/icons8-sparkling-96.png" />
-                                      <entry key="outputName" value="ic_stars" />
+                                      <entry key="imageAsset" value="$USER_HOME$/Downloads/Standard Logo Files/Original on Transparent.png" />
+                                      <entry key="outputName" value="ic_launcher_title" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -272,6 +274,17 @@
                                 <PersistentState>
                                   <option name="children">
                                     <map>
+                                      <entry key="foregroundImage">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="imagePath" value="$USER_HOME$/Downloads" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
                                       <entry key="foregroundText">
                                         <value>
                                           <PersistentState>
