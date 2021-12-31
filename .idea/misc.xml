@@ -7,10 +7,13 @@
         <entry key="app/src/main/res/drawable/bg_search.xml" value="0.2851851851851852" />
         <entry key="app/src/main/res/drawable/track_custom.xml" value="0.2851851851851852" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/custom_tab.xml" value="0.18614130434782608" />
         <entry key="app/src/main/res/layout/dialog_filters.xml" value="0.15070921985815602" />
         <entry key="app/src/main/res/layout/dialog_info.xml" value="0.25" />
         <entry key="app/src/main/res/layout/dialog_support.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_anime.xml" value="0.15070921985815602" />
+        <entry key="app/src/main/res/layout/fragment_list.xml" value="0.18614130434782608" />
+        <entry key="app/src/main/res/layout/fragment_pager.xml" value="0.18614130434782608" />
         <entry key="app/src/main/res/layout/fragment_user.xml" value="0.15070921985815602" />
         <entry key="app/src/main/res/layout/include_related.xml" value="0.15070921985815602" />
         <entry key="app/src/main/res/layout/include_reload.xml" value="0.15070921985815602" />

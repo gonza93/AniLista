@@ -59,12 +59,7 @@ public class InfoDialog extends DialogFragment {
         View infoClose = view.findViewById(R.id.dialog_info_close);
 
         infoText.setText(info);
-        if (isSeiyuInfo) {
-            infoCheck.setVisibility(View.GONE);
-            infoClose.setVisibility(View.GONE);
-            infoYes.setVisibility(View.GONE);
-        }
-        else {
+        if (!isSeiyuInfo) {
             infoCheck.setOnClickListener(v -> {
                 if (infoCheck.isChecked())
                     DataUtil.getInstance(getContext()).saveBoolean(

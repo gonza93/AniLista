@@ -49,8 +49,8 @@ public class SearchFragment extends Fragment {
         searchParams.clear();
         searchParams.put("page", "1");
         searchParams.put("limit", "30");
-        searchParams.put("genre", "12");
-        searchParams.put("genre_exclude", "1");
+        //searchParams.put("genre", "12");
+        //searchParams.put("genre_exclude", "0");
     }
     public void setListPaddingBottom(int padding){
         this.listAnime.setPadding(0, 0, 0, padding);
@@ -78,8 +78,8 @@ public class SearchFragment extends Fragment {
         searchParams.put("q", "Air");
         searchParams.put("page", "1");
         searchParams.put("limit", "30");
-        searchParams.put("genre", "12");
-        searchParams.put("genre_exclude", "1");
+        //searchParams.put("genre", "12");
+        //searchParams.put("genre_exclude", "1");
 
         searchAnime();
 
