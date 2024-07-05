@@ -6,7 +6,7 @@ import java.util.List;
 
 public class ResponseSeiyu {
 
-    @SerializedName(value = "top")
+    @SerializedName(value = "data")
     private List<Seiyu> seiyus;
 
     public List<Seiyu> getSeiyus() {

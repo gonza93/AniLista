@@ -3,6 +3,7 @@ package redix.soft.anilista.api;
 import java.util.Map;
 
 import redix.soft.anilista.model.Anime;
+import redix.soft.anilista.model.Data;
 import redix.soft.anilista.model.ResponseModel;
 import redix.soft.anilista.model.ResponseSeiyu;
 import redix.soft.anilista.model.Seiyu;
@@ -19,7 +20,7 @@ public class JikanService {
 
     public JikanService(){
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://api.jikan.moe/v3/")
+                .baseUrl("https://api.jikan.moe/v4/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
@@ -27,11 +28,11 @@ public class JikanService {
         jikanAPI = retrofit.create(JikanAPI.class);
     }
 
-    public Single<ResponseModel> search(String type, Map<String, String> params){
-        return jikanAPI.search(type, params);
+    public Single<ResponseModel> search(Map<String, String> params){
+        return jikanAPI.search(params);
     }
 
-    public Single<Anime> getAnimeInfo(int id){
+    public Single<Data> getAnimeInfo(int id){
         return jikanAPI.getAnimeInfo(id);
     }
 
@@ -63,8 +64,8 @@ public class JikanService {
         return jikanAPI.getTopAnime(page);
     }
 
-    public Single<ResponseModel> getTopAnime(String subtype, int page){
-        return jikanAPI.getTopAnime(page, subtype);
+    public Single<ResponseModel> getTopAnime(String filter, int page){
+        return jikanAPI.getTopAnime(page, filter);
     }
 
     public Single<ResponseSeiyu> getPopularPeople(int page){

@@ -34,7 +34,7 @@
     <string name="ranked">Ranked:</string>
     <string name="score_format">%.2f</string>
     <string name="aired">Aired:</string>
-    <string name="themes">Songs</string>
+    <string name="songs">Songs</string>
     <string name="episodes_list">Episodes</string>
     <string name="synopsis">Synopsis</string>
     <string name="expand">Expand</string>

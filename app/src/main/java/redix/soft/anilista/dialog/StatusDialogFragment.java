@@ -18,8 +18,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.shawnlin.numberpicker.NumberPicker;
 
-import cn.carbswang.android.numberpickerview.library.NumberPickerView;
 import redix.soft.anilista.R;
 import redix.soft.anilista.api.MyAnimeListService;
 import redix.soft.anilista.model.Anime;
@@ -34,7 +34,7 @@ public class StatusDialogFragment extends BottomSheetDialogFragment implements V
 
     private Anime anime;
     private Spinner spinnerStatus;
-    private NumberPickerView numberPickerView;
+    private NumberPicker numberPickerView;
     private EditText editTextEpisodes;
     private View progress;
     private View saveButton, deleteButton;
@@ -161,7 +161,7 @@ public class StatusDialogFragment extends BottomSheetDialogFragment implements V
 
             String status = spinnerStatus.getSelectedItem().toString();
             episodesWatched = Integer.parseInt(editTextEpisodes.getText().toString());
-            int score = 10 - numberPickerView.getValue();
+            int score = 10 - 1; //numberPickerView.getValue();
 
             status = status.replace(" ", "_").toLowerCase();
 

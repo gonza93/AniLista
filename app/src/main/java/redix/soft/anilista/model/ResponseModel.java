@@ -6,7 +6,7 @@ import java.util.List;
 
 public class ResponseModel {
 
-    @SerializedName(value = "results", alternate = {"top", "recommendations", "anime", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"})
+    @SerializedName(value = "results", alternate = {"top", "data", "recommendations", "anime", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"})
     private List<Anime> animes;
 
     private List<Character> characters;
@@ -18,8 +18,6 @@ public class ResponseModel {
     private List<Picture> pictures;
 
     private List<Review> reviews;
-
-    private List<DataAnime> data;
 
     @SerializedName("last_page")
     private int searchLastPage;
@@ -49,10 +47,6 @@ public class ResponseModel {
 
     public List<Review> getReviews() {
         return reviews;
-    }
-
-    public List<DataAnime> getData() {
-        return data;
     }
 
     public int getSearchLastPage() {

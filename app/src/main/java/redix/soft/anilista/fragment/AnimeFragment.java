@@ -38,9 +38,9 @@ import redix.soft.anilista.model.Anime;
 import redix.soft.anilista.model.Character;
 import redix.soft.anilista.model.Genre;
 import redix.soft.anilista.model.Related;
+import redix.soft.anilista.model.Relation;
 import redix.soft.anilista.model.Review;
 import redix.soft.anilista.util.AnimationUtil;
-import redix.soft.anilista.util.ChipsLayoutManagerHelper;
 import redix.soft.anilista.util.DataUtil;
 import retrofit2.HttpException;
 import rx.android.schedulers.AndroidSchedulers;
@@ -126,7 +126,7 @@ public class AnimeFragment extends Fragment {
 
         //Genres List
         genreAdapter = new GenreAdapter(new ArrayList<>(), getContext(), R.layout.list_genre);
-        genreList.setLayoutManager(ChipsLayoutManagerHelper.build(getContext()));
+        genreList.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         genreList.setAdapter(genreAdapter);
 
         //Characters List
@@ -163,7 +163,9 @@ public class AnimeFragment extends Fragment {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        anime -> {
+                        response -> {
+                            Anime anime = response.getData();
+
                             this.animeBinding.setAnime(anime);
                             List<Genre> genres = anime.getGenres();
                             if(genres.size() > 5)
@@ -206,11 +208,6 @@ public class AnimeFragment extends Fragment {
                         throwable -> {
                             progressStatus.setVisibility(View.GONE);
                             statusLayout.setVisibility(View.VISIBLE);
-
-                            /*HttpException exception = (HttpException) throwable;
-                            if (exception.code() == 401){
-
-                            }*/
                         }
                 );
     }
@@ -296,53 +293,64 @@ public class AnimeFragment extends Fragment {
 
     private void setRelatedList() {
         Anime anime = this.animeBinding.getAnime();
-        Related relatedAnime = anime.getRelated();
 
-        //Adaptation
-        if (relatedAnime.getAdaptation() != null)
-            adaptationList.setAdapter(new AnimeAdapter(relatedAnime.getAdaptation(), getContext(), R.layout.list_related));
-        else
-            adapatationLayout.setVisibility(View.GONE);
-        //Prequel
-        if (relatedAnime.getPrequel() != null)
-            prequelList.setAdapter(new AnimeAdapter(relatedAnime.getPrequel(), getContext(), R.layout.list_related));
-        else
-            prequelLayout.setVisibility(View.GONE);
-        //Sequel
-        if (relatedAnime.getSequel() != null)
-            sequelList.setAdapter(new AnimeAdapter(relatedAnime.getSequel(), getContext(), R.layout.list_related));
-        else
-            sequelLayout.setVisibility(View.GONE);
-        //Summary
-        if (relatedAnime.getSummary() != null)
-            summaryList.setAdapter(new AnimeAdapter(relatedAnime.getSummary(), getContext(), R.layout.list_related));
-        else
-            summaryLayout.setVisibility(View.GONE);
-        //Alternative Version
-        if (relatedAnime.getAlternativeVersion() != null)
-            alternativeList.setAdapter(new AnimeAdapter(relatedAnime.getAlternativeVersion(), getContext(), R.layout.list_related));
-        else
-            alternativeLayout.setVisibility(View.GONE);
-        //Side Story
-        if (relatedAnime.getSideStory() != null)
-            sidestoryList.setAdapter(new AnimeAdapter(relatedAnime.getSideStory(), getContext(), R.layout.list_related));
-        else
-            sidestoryLayout.setVisibility(View.GONE);
-        //Spin-Off
-        if (relatedAnime.getSpinOff() != null)
-            spinoffList.setAdapter(new AnimeAdapter(relatedAnime.getSpinOff(), getContext(), R.layout.list_related));
-        else
-            spinoffLayout.setVisibility(View.GONE);
-        //Character
-        if (relatedAnime.getCharacter() != null)
-            relatedCharacterList.setAdapter(new AnimeAdapter(relatedAnime.getCharacter(), getContext(), R.layout.list_related));
-        else
-            relatedCharacterLayout.setVisibility(View.GONE);
-        //Character
-        if (relatedAnime.getOther() != null)
-            otherList.setAdapter(new AnimeAdapter(relatedAnime.getOther(), getContext(), R.layout.list_related));
-        else
-            otherLayout.setVisibility(View.GONE);
+        for (Relation relation : anime.getRelations()) {
+            AnimeAdapter adapter = new AnimeAdapter(relation.getEntry(), getContext(), R.layout.list_related);
+
+            //Adaptation
+            if (relation.getRelation().equalsIgnoreCase("Adaptation")) {
+                adaptationList.setAdapter(adapter);
+                adapatationLayout.setVisibility(View.VISIBLE);
+            }
+
+            //Prequel
+            if (relation.getRelation().equalsIgnoreCase("Prequel")) {
+                prequelList.setAdapter(adapter);
+                prequelLayout.setVisibility(View.VISIBLE);
+            }
+
+            //Sequel
+            if (relation.getRelation().equalsIgnoreCase("Sequel")) {
+                sequelList.setAdapter(adapter);
+                sequelLayout.setVisibility(View.VISIBLE);
+            }
+
+            //Summary
+            if (relation.getRelation().equalsIgnoreCase("Summary")) {
+                summaryList.setAdapter(adapter);
+                summaryLayout.setVisibility(View.VISIBLE);
+            }
+
+            //Alternative Version
+            if (relation.getRelation().equalsIgnoreCase("Alternative Version")) {
+                alternativeList.setAdapter(adapter);
+                alternativeLayout.setVisibility(View.VISIBLE);
+            }
+
+            //Side Story
+            if (relation.getRelation().equalsIgnoreCase("Side story")) {
+                sidestoryList.setAdapter(adapter);
+                sidestoryLayout.setVisibility(View.VISIBLE);
+            }
+            //Spin-Off
+            if (relation.getRelation().equalsIgnoreCase("Spin-Off")) {
+                spinoffList.setAdapter(adapter);
+                spinoffLayout.setVisibility(View.VISIBLE);
+            }
+
+            //Character
+            if (relation.getRelation().equalsIgnoreCase("Character")) {
+                relatedCharacterList.setAdapter(adapter);
+                relatedCharacterLayout.setVisibility(View.VISIBLE);
+            }
+
+            //Other
+            if (relation.getRelation().equalsIgnoreCase("Other")) {
+                otherList.setAdapter(adapter);
+                otherLayout.setVisibility(View.VISIBLE);
+            }
+        }
+
     }
 
     @OnClick(R.id.anime_status)

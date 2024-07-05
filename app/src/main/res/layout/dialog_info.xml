@@ -1,48 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
+    android:id="@+id/dialog_info_main_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="300dp"
+    android:layout_centerHorizontal="true"
+    android:background="@color/colorSearchBar"
+    android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <LinearLayout
-        android:id="@+id/dialog_info_main_layout"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/bg_rounded"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:fadeScrollbars="false"
+        android:scrollbarSize="11dp"
+        android:scrollbarStyle="insideOverlay"
+        android:scrollbarThumbVertical="@drawable/track_custom">
 
-        <ScrollView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fadeScrollbars="false"
-            android:scrollbarSize="11dp"
-            android:scrollbarStyle="insideOverlay"
-            android:scrollbarThumbVertical="@drawable/track_custom">
+            android:orientation="horizontal">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_margin="10dp"
+                android:src="@mipmap/ic_info" />
+
+            <TextView
+                android:id="@+id/dialog_info_text"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_margin="8dp"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault"
+                android:textSize="14sp" />
 
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_margin="10dp"
-                    android:src="@mipmap/ic_info" />
+        </LinearLayout>
 
-                <TextView
-                    android:id="@+id/dialog_info_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:textAppearance="@android:style/TextAppearance.DeviceDefault"
-                    android:textSize="14sp" />
+    </ScrollView>
 
-            </LinearLayout>
-
-        </ScrollView>
-
-    </LinearLayout>
-
-</RelativeLayout>
+</LinearLayout>

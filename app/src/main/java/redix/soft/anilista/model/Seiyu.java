@@ -20,6 +20,7 @@ public class Seiyu {
     private int id;
     @SerializedName(value = "name", alternate = {"title"})
     private String name;
+    private Image images;
     @SerializedName("image_url")
     private String imageURL;
     @SerializedName("website_url")
@@ -44,6 +45,10 @@ public class Seiyu {
 
     public String getName() {
         return name;
+    }
+
+    public Image getImages() {
+        return images;
     }
 
     public String getImageURL() {

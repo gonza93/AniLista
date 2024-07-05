@@ -4,40 +4,40 @@ import android.content.Context;
 import androidx.databinding.DataBindingUtil;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import redix.soft.anilista.R;
-import redix.soft.anilista.databinding.ListThemeBinding;
+import redix.soft.anilista.databinding.ListSongBinding;
 import redix.soft.anilista.listener.ItemClickListener;
-import redix.soft.anilista.model.Theme;
+import redix.soft.anilista.model.Song;
 
-public class ThemeAdapter extends RecyclerView.Adapter<ThemeAdapter.ViewHolder> {
+public class SongAdapter extends RecyclerView.Adapter<SongAdapter.ViewHolder> {
 
-    private List<Theme> themes;
+    private List<Song> songs;
     private Context context;
 
-    public ThemeAdapter(List<Theme> themes, Context context) {
-        this.themes = themes;
+    public SongAdapter(List<Song> songs, Context context) {
+        this.songs = songs;
         this.context = context;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private ListThemeBinding mBinding;
+        private ListSongBinding mBinding;
         private ItemClickListener listener;
 
-        public ViewHolder(ListThemeBinding binding) {
+        public ViewHolder(ListSongBinding binding) {
             super(binding.getRoot());
             mBinding = binding;
         }
 
-        public void bind(Theme theme) {
-            mBinding.setTheme(theme);
+        public void bind(Song song) {
+            mBinding.setSong(song);
             mBinding.executePendingBindings();
         }
 
@@ -54,18 +54,18 @@ public class ThemeAdapter extends RecyclerView.Adapter<ThemeAdapter.ViewHolder> 
     @NonNull
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        ListThemeBinding binding = DataBindingUtil.inflate(inflater, R.layout.list_theme, parent, false);
+        ListSongBinding binding = DataBindingUtil.inflate(inflater, R.layout.list_song, parent, false);
         return new ViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.bind(themes.get(position));
+        holder.bind(songs.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return themes.size();
+        return songs.size();
     }
 
 }

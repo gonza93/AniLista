@@ -2,8 +2,8 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-        <variable name="theme"
-            type="redix.soft.anilista.model.Theme" />
+        <variable name="song"
+            type="redix.soft.anilista.model.Song" />
     </data>
 
     <LinearLayout
@@ -28,7 +28,7 @@
                 android:textSize="25sp"
                 android:textAppearance="@android:style/TextAppearance.DeviceDefault"
                 android:layout_margin="5dp"
-                android:text="@{theme.order}"/>
+                android:text="@{song.order}"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -43,12 +43,12 @@
                     android:layout_height="wrap_content"
                     android:textSize="17sp"
                     android:textAppearance="@android:style/TextAppearance.DeviceDefault"
-                    android:text="@{theme.title}"/>
+                    android:text="@{song.title}"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{theme.author}"/>
+                    android:text="@{song.author}"/>
 
             </LinearLayout>
 
@@ -58,7 +58,7 @@
                 android:layout_weight="2"
                 android:layout_gravity="center"
                 android:paddingEnd="10dp"
-                android:text="@{theme.episodes}"/>
+                android:text="@{song.episodes}"/>
 
         </LinearLayout>
 

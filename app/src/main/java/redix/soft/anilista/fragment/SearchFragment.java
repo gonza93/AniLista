@@ -48,7 +48,6 @@ public class SearchFragment extends Fragment {
     public void clearSearchParams(){
         searchParams.clear();
         searchParams.put("page", "1");
-        searchParams.put("limit", "30");
         //searchParams.put("genre", "12");
         //searchParams.put("genre_exclude", "0");
     }
@@ -77,7 +76,6 @@ public class SearchFragment extends Fragment {
         searchParams = new HashMap<>();
         searchParams.put("q", "Air");
         searchParams.put("page", "1");
-        searchParams.put("limit", "30");
         //searchParams.put("genre", "12");
         //searchParams.put("genre_exclude", "1");
 
@@ -92,7 +90,7 @@ public class SearchFragment extends Fragment {
         notFoundView.setVisibility(View.GONE);
 
         new JikanService()
-                .search("anime", searchParams)
+                .search(searchParams)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -107,6 +105,7 @@ public class SearchFragment extends Fragment {
                             Toast.makeText(getContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
                             progress.setVisibility(View.GONE);
                             notFoundView.setVisibility(View.VISIBLE);
+                            Log.d("SearchFragment", throwable.getMessage());
                         }
                 );
     }
@@ -115,19 +114,6 @@ public class SearchFragment extends Fragment {
         searchParams.put("limit", "15");
         progress.setVisibility(View.VISIBLE);
 
-        new JikanService()
-                .search("manga", searchParams)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        response -> {
-                            animeAdapter.setDataSet(response.getAnimes());
-                            progress.setVisibility(View.GONE);
-                        },
-                        throwable -> {
-                            Toast.makeText(getContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
-                            progress.setVisibility(View.GONE);
-                        }
-                );
+        //TODO searchManga
     }
 }

@@ -27,7 +27,7 @@
                 android:layout_marginEnd="10dp"
                 android:layout_gravity="center"
                 android:background="@drawable/bg_rounded_5"
-                bind:loadThumbRanking="@{anime.imageURL}"/>
+                bind:loadThumbRanking="@{anime.images.jpg.imageUrl}"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"

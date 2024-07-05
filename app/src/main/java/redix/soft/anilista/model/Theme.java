@@ -1,50 +1,18 @@
 package redix.soft.anilista.model;
 
+import java.util.List;
+
 public class Theme {
 
-    private String order;
-    private String title;
-    private String author;
-    private String episodes;
-    private boolean isOpening;
+    private List<String> openings;
+    private List<String> endings;
 
-    public String getOrder() {
-        return order;
+    public List<String> getOpenings() {
+        return openings;
     }
 
-    public void setOrder(String order) {
-        this.order = order;
+    public List<String> getEndings() {
+        return endings;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
-    public String getEpisodes() {
-        return episodes;
-    }
-
-    public void setEpisodes(String episodes) {
-        this.episodes = episodes;
-    }
-
-    public boolean isOpening() {
-        return isOpening;
-    }
-
-    public void setOpening(boolean opening) {
-        isOpening = opening;
-    }
 }

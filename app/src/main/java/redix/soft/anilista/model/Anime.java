@@ -3,11 +3,9 @@ package redix.soft.anilista.model;
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 import androidx.databinding.BindingAdapter;
-import androidx.core.content.ContextCompat;
 import androidx.databinding.library.baseAdapters.BR;
 
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.google.gson.annotations.SerializedName;
 import com.squareup.picasso.MemoryPolicy;
@@ -15,9 +13,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import butterknife.BindView;
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
-import redix.soft.anilista.R;
 
 public class Anime extends BaseObservable {
 
@@ -25,10 +21,15 @@ public class Anime extends BaseObservable {
     private int id;
     @SerializedName("url")
     private String URL;
+    private Image images;
     @SerializedName("image_url")
     private String imageURL;
     @SerializedName(value = "title", alternate = "name")
     private String title;
+    @SerializedName(value = "title_japanese")
+    private String titleJapanese;
+    @SerializedName(value = "title_english")
+    private String titleEnglish;
     private String synopsis;
     private String type;
     private float score;
@@ -45,15 +46,14 @@ public class Anime extends BaseObservable {
     private String endDate;
     private Related related;
 
+    private Theme theme;
+
     //Arrays
     private List<Studio> studios;
     private List<Genre> genres;
-    @SerializedName("opening_themes")
-    private List<String> openingThemes;
-    @SerializedName("ending_themes")
-    private List<String> endingThemes;
     private List<Character> characters;
     private List<Review> reviews;
+    private List<Relation> relations;
 
     //User anime list
     @SerializedName("watching_status")
@@ -80,6 +80,18 @@ public class Anime extends BaseObservable {
 
     public String getURL() {
         return URL;
+    }
+
+    public Image getImages() {
+        return images;
+    }
+
+    public String getTitleJapanese() {
+        return titleJapanese;
+    }
+
+    public String getTitleEnglish() {
+        return titleEnglish;
     }
 
     public String getImageURL() {
@@ -138,12 +150,8 @@ public class Anime extends BaseObservable {
         return genres;
     }
 
-    public List<String> getOpeningThemes() {
-        return openingThemes;
-    }
-
-    public List<String> getEndingThemes() {
-        return endingThemes;
+    public Theme getTheme() {
+        return theme;
     }
 
     public List<Character> getCharacters() {
@@ -174,16 +182,12 @@ public class Anime extends BaseObservable {
         return totalEpisodes;
     }
 
+    public List<Relation> getRelations() {
+        return relations;
+    }
+
     public void setCharacters(List<Character> characters) {
         this.characters = characters;
-    }
-
-    public void setOpeningThemes(List<String> openingThemes) {
-        this.openingThemes = openingThemes;
-    }
-
-    public void setEndingThemes(List<String> endingThemes) {
-        this.endingThemes = endingThemes;
     }
 
     public void setId(int id) {

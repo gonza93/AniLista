@@ -9,7 +9,7 @@
 
         <item name="android:colorControlHighlight">@color/colorPrimary</item>
         <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
-        <item name="android:dialogTheme">@style/AppDialogTheme</item>
+        <!--<item name="android:dialogTheme">@style/AppDialogTheme</item>-->
     </style>
 
     <style name="AppBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">

@@ -3,6 +3,7 @@ package redix.soft.anilista.api;
 import java.util.Map;
 
 import redix.soft.anilista.model.Anime;
+import redix.soft.anilista.model.Data;
 import redix.soft.anilista.model.ResponseModel;
 import redix.soft.anilista.model.ResponseSeiyu;
 import redix.soft.anilista.model.Seiyu;
@@ -15,18 +16,11 @@ import rx.Single;
 
 public interface JikanAPI {
 
-    @GET("search/{type}")
-    Single<ResponseModel> search(@Path("type") String type,
-                                 @Query("q") String query,
-                                 @Query("page") int page,
-                                 @Query("limit") int limit);
+    @GET("anime")
+    Single<ResponseModel> search(@QueryMap Map<String, String> params);
 
-    @GET("search/{type}")
-    Single<ResponseModel> search(@Path("type") String type,
-                                 @QueryMap Map<String, String> params);
-
-    @GET("anime/{id}")
-    Single<Anime> getAnimeInfo(@Path("id") int id);
+    @GET("anime/{id}/full")
+    Single<Data> getAnimeInfo(@Path("id") int id);
 
     @GET("anime/{id}/characters_staff")
     Single<ResponseModel> getAnimeCharacters(@Path("id") int id);
@@ -51,15 +45,15 @@ public interface JikanAPI {
     @GET("top/anime/{page}")
     Single<ResponseModel> getTopAnime(@Path("page") int page);
 
-    @GET("top/anime/{page}/{subtype}")
-    Single<ResponseModel> getTopAnime(@Path("page") int page,
-                                      @Path("subtype") String subtype);
+    @GET("top/anime")
+    Single<ResponseModel> getTopAnime(@Query("page") int page,
+                                      @Query("filter") String filter);
 
-    @GET("top/people/{page}")
-    Single<ResponseSeiyu> getTopPeople(@Path("page") int page);
+    @GET("top/people")
+    Single<ResponseSeiyu> getTopPeople(@Query("page") int page);
 
-    @GET("schedule/{day}")
-    Single<ResponseModel> getSchedule(@Path("day") String day);
+    @GET("schedules")
+    Single<ResponseModel> getSchedule(@Query("filter") String day);
 
     @GET("season/{year}/{season}")
     Single<ResponseModel> getSeasonAnime(@Path("year") int year,

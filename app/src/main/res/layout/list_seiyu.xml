@@ -17,7 +17,7 @@
         <ImageView
             android:layout_width="100dp"
             android:layout_height="100dp"
-            bind:loadSeiyuAvatar="@{seiyu.imageURL}"/>
+            bind:loadSeiyuAvatar="@{seiyu.images.jpg.imageUrl}"/>
 
         <TextView
             android:layout_width="100dp"

@@ -1,6 +1,7 @@
 package redix.soft.anilista.activity;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -19,6 +20,7 @@ import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.Editable;
@@ -29,10 +31,9 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.adw.library.widgets.discreteseekbar.DiscreteSeekBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +57,6 @@ import redix.soft.anilista.fragment.UserListFragment;
 import redix.soft.anilista.model.Genre;
 import redix.soft.anilista.model.Picture;
 import redix.soft.anilista.util.AnimationUtil;
-import redix.soft.anilista.util.ChipsLayoutManagerHelper;
 import redix.soft.anilista.util.DataUtil;
 import redix.soft.anilista.util.NavigationUtil;
 
@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity
     @BindView(R.id.filters_scroll) NestedScrollView filters_scroll;
     @BindView(R.id.filters_list_genre) RecyclerView listFiltersGenre;
     @BindView(R.id.filters_score) TextView filterScore;
-    @BindView(R.id.filters_score_bar) DiscreteSeekBar filterScoreBar;
+    @BindView(R.id.filters_score_bar) SeekBar filterScoreBar;
     @BindView(R.id.filters_main_button) TextView filtersText;
     @BindView(R.id.filters_sort_layout) LinearLayout filtersLayoutSort;
     @BindView(R.id.filters_order_layout) LinearLayout filtersLayoutOrder;
@@ -156,6 +156,11 @@ public class MainActivity extends AppCompatActivity
         toolbarColor();
         initFilters();
         initSaveButton();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
 
         if (DataUtil.getInstance(this).showSupport()) {
             InfoDialog infoDialog = new InfoDialog();
@@ -304,7 +309,7 @@ public class MainActivity extends AppCompatActivity
     @SuppressLint("SetTextI18n")
     private void initFilters() {
         BottomSheetBehavior.from(findViewById(R.id.filters)).setState(BottomSheetBehavior.STATE_HIDDEN);
-        BottomSheetBehavior.from(findViewById(R.id.filters)).setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+        BottomSheetBehavior.from(findViewById(R.id.filters)).addBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
             public void onStateChanged(@NonNull View bottomSheet, int newState) {
                 float elevation =   newState == BottomSheetBehavior.STATE_EXPANDED ||
@@ -334,22 +339,22 @@ public class MainActivity extends AppCompatActivity
         });
 
         GenreAdapter genreAdapter = new GenreAdapter(Genre.getGenres(), this, R.layout.list_genre_3);
-        listFiltersGenre.setLayoutManager(ChipsLayoutManagerHelper.build(this));
+        listFiltersGenre.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         listFiltersGenre.setAdapter(genreAdapter);
 
-        filterScoreBar.setOnProgressChangeListener(new DiscreteSeekBar.OnProgressChangeListener() {
+        filterScoreBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
-            public void onProgressChanged(DiscreteSeekBar seekBar, int value, boolean fromUser) {
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
 
             }
 
             @Override
-            public void onStartTrackingTouch(DiscreteSeekBar seekBar) {
+            public void onStartTrackingTouch(SeekBar seekBar) {
 
             }
 
             @Override
-            public void onStopTrackingTouch(DiscreteSeekBar seekBar) {
+            public void onStopTrackingTouch(SeekBar seekBar) {
                 filterScore.setText(getString(R.string.filters_score_near) + " " + filterScoreBar.getProgress());
             }
         });

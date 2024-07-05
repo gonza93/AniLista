@@ -11,6 +11,7 @@ import okhttp3.Response;
 import redix.soft.anilista.model.Anime;
 import redix.soft.anilista.model.AnimeStatus;
 import redix.soft.anilista.model.ResponseModel;
+import redix.soft.anilista.model.ResponseModelMAL;
 import redix.soft.anilista.model.User;
 import redix.soft.anilista.util.DataUtil;
 import retrofit2.Retrofit;
@@ -72,7 +73,7 @@ public class MyAnimeListService {
         return myAnimeListAPI.getUser("anime_statistics");
     }
 
-    public Single<ResponseModel> getUserAnimeList(Map<String, String> params) {
+    public Single<ResponseModelMAL> getUserAnimeList(Map<String, String> params) {
         return myAnimeListAPI.getUserAnimeList(params);
     }
 

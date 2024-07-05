@@ -18,7 +18,7 @@
         <ImageView
             android:layout_width="130dp"
             android:layout_height="210dp"
-            bind:loadThumbTrending="@{anime.imageURL}"/>
+            bind:loadThumbTrending="@{anime.images.jpg.imageUrl}"/>
 
         <TextView
             android:layout_width="match_parent"

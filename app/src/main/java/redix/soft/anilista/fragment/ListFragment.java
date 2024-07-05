@@ -30,16 +30,15 @@ import redix.soft.anilista.adapter.NewsAdapter;
 import redix.soft.anilista.adapter.PictureAdapter;
 import redix.soft.anilista.adapter.RankingAdapter;
 import redix.soft.anilista.adapter.ReviewAdapter;
-import redix.soft.anilista.adapter.ThemeAdapter;
+import redix.soft.anilista.adapter.SongAdapter;
 import redix.soft.anilista.adapter.UserAnimeListAdapter;
 import redix.soft.anilista.api.JikanService;
 import redix.soft.anilista.api.MyAnimeListService;
 import redix.soft.anilista.model.Anime;
 import redix.soft.anilista.model.Character;
-import redix.soft.anilista.model.DataAnime;
 import redix.soft.anilista.model.Genre;
 import redix.soft.anilista.model.News;
-import redix.soft.anilista.model.Theme;
+import redix.soft.anilista.model.Song;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -201,17 +200,17 @@ public class ListFragment extends Fragment{
     }
 
     private void populateThemes(){
-        List<Theme> themes = new ArrayList<>();
+        List<Song> songs = new ArrayList<>();
 
         if (isThemeOp)
-            themes.addAll(parseThemes(anime.getOpeningThemes(), true));
+            songs.addAll(parseThemes(anime.getTheme().getOpenings(), true));
         else
-            themes.addAll(parseThemes(anime.getEndingThemes(), false));
+            songs.addAll(parseThemes(anime.getTheme().getEndings(), false));
 
         progress.setVisibility(View.GONE);
 
-        ThemeAdapter themeAdapter = new ThemeAdapter(themes, getContext());
-        list.setAdapter(themeAdapter);
+        SongAdapter songAdapter = new SongAdapter(songs, getContext());
+        list.setAdapter(songAdapter);
     }
 
     private void populateCharacters() {
@@ -353,37 +352,37 @@ public class ListFragment extends Fragment{
         }
     }
 
-    private List<Theme> parseThemes(List<String> themes, boolean isOpening){
-        List<Theme> parsedThemes = new ArrayList<>();
+    private List<Song> parseThemes(List<String> themes, boolean isOpening){
+        List<Song> parsedSongs = new ArrayList<>();
         int order = 1;
         for(String line : themes) {
 
-            Theme theme = new Theme();
-            theme.setOpening(isOpening);
+            Song song = new Song();
+            song.setOpening(isOpening);
 
-            theme.setOrder(String.valueOf(order++));
+            song.setOrder(String.valueOf(order++));
             int titleIndex = line.lastIndexOf("\"") + 1;
 
             String title = line.substring(0, titleIndex);
-            theme.setTitle(title.replace("\"", ""));
+            song.setTitle(title.replace("\"", ""));
             line = line.replace(title, "").substring(1);
 
             String author;
             if (line.lastIndexOf("(") == -1) {
-                theme.setAuthor(line);
+                song.setAuthor(line);
             }
             else {
                 author = line.substring(0, line.lastIndexOf("(") - 1);
-                theme.setAuthor(author);
+                song.setAuthor(author);
 
-                line = line.replace(theme.getAuthor(), "").substring(1);
-                theme.setEpisodes(line);
+                line = line.replace(song.getAuthor(), "").substring(1);
+                song.setEpisodes(line);
             }
 
-            parsedThemes.add(theme);
+            parsedSongs.add(song);
         }
 
-        return parsedThemes;
+        return parsedSongs;
     }
 
     private void populateNews() {
@@ -594,10 +593,10 @@ public class ListFragment extends Fragment{
                 .subscribe(
                         response -> {
                             ((AnimeAdapter) list.getAdapter()).endLoad();
-                            ((AnimeAdapter) list.getAdapter()).addAnime(response);
+                            ((AnimeAdapter) list.getAdapter()).addAnime(response.getData());
 
-                            if (response.getRelated().getSequel() != null)
-                                getSequels(response.getRelated().getSequel().get(0).getId());
+                            if (response.getData().getRelated().getSequel() != null)
+                                getSequels(response.getData().getRelated().getSequel().get(0).getId());
                             else if (anime.getRelated().getPrequel() != null)
                                 getPrequels(anime.getRelated().getPrequel().get(0).getId());
                         },
@@ -618,10 +617,10 @@ public class ListFragment extends Fragment{
                 .subscribe(
                         response -> {
                             ((AnimeAdapter) list.getAdapter()).endLoadInverse();
-                            ((AnimeAdapter) list.getAdapter()).putAnime(response);
+                            ((AnimeAdapter) list.getAdapter()).putAnime(response.getData());
 
-                            if (response.getRelated().getPrequel() != null)
-                                getPrequels(response.getRelated().getPrequel().get(0).getId());
+                            if (response.getData().getRelated().getPrequel() != null)
+                                getPrequels(response.getData().getRelated().getPrequel().get(0).getId());
                         },
                         throwable -> {
                             Toast.makeText(getContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();

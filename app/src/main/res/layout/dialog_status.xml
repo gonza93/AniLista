@@ -60,7 +60,22 @@
                 android:textColor="@color/colorBlack"
                 android:textAppearance="?android:attr/textAppearance"/>
 
-            <cn.carbswang.android.numberpickerview.library.NumberPickerView
+            <com.shawnlin.numberpicker.NumberPicker
+                android:id="@+id/dialog_status_score"
+                android:layout_width="wrap_content"
+                android:layout_height="150dp"
+                android:layout_marginTop="15dp"
+                android:layout_gravity="center"
+                app:np_textSize="20sp"
+                app:np_selectedTextSize="20sp"
+                app:np_selectedTextColor="@color/colorPrimary"
+                app:np_dividerType="underline"
+                app:np_order="descending"
+                app:np_max="10"
+                app:np_min="1"
+                app:np_value="5"/>
+
+            <!--<cn.carbswang.android.numberpickerview.library.NumberPickerView
                 android:id="@+id/dialog_status_score"
                 android:layout_width="wrap_content"
                 android:layout_height="150dp"
@@ -75,7 +90,7 @@
                 app:npv_RespondChangeOnDetached="false"
                 app:npv_TextSizeNormal="16sp"
                 app:npv_TextSizeSelected="20sp"
-                app:npv_WrapSelectorWheel="true"/>
+                app:npv_WrapSelectorWheel="true"/>-->
 
         </LinearLayout>
 
@@ -179,7 +194,6 @@
             android:layout_marginEnd="5dp"
             android:padding="10dp"
             android:background="@drawable/bg_button_3"
-            android:fontFamily="@font/spinnaker"
             android:textColor="@color/colorRedTextUser"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -194,7 +208,6 @@
             android:layout_marginStart="5dp"
             android:padding="10dp"
             android:background="@drawable/bg_button_2"
-            android:fontFamily="@font/spinnaker"
             android:textColor="@android:color/white"
             android:textSize="20sp"
             android:textStyle="bold"
